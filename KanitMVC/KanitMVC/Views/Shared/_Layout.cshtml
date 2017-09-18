@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
+    <!-- Bootstrap CSS -->
+    @Styles.Render("~/Content/css/bootstrap.min.css")
+    @*<link href="@Url.Content("~/Content/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />*@
+    <!-- bootstrap theme -->
+    @Styles.Render("~/Content/css/bootstrap-theme.css")
+    <!--external css-->
+    <!-- font icon -->
+    @Styles.Render("~/Content/css/elegant-icons-style.css")
+    @Styles.Render("~/Content/css/font-awesome.min.css")
+    <!-- full calendar css-->
+    @Styles.Render("~/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css")
+    @Styles.Render("~/assets/fullcalendar/fullcalendar/fullcalendar.css")
+    <!-- easy pie chart-->
+    @Styles.Render("~/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css")
+    @*<link href="@Url.Content("~/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css")" rel="stylesheet" type="text/css" media="screen" />*@
+    <!-- owl carousel -->
+    @Styles.Render("~/Content/css/owl.carousel.css")
+    @Styles.Render("~/Content/css/jquery-jvectormap-1.2.2.css")
+    <!-- Custom styles -->
+    @Styles.Render("~/Content/css/fullcalendar.css")
+    @Styles.Render("~/Content/css/widgets.css")
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/style-responsive.css")
+    @Styles.Render("~/Content/css/xcharts.min.css")
+    @Styles.Render("~/Content/css/jquery-ui-1.10.4.min.css")
+    @Styles.Render("~/Content/css/DatepickerBS/css/bootstrap-datetimepicker.css")
+    @*====================================================================================================================================*@
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+    <!-- javascripts -->
+    @Scripts.Render("~/Scripts/js/jquery.js")
+    @Scripts.Render("~/Scripts/js/jquery-ui-1.10.4.min.js")
+    @Scripts.Render("~/Scripts/js/jquery-1.8.3.min.js")
+    @Scripts.Render("~/Scripts/js/jquery-ui-1.9.2.custom.min.js")
+    <!-- bootstrap -->
+    @Scripts.Render("~/Scripts/js/bootstrap.min.js")
+    <!-- nice scroll -->
+    @Scripts.Render("~/Scripts/js/jquery.scrollTo.min.js")
+    @Scripts.Render("~/Scripts/js/jquery.nicescroll.js")
+    <!-- charts scripts -->
+    @Scripts.Render("~/assets/jquery-knob/js/jquery.knob.js")
+    @Scripts.Render("~/Scripts/js/jquery.sparkline.js")
+    @Scripts.Render("~/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js")
+    @Scripts.Render("~/Scripts/js/owl.carousel.js")
+    @*<script src="Scripts/js/jquery.js"></script>*@
+    <!-- jQuery full calendar -->
+    @Scripts.Render("~/Scripts/js/fullcalendar.min.js")
+    @Scripts.Render("~/assets/fullcalendar/fullcalendar/fullcalendar.js")
+    <!--script for this page only-->
+    @Scripts.Render("~/Scripts/js/calendar-custom.js")
+    @Scripts.Render("~/Scripts/js/jquery.rateit.min.js")
+    <!-- custom select -->
+    @Scripts.Render("~/Scripts/js/jquery.customSelect.min.js")
+    @Scripts.Render("~/assets/chart-master/Chart.js")
+    <!--custome script for all page-->
+    @Scripts.Render("~/Scripts/js/scripts.js")
+    <!-- custom script for this page-->
+    @Scripts.Render("~/Scripts/js/sparkline-chart.js")
+    @Scripts.Render("~/Scripts/js/easy-pie-chart.js")
+    @Scripts.Render("~/Scripts/js/jquery-jvectormap-1.2.2.min.js")
+    @Scripts.Render("~/Scripts/js/jquery-jvectormap-world-mill-en.js")
+    @Scripts.Render("~/Scripts/js/xcharts.min.js")
+    @Scripts.Render("~/Scripts/js/jquery.autosize.min.js")
+    @Scripts.Render("~/Scripts/js/jquery.placeholder.min.js")
+    @Scripts.Render("~/Scripts/js/gdp-data.js")
+    @Scripts.Render("~/Scripts/js/morris.min.js")
+    @Scripts.Render("~/Scripts/js/sparklines.js")
+    @Scripts.Render("~/Scripts/js/charts.js")
+    @Scripts.Render("~/Scripts/js/jquery.slimscroll.min.js")
+    @Scripts.Render("~/Scripts/CUDS/General/ChangeFomatDate.js")
+    @Scripts.Render("~/Scripts/CUDS/General/ConfirmDialog.js")
+    @Scripts.Render("~/Scripts/CUDS/General/CheckAuthorization.js")
+    @Scripts.Render("~/Scripts/js/DatepickerBS/js/moment.min.js")
+    @Scripts.Render("~/Scripts/js/DatepickerBS/js/bootstrap-datetimepicker.min.js")
+    
+
+    <script>
+        //knob
+        $(function () {
+            $(".knob").knob({
+                'draw': function () {
+                    $(this.i).val(this.cv + '%')
+                }
+            })
+        });
+
+        //carousel
+        $(document).ready(function () {
+            document.getElementById("lblLoginfullName").innerHTML = localStorage['FullName'];
+            $("#owl-slider").owlCarousel({
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true
+
+            });
+        });
+
+        //custom select box
+
+        $(function () {
+            $('select.styled').customSelect();
+        });
+
+        /* ---------- Map ---------- */
+        $(function () {
+            $('#map').vectorMap({
+                map: 'world_mill_en',
+                series: {
+                    regions: [{
+                        values: gdpData,
+                        scale: ['#000', '#000'],
+                        normalizeFunction: 'polynomial'
+                    }]
+                },
+                backgroundColor: '#eef3f7',
+                onLabelShow: function (e, el, code) {
+                    el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <section id="container" class="">
+        <header class="header dark-bg">
+            <div class="toggle-nav">
+                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+            </div>
+
+            <!--logo start-->
+            <a href="index.html" class="logo">KA<span class="lite">NIT</span></a>
+            <!--logo end-->
+
+            <div class="top-nav notification-row">
+                <!-- notificatoin dropdown start-->
+                <ul class="nav pull-right top-menu">
+
+                    <!-- task notificatoin start -->
+                    <li id="task_notificatoin_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="icon-task-l"></i>
+                            <span class="badge bg-important">4</span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <div class="notify-arrow notify-arrow-blue"></div>
+                            <li>
+                                <p class="blue">You have 4 pending tasks</p>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <div class="desc">Waiting Approve (ใบเสนอราคา) &nbsp;&nbsp;&nbsp;&nbsp; <span class="required fontbold">4</span></div>
+                                        @*<div class="percent">90%</div>*@
+                                    </div>
+                                    @*<div class="progress progress-striped">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
+                                            <span class="sr-only">90% Complete (success)</span>
+                                        </div>
+                                    </div>*@
+                                </a>
+                            </li>
+                            <li class="external">
+                                <a href="#">See All Tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- task notificatoin end -->
+                    <!-- alert notification start-->
+                    <li id="alert_notificatoin_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                            <i class="icon-bell-l"></i>
+                            <span class="badge bg-important">2</span>
+                        </a>
+                        <ul class="dropdown-menu extended notification">
+                            <div class="notify-arrow notify-arrow-blue"></div>
+                            <li>
+                                <p class="blue">You have 2 new notifications</p>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label label-danger"></span>
+                                    แจ้งปิดระบบ วันที่
+                                    <span class="small italic pull-right">8/8/2017 01.00 น.</span>
+                                </a>
+                                <a href="#">
+                                    <span class="label label-danger"></span>
+                                    Low Stock (Fisher-0001)
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">See all notifications</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- alert notification end-->
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="profile-ava">
+                                <img alt="" src="../img/avatar1_small.jpg">
+                            </span>
+                            <span class="username" id="lblLoginfullName"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <div class="log-arrow-up"></div>
+                            <li class="eborder-top">
+                                <a href="#"><i class="icon_profile"></i> My Profile</a>
+                            </li>
+                            <li>
+                                @Html.ActionLink("Log Out", "IndexLogin", "Login")
+                                @*<a href="login.html"><i class="icon_key_alt"></i> Log Out</a>*@
+                            </li>
+                            <li>
+                                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- user login dropdown end -->
+                </ul>
+                <!-- notificatoin dropdown end-->
+            </div>
+        </header>
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu">
+                    <li class="active mnDashboard">
+                        <a class="" href="/Home/Index">
+                            <i class="icon_house_alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu mnCompany">
+                        <a href="javascript:;" class="">
+                            <i class="icon_document_alt"></i>
+                            <span>Company</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub">
+                            <li class="subCompany">@Html.ActionLink("Company", "IndexCompany", "Company")</li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu mnProduct">
+                        <a href="javascript:;" class="">
+                            <i class="icon_desktop"></i>
+                            <!--<span>UI Fitures</span>-->
+                            <span>Product</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub">
+                            <li class="subProduct">@Html.ActionLink("Product", "IndexProduct", "Product")</li>
+                        </ul>
+                    </li>
+                    <li class="mnQuotation">
+                        <a class="" href="/Quotation/IndexQuotation">
+                            <i class="icon_genius"></i>
+                            <span>Quotation</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu mnSetting">
+                        <a href="javascript:;" class="">
+                            <i class="icon_documents_alt"></i>
+                            <span>Setting</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub">
+                            @*<li><a class="" href="IndexWorkflow.aspx">Work Flow</a></li>*@
+                            @*<li><a class="" href="IndexExchangeRate.aspx">Exchange Rate</a></li>*@
+                            <li class="subWorkFlow">@Html.ActionLink("Work Flow", "IndexWorkFlow", "WorkFlow")</li>
+                            <li class="subExchangeRate">@Html.ActionLink("Exchange Rate", "IndexExchangeRate", "ExchangeRate")</li>
+                            <li class="subSecurityProfile">@Html.ActionLink("Security Profile", "IndexSecurityProfile", "SecurityProfile")</li>
+                            <li class="subUser">@Html.ActionLink("User", "IndexUser", "User")</li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="container body-content">
+                    @RenderBody()
+                    @*@RenderSection("scripts", required: false)*@
+                </div>
+            </section>
+        </section>
+        <!--main content end-->
+    </section>
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+    
+</body>
+</html>

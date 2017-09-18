@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "IndexLogin";
+    Layout = "~/Views/Shared/Lockout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/CUDS/Login/IndexUserLogin.js")" type="text/javascript"></script>
+<form class="login-form">
+    <div class="login-wrap">
+        <p class="login-img">
+            <!--<i class="icon_lock_alt"></i>-->
+            <img src="img/Logokanit.jpg" />
+        </p>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="icon_profile"></i></span>
+            <input type="text" class="form-control" id="txtUserName" placeholder="Username" autofocus>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+            <input type="password" id="txtPassword" class="form-control" placeholder="Password">
+        </div>
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+            <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
+        </label>
+        @*@Html.ActionLink("Login", "Index", "Home")*@
+        <button class="btn btn-primary btn-lg btn-block" type="submit" id="btnLogin" onClick="UserLogin()">@Html.ActionLink("Login", "Index", "Home")</button>
+        <button class="btn btn-info btn-lg btn-block" type="submit" id="btnCancel">Cancel</button>
+    </div>
+</form>
+<script type="text/javascript">
+    @*function redirectLogin()
+    {
+        @{ Response.Redirect("~/Home/Index");}
+    }*@
+</script>

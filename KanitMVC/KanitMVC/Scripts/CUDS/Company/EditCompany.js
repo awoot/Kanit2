@@ -1,0 +1,952 @@
+var row_index2 = 0;//RowCal
+$(document).ready(function () {
+    CheckAuthorization();
+    $(".nav-tabs a").click(function () {
+        $(this).tab('show');
+    });
+
+    $(window).load(function () {
+        //Income
+        $('.cloneContactAddress').click(function () {
+            $('.RowCal:last').find('td input[type=text]').eq(0).val('');
+            $('.RowCal:last').find('td input[type=text]').eq(1).val('');
+            CalSum();
+        });
+    });
+    //GetExpenseGroup();
+    //GetCurrency();
+});
+$(function () {
+    $('.RowCal td:first').click(function () {
+        row_index2 = $(this).parent().index();
+    });
+
+    $('#tblContactAddress').dynoTable2();
+    //GetPriceList();
+});
+function SetRowIndex() {
+    $('.RowCal td').click(function () {
+        row_index2 = $(this).parent().index();
+        });
+ }
+function GetSalutation() {
+    var dataObject = { typeID: '001' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbSalutation').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbSalutation').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetEmailLetters() {
+    var dataObject = { typeID: '002' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbEmailLetter').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbEmailLetter').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetAddressType() {
+    var dataObject = { typeID: '003' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbAddressType').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbAddressType').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetCreditTerm() {
+    var dataObject = { typeID: '004' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbCreditTerm').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbCreditTerm').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetPaymentType() {
+    var dataObject = { typeID: '005' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbPaymentType').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbPaymentType').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetCustomerSegment() {
+    var dataObject = { typeID: '006' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbCustomerSegment').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbCustomerSegment').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetCompanyType() {
+    var dataObject = { typeID: '007' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbCompanyType').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbCompanyType').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetProvince() {
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            data = JSON.parse(data);
+            $.each(data.Table, function (i) {
+                $('#cmbProvince').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbProvince').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetAmphurByProvince() {
+    var ProvinceID = $('#cmbProvince:last').find(":selected").val();
+    //alert(val);
+    var dataObject = { ProvinceID: parseInt(ProvinceID) };
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $('#cmbAmphur').find("option").remove();
+            $.each(data.Table, function (i) {
+                $('#cmbAmphur').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbAmphur').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+    GetDistrictByAmphur();
+}
+function GetDistrictByAmphur() {
+    var AmphurID = $('#cmbAmphur:last').find(":selected").val();
+    //alert(val);
+    var dataObject = { AmphurID: parseInt(AmphurID) };
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $('#cmbTambon').find("option").remove();
+            $.each(data.Table, function (i) {
+                //alert(data.Table[i].Detail);
+                $('#cmbTambon').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbTambon').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetAmphurAll() {
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/GetAmphurAll',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            data = JSON.parse(data);
+            //$('#cmbAmphur').find("option").remove();
+            $.each(data.Table, function (i) {
+                $('#cmbAmphur').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbAmphur').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetDistrictAll() {
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/GetDistrictAll',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            data = JSON.parse(data);
+            //$('#cmbTambon').find("option").remove();
+            $.each(data.Table, function (i) {
+                $('#cmbTambon').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbTambon').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+
+function GetContactProvince() {
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/',
+        type: 'GET',
+        dataType: 'json',
+       
+        success: function (data) {
+            data = JSON.parse(data);
+            $.each(data.Table, function (i) {
+                //alert(data.Table[i].Detail);
+                $('.cmbContProvince:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('.cmbContProvince:last').find('option:first-child').attr('selected', true);
+            //alert($('.cmbContProvince:last').val());
+            GetContactAmphurByProvince();
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+function GetContactAmphurByProvince() {
+    var ProvinceID = $('.cmbContProvince:last').find(":selected").val();
+    //alert("ProvinceID "+ProvinceID);
+    var dataObject = { ProvinceID: parseInt(ProvinceID) };
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
+        type: 'GET',
+        dataType: 'json',
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $('.cmbContAmphur:last').find("option").remove();
+            $.each(data.Table, function (i) {
+                $('.cmbContAmphur:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('.cmbContAmphur:last').find('option:first-child').attr('selected', true);
+            GetContactDistrictByAmphur();
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+    
+}
+function GetContactDistrictByAmphur() {
+    var AmphurID = $('.cmbContAmphur:last').find(":selected").val();
+    //alert(val);
+    var dataObject = { AmphurID: parseInt(AmphurID) };
+    $.ajax({
+        url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
+        type: 'GET',
+        dataType: 'json',
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $('.cmbContTambon:last').find("option").remove();
+            $.each(data.Table, function (i) {
+                //alert(data.Table[i].Detail);
+                $('.cmbContTambon:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('.cmbContTambon').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+
+function ControlEnable(Isview) {
+    //var Isview = val;
+    if (Isview) {
+        document.getElementById("txtDetail").disabled = true;
+        document.getElementById("txtPricelist").disabled = true;
+        document.getElementById("txtSeq").disabled = true;
+        document.getElementById("btnSave").disabled = true;
+        document.getElementById("cmbExpenseGroup").disabled = true;
+    }
+}
+function GetData(val) {
+    $('#hidCompID').val(val);
+    var dataObject = { ID: val}
+    $.ajax(
+   {
+       url: 'http://localhost:13149/api/Company',
+       type: 'GET',
+       async: false,
+       data: dataObject,
+       datatype: 'json',
+       success: function (data) {
+           data = JSON.parse(data);
+
+           // =================================================================================== Company
+           GetCreditTerm();
+           GetPaymentType();
+           GetCustomerSegment();
+           GetCompanyType();
+           var creditLimit = AddComma(parseFloat(data.Table[0].CreditLimit).toFixed(2));
+           $("#txtCompanyCode").val(data.Table[0].CompanyCode);
+           $("#txtCompanyNameTH").val(data.Table[0].CompanyNameTH);
+           $("#txtCompanyNameEN").val(data.Table[0].CompanyNameEN);
+           $("#cmbCompanyType").val(data.Table[0].CompanyTypeID);
+           $("#cmbCustomerSegment").val(data.Table[0].CustSegment);
+           $("#txtValidity").val(data.Table[0].Validity);
+           $("#cmbPaymentType").val(data.Table[0].PaymentTypeID);
+           $("#cmbCreditTerm").val(data.Table[0].CreditTerm);
+           $("#txtCreditLimit").val(creditLimit);
+           $("#txtParentCompany").val(data.Table[0].ParentCompany);
+           $("#txtKeyAccountSR").val(data.Table[0].KeyAccountSR);
+
+           // =================================================================================== Address
+           $('th').click(function () {
+               var table = $(this).parents('table').eq(0)
+               var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+               this.asc = !this.asc
+               if (!this.asc) { rows = rows.reverse() }
+               for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+           })
+           function comparer(index) {
+               return function (a, b) {
+                   var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                   return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+               }
+           }
+           function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
+
+           //filter
+           $("#txtSearchAddress").keyup(function () {
+               $("#resultAddress").find("tr").hide();
+               var data = this.value.split(" ");
+               var jo = $("#resultAddress").find("tr");
+               $.each(data, function (i, v) {
+                   //jo = jo.filter("*:contains('" + v + "')");
+                   jo = jo.filter(function () {
+                       return $(this).text().toLowerCase().indexOf(v.toLowerCase()) > -1;
+                   });
+               });
+               jo.show();
+
+           }).focus(function () {
+               this.value = "";
+               $(this).css({ "color": "black" });
+               $(this).unbind('focus');
+           }).css({ "color": "#C0C0C0" });
+
+            var html = '<tbody>';
+            for (var i = 0; i < data.Table1.length; i++) {
+
+                html += '<tr>';
+                html += '<td class="">' + data.Table1[i].RowNum + '</td>';
+                html += '<td class="">' + data.Table1[i].Branch + '</td>';
+                html += '<td class="">' + data.Table1[i].Address + '</td>';
+                html += '<td class="">' + data.Table1[i].TelNo + '</td>';
+                html += '<td class="">' + data.Table1[i].MobileNo + '</td>';
+                html += '<td class="">' + data.Table1[i].AddressTypeName + '</td>';
+                if (data.Table1[i].IsPrimary == '1')
+                {
+                    html += '<td class=""><img src="#" class="fa fa-check" /></td>';
+                }
+                else
+                {
+                    html += '<td class=""><img src="#" class="fa fa-minus" /></td>';
+                }
+                html += '<td><div class="btn-group">';
+                html += '<a class="btn btn-success" href="#myModal" data-toggle="modal" onclick="GetDataAddress(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
+                html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'CompanyAddress'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
+                //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
+                //html += '<a href="#" id="del' + data.Table[i].ID + '" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'ExpenseMaster'" + ',' + data.Table[i].ID + ')" style="margin-right: 5px;" >' + '<img src="/Images/delete.png" class="imgExpenseDelete" /></a>';
+                //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '&IsView=' + true + '" id="edit' + data.Table[i].ID + '">' + '<img src="/Images/view.png" class="imgExpenseView" /></a>';
+                html += '</div></td>';
+                html += '</tr>';
+            }
+            html += '</tbody>';
+            document.getElementById("resultAddress").innerHTML = html;
+
+           // =================================================================================== Contact Person
+           //GetSalutation();
+           //GetEmailLetters();
+            $('th').click(function () {
+                var table = $(this).parents('table').eq(0)
+                var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+                this.asc = !this.asc
+                if (!this.asc) { rows = rows.reverse() }
+                for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+            })
+            function comparer(index) {
+                return function (a, b) {
+                    var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+                }
+            }
+            function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
+
+           //filter
+            $("#txtSearchContact").keyup(function () {
+                $("#resultContact").find("tr").hide();
+                var data = this.value.split(" ");
+                var jo = $("#resultContact").find("tr");
+                $.each(data, function (i, v) {
+                    //jo = jo.filter("*:contains('" + v + "')");
+                    jo = jo.filter(function () {
+                        return $(this).text().toLowerCase().indexOf(v.toLowerCase()) > -1;
+                    });
+                });
+                jo.show();
+
+            }).focus(function () {
+                this.value = "";
+                $(this).css({ "color": "black" });
+                $(this).unbind('focus');
+            }).css({ "color": "#C0C0C0" });
+
+            var html = '<tbody>';
+            for (var i = 0; i < data.Table2.length; i++) {
+
+                html += '<tr>';
+                html += '<td class="">' + data.Table2[i].RowNum + '</td>';
+                html += '<td class="">' + data.Table2[i].FullName + '</td>';
+                html += '<td class="">' + data.Table2[i].MobileNo + '</td>';
+                html += '<td class="">' + data.Table2[i].Email + '</td>';
+                html += '<td class="">' + data.Table2[i].EmailLettersName + '</td>';
+                html += '<td><div class="btn-group">';
+                html += '<a class="btn btn-default btnContAddress" href="#ModalContactAddress" data-toggle="modal" onclick="GetDataContactAddress(' + data.Table2[i].ID + ')"><i class="	fa fa-home"></i></a>';
+                html += '</div></td>';
+                html += '<td><div class="btn-group">';
+                html += '<a class="btn btn-success" href="#ModalContact" data-toggle="modal" onclick="GetDataContactPerson(' + data.Table2[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
+                html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'DeleteContactPerson'" + ',' + "'CompanyContact'" + ',' + data.Table2[i].ID + ')"><i class="icon_close_alt2"></i></a>';
+                //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
+                //html += '<a href="#" id="del' + data.Table[i].ID + '" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'ExpenseMaster'" + ',' + data.Table[i].ID + ')" style="margin-right: 5px;" >' + '<img src="/Images/delete.png" class="imgExpenseDelete" /></a>';
+                //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '&IsView=' + true + '" id="edit' + data.Table[i].ID + '">' + '<img src="/Images/view.png" class="imgExpenseView" /></a>';
+                html += '</div></td>';
+                html += '</tr>';
+            }
+            html += '</tbody>';
+            document.getElementById("resultContact").innerHTML = html;
+            
+       },
+       error: function (msg) {
+           alert(msg);
+       }
+
+   });
+}
+function RowDelete(id) {
+    var dataObject = { ID: id, EditBy: localStorage['UserID'] };
+    $.ajax(
+        {
+            url: 'http://localhost:13149/api/Address/Delete',
+            type: 'DELETE',
+            data: dataObject,
+            datatype: 'json',
+
+            success: function (result) {
+                //alert('Delete is completed')
+                window.location.href = "../Company/EditCompany?id=" + $('#hidCompID').val();
+            }
+            ,
+            error: function (msg) {
+                alert(msg)
+            }
+
+
+        });
+}
+function RowDeleteContactPerson(id) {
+    var dataObject = { ID: id, EditBy: localStorage['UserID'] };
+    $.ajax(
+        {
+            url: 'http://localhost:13149/api/ContactPerson/Delete',
+            type: 'DELETE',
+            data: dataObject,
+            datatype: 'json',
+
+            success: function (result) {
+                //alert('Delete is completed')
+                window.location.href = "../Company/EditCompany?id=" + $('#hidCompID').val();
+            }
+            ,
+            error: function (msg) {
+                alert(msg)
+            }
+
+
+        });
+}
+function GetDataAddress(AddressID)
+{
+    //alert("GetDataAddress");
+    var AddressID = AddressID;
+    //alert("AddressID "+AddressID);
+    if(AddressID > 0)
+    {
+        var dataObject = { ID: AddressID }
+        $.ajax(
+       {
+           url: 'http://localhost:13149/api/Address',
+           type: 'GET',
+           async: false,
+           data: dataObject,
+           datatype: 'json',
+           success: function (data) {
+               data = JSON.parse(data);
+               GetAddressType();
+               GetProvince();
+               GetAmphurAll();
+               GetDistrictAll();
+
+                $("#hidAddressID").val(data.Table[0].ID);
+                $("#txtTaxID").val(data.Table[0].TaxID); 
+                $("#txtBranch").val(data.Table[0].Branch);
+                $("#txtAddress").val(data.Table[0].Address); 
+                $("#cmbProvince").val(data.Table[0].Province);
+                $("#cmbAmphur").val(data.Table[0].Amphur);
+                $("#cmbTambon").val(data.Table[0].Tambon); 
+                $("#txtPostCode").val(data.Table[0].PostCode);
+                $("#txtTelNo").val(data.Table[0].TelNo); 
+                $("#txtTelExt").val(data.Table[0].TelExt);
+                $("#txtMobileNo").val(data.Table[0].MobileNo); 
+                $("#txtFaxNo").val(data.Table[0].FaxNo);
+                $("#cmbAddressType").val(data.Table[0].AddressTypeID);
+                if (data.Table[0].IsPrimary == '1') {
+                   $('#chkPrimary').prop('checked', true);
+                }
+           },
+           error: function (msg) {
+               alert(msg);
+           }
+
+       });
+    }
+    else
+    {
+        //alert("New Address");
+        $('#cmbAddressType').find("option").remove();
+        GetAddressType();
+        GetProvince();
+        GetAmphurByProvince();
+        GetDistrictByAmphur();
+        $("#hidAddressID").val('');
+        $("#txtTaxID").val('');
+        $("#txtBranch").val('');
+        $("#txtAddress").val('');
+        $("#txtPostCode").val('');
+        $("#txtTelNo").val('');
+        $("#txtTelExt").val('');
+        $("#txtMobileNo").val('');
+        $("#txtFaxNo").val('');
+        $('#chkPrimary').prop('checked', false);
+
+    }
+}
+function GetDataContactPerson(ContactID) {
+    //alert("GetDataAddress");
+    var ContactID = ContactID;
+    //alert("AddressID "+AddressID);
+    if (ContactID > 0) {
+        var dataObject = { ID: ContactID }
+        $.ajax(
+       {
+           url: 'http://localhost:13149/api/ContactPerson',
+           type: 'GET',
+           async: false,
+           data: dataObject,
+           datatype: 'json',
+           success: function (data) {
+               data = JSON.parse(data);
+               GetSalutation();
+               GetEmailLetters();
+
+               $("#hidContactID").val(data.Table[0].ID);
+               $("#cmbSalutation").val(data.Table[0].Salutation);
+               $("#txtFirstNameTH").val(data.Table[0].FirstNameTH);
+               $("#txtFirstNameEN").val(data.Table[0].FirstNameEN);
+               $("#txtLastNameTH").val(data.Table[0].LastNameTH);
+               $("#txtLastNameEN").val(data.Table[0].LastNameEN);
+               $("#txtContactMobile").val(data.Table[0].MobileNo);
+               $("#txtContactEmail").val(data.Table[0].Email);
+               $("#cmbEmailLetter").val(data.Table[0].EmailLetters);
+           },
+           error: function (msg) {
+               alert(msg);
+           }
+
+       });
+    }
+    else {
+        //alert("New Address");
+        $('#cmbSalutation').find("option").remove();
+        $('#cmbEmailLetter').find("option").remove();
+        GetSalutation();
+        GetEmailLetters();
+
+        $("#hidContactID").val('');
+        $("#cmbSalutation").val('');
+        $("#txtFirstNameTH").val('');
+        $("#txtFirstNameEN").val('');
+        $("#txtLastNameTH").val('');
+        $("#txtLastNameEN").val('');
+        $("#txtContactMobile").val('');
+        $("#txtContactEmail").val('');
+        $("#cmbEmailLetter").val('');
+
+    }
+}
+function GetDataContactAddress(ContactID) {
+    //alert("GetDataAddress");
+    var ContactID = ContactID;
+    //alert("AddressID "+AddressID);
+    if (ContactID > 0) {
+        //alert("Edit ContAddress");
+        GetContactProvince();
+        GetContactAmphurByProvince();
+        GetContactDistrictByAmphur();
+        //var dataObject = { ID: ContactID }
+       // $.ajax(
+       //{
+       //    url: 'http://localhost:13149/api/ContactPerson',
+       //    type: 'GET',
+       //    async: false,
+       //    data: dataObject,
+       //    datatype: 'json',
+       //    success: function (data) {
+       //        data = JSON.parse(data);
+       //        GetSalutation();
+       //        GetEmailLetters();
+
+       //        $("#hidContactID").val(data.Table[0].ID);
+       //        $("#cmbSalutation").val(data.Table[0].Salutation);
+       //        $("#txtFirstNameTH").val(data.Table[0].FirstNameTH);
+       //        $("#txtFirstNameEN").val(data.Table[0].FirstNameEN);
+       //        $("#txtLastNameTH").val(data.Table[0].LastNameTH);
+       //        $("#txtLastNameEN").val(data.Table[0].LastNameEN);
+       //        $("#txtContactMobile").val(data.Table[0].MobileNo);
+       //        $("#txtContactEmail").val(data.Table[0].Email);
+       //        $("#cmbEmailLetter").val(data.Table[0].EmailLetters);
+       //    },
+       //    error: function (msg) {
+       //        alert(msg);
+       //    }
+
+       //});
+    }
+    else {
+        //alert("New ContAddress");
+        GetContactProvince();
+        GetContactAmphurByProvince();
+        GetContactDistrictByAmphur();
+    }
+}
+function AddRowContactAddress()
+{
+    SetRowIndex();
+    GetContactProvince();
+   
+}
+function Update(val) {
+    //var rate = $("#txtRate").val().replace(',', '');
+    var creditLimit = $("#txtCreditLimit").val().replace(',', '');
+    var dataObject = { ID: val, CompanyCode: $("#txtCompanyCode").val(), CompanyNameTH: $("#txtCompanyNameTH").val(),
+        CompanyNameEN: $("#txtCompanyNameEN").val(), CompanyTypeID: $("#cmbCompanyType").find(":selected").val(),
+        CustSegment: $("#cmbCustomerSegment").find(":selected").val(), Validity: $("#txtValidity").val(),
+        PaymentTypeID: $("#cmbPaymentType").find(":selected").val(), CreditTerm: $("#cmbCreditTerm").find(":selected").val(),
+        CreditLimit: creditLimit, ParentCompany: $("#txtParentCompany").val(), KeyAccountSR: $("#txtKeyAccountSR").val(),
+        EditBy: 2};
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/Company',
+            type: 'PUT',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+
+            success: function (data) {
+                //alert('Update is completed');
+                Redirect();
+            }
+            ,
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+}
+function SaveAddress(val)
+{
+    var ID = $("#hidAddressID").val();
+    var CompID = val;
+    //alert("ID " + ID);
+    if(ID > 0)
+    {
+        //alert("Update");
+        var IsPrimary = $('#chkPrimary').is(":checked") == true ? '1' : '0';
+        var dataObject = { ID: ID, TaxID: $("#txtTaxID").val(), Branch: $("#txtBranch").val(),
+                    Address: $("#txtAddress").val(), Province: $("#cmbProvince").find(":selected").val(),Amphur:$("#cmbAmphur").find(":selected").val(),
+                    Tambon: $("#cmbTambon").find(":selected").val(), PostCode: $("#txtPostCode").val(),
+                    TelNo: $("#txtTelNo").val(), TelExt: $("#txtTelExt").val(),
+                    MobileNo: $("#txtMobileNo").val(), FaxNo: $("#txtFaxNo").val(),
+                    AddressTypeID: $("#cmbAddressType").find(":selected").val(), IsPrimary: IsPrimary, EditBy: 2 };
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/Address',
+            type: 'PUT',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+
+            success: function (data) {
+                //alert('Update is completed');
+                Redirect();
+            }
+            ,
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+        window.location.href = "../Company/EditCompany?id=" + CompID;
+    }
+    else
+    {
+        //alert("Insert");
+            var IsPrimary = $('#chkPrimary').is(":checked") == true ? '1' : '0';
+            var dataObject = { CompID: CompID,
+                TaxID: $("#txtTaxID").val(), Branch: $("#txtBranch").val(),
+                Address: $("#txtAddress").val(), Province: $("#cmbProvince").find(":selected").val(),Amphur:$("#cmbAmphur").find(":selected").val(),
+                Tambon: $("#cmbTambon").find(":selected").val(), PostCode: $("#txtPostCode").val(),
+                TelNo: $("#txtTelNo").val(), TelExt: $("#txtTelExt").val(),
+                MobileNo: $("#txtMobileNo").val(), FaxNo: $("#txtFaxNo").val(),
+                AddressTypeID: $("#cmbAddressType").find(":selected").val(), IsPrimary: IsPrimary,CreateBy: 1, EditBy: 1
+            };
+            $.ajax(
+            {
+                url: 'http://localhost:13149/api/Address',
+                type: 'POST',
+                data: dataObject,
+                datatype: 'json',
+                async: false,
+                success: function (data) {
+                },
+                error: function (msg) { alert(msg); }
+            });
+            window.location.href = "../Company/EditCompany?id=" + CompID;
+    }
+
+}
+function SaveContact(val) {
+    var ID = $("#hidContactID").val();
+    var CompID = val;
+    //alert("ID " + ID);
+    if (ID > 0) {
+        //alert("Update");
+        var dataObject = {
+            ID: ID, Salutation: $("#cmbSalutation").find(":selected").val(), FirstNameTH: $("#txtFirstNameTH").val(),
+                    LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
+                    LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
+                    Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
+                    EditBy: 2
+        };
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/ContactPerson',
+            type: 'PUT',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+
+            success: function (data) {
+                //alert('Update is completed');
+                Redirect();
+            }
+            ,
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+        window.location.href = "../Company/EditCompany?id=" + CompID;
+    }
+    else {
+        //alert("Insert");
+        var dataObject = {
+            CompID: CompID,
+            Salutation: $("#cmbSalutation").find(":selected").val(), FirstNameTH: $("#txtFirstNameTH").val(),
+            LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
+            LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
+            Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
+            CreateBy: 1, EditBy: 1
+        };
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/ContactPerson',
+            type: 'POST',
+            data: dataObject,
+            datatype: 'json',
+            async: false,
+            success: function (data) {
+
+            },
+            error: function (msg) { alert(msg); }
+        });
+        window.location.href = "../Company/EditCompany?id=" + CompID;
+    }
+
+}
+function SaveContactAddress(val) {
+    var ID = $("#hidContactID").val();
+    var CompID = val;
+    //alert("ID " + ID);
+    if (ID > 0) {
+        //alert("Update");
+        var dataObject = {
+            ID: ID, Salutation: $("#cmbSalutation").find(":selected").val(), FirstNameTH: $("#txtFirstNameTH").val(),
+            LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
+            LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
+            Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
+            EditBy: 2
+        };
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/ContactPerson',
+            type: 'PUT',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+
+            success: function (data) {
+                //alert('Update is completed');
+                Redirect();
+            }
+            ,
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+        window.location.href = "../Company/EditCompany?id=" + CompID;
+    }
+    else {
+        //alert("Insert");
+        var dataObject = {
+            CompID: CompID,
+            Salutation: $("#cmbSalutation").find(":selected").val(), FirstNameTH: $("#txtFirstNameTH").val(),
+            LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
+            LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
+            Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
+            CreateBy: 1, EditBy: 1
+        };
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/ContactPerson',
+            type: 'POST',
+            data: dataObject,
+            datatype: 'json',
+            async: false,
+            success: function (data) {
+            },
+            error: function (msg) { alert(msg); }
+        });
+        window.location.href = "../Company/EditCompany?id=" + CompID;
+    }
+
+}
+function Redirect() {
+    window.location.href = "../Company/IndexCompany";
+}
+function convertFloat(str) {
+
+    $(str).val($(str).val().replace(',', '')).formatNumber({ format: "#,###.00", locale: "us" });
+}

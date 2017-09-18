@@ -1,0 +1,876 @@
+﻿    h1 {
+        text-align: center;
+    }
+
+    p {
+        text-align: left;
+    }
+
+    img {
+    }
+    .imgpreview{
+        /*width: 248px;*/
+        width: 225px;
+        height: 170px;
+        margin-top: 5px;
+        background-color:#f5f5f5;
+        border-style: solid;
+        border-color: cadetblue;
+        border-width: 1px;
+        text-align: center;
+        font-family: monospace;
+        color: #dddddd;
+        font-size: -webkit-xxx-large;
+    }
+    .img-center{
+        /*margin-left: 50px;
+        margin-top: 25px;*/
+        width: 248px;
+        height: 170px;
+        /*margin-top: 10%;*/
+    }
+
+    #log {
+        width: 420px;
+        height: 280px;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        background: #000;
+        color: lightgreen;
+        font-family: monospace;
+        font-weight: bold;
+        border: 2px solid #c0c0c0;
+        overflow: auto;
+    }
+    /*--------------------------------------------------------------------*/
+    body {
+        font-family: arial, verdana, sans-serif;
+    }
+    body .myDesktop{
+        visibility:visible !important;
+    }
+
+    .example{
+        /*background: #D0E5F5;
+        border: 1px solid #c0c0c0;
+        width: 520px;*/
+        /*background: #fbfbf1;*/
+        background: #f6f6de;
+        border: 1px solid #f6f6de;
+        width: inherit;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+    .text-right{
+        text-align:right;
+        padding-right:2px;
+    }
+    .example-2 thead th{
+        border: 1px solid #ffffff;
+    }
+    .example-2{
+        border: 1px solid #c1c1c1;
+        width: 300px;
+    }
+    .example-2 tbody td{
+        text-align:center;
+        padding: 2px;
+    }
+
+    table {
+        /*background: #D0E5F5;
+        border: 1px solid #c0c0c0;
+        width: 520px;*/
+        background: #fbfbf1;
+        /*width: 520px;*/
+        /*width: 560px;*/
+    }
+    .tableexpense {
+     background: #ffffff; 
+     width: 100%;
+    }
+
+    .theader {
+        /*background: #fbfbf1;*/
+        /*background: #91b6b4;*/
+        /*background: #e89a89;*/
+        background-color:rgba(187, 160, 192, 0.40) !important;
+        /*color: white;*/
+        color: #5b1675;
+        text-align: center;
+        font-size: small;
+    }
+
+        .theader tr {
+            height: 40px;
+        }
+        .thwrap
+        {
+            width: 50px; 
+            /*border: 1px solid #000000;*/
+            word-wrap: break-word;
+        }
+
+    /*tr:nth-child(even) { background-color:#0F0; }
+    tr:nth-child(odd) { background-color:#F00; }
+    tr:first-child {background-color:#FFFFFF;}*/
+
+    table td {
+        /*vertical-align: middle;*/
+        vertical-align: inherit;
+        padding: 0.5px;
+    }
+
+        table td input {
+            /*width: 350px;
+                margin: 0;
+                background: #fff;
+                height: 18px;*/
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: right;
+        }
+        
+        table td .txt-1 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: left;
+        }
+        table td .txt-3 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: right;
+        }
+        table td .txt-2 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: left;
+        }
+    .txtbox{
+        margin: 0;
+        background: #fff;
+        height: 25px;
+        word-wrap: break-word;
+    }
+    .thno {
+        /*width: 51px;*/
+        width: 30%;
+        margin: 0;
+        /*background: #eaebff;*/
+        /*background: #ffe2dc;*/
+        background: rgb(226, 215, 222);
+        text-align: center;
+        border: none;
+    }
+    .tdno {
+        width: 51px;
+        /*width: 30%;*/
+        margin: 0;
+        /*background: #eaebff;*/
+        /*background: #ffe2dc;*/
+        background: rgb(226, 215, 222);
+        text-align: center;
+        height: 29px;
+        border: none;
+    }
+    .myDIV {
+        /*width:inherit;*/
+        width: 590px;
+        overflow-x: auto !important;
+    }
+    .manDIV {
+        /*width:inherit;*/
+        width: 590px;
+        overflow-x: auto !important;
+    }
+    .DialogDiv
+    {
+        width: 500px;
+    }
+
+    .tdskill {
+            /*width: 350px;
+                margin: 0;
+                background: #fff;
+                height: 18px;*/
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 450px;
+        }
+
+    table td select {
+        /*background: #fff;
+                height: 18px;
+                width: 90px;*/
+        background: #fff;
+        height: 29px;
+        font-size: small;
+        width: 200px;
+        /*width: 150px;*/
+        padding: 2px !important;
+    }
+    table td .unitSelect {
+    background: #fff;
+    height: 29px;
+    font-size: small;
+    width: 80px;
+    padding: 2px !important;
+}
+    .clone-1{
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    table td .select-size120 {
+        background: #fff;
+        height: 29px;
+        width: 120px;
+        padding: 2px !important;
+    }
+    table td .select-3 {
+        background: #fff;
+        height: 25px;
+        width: 220px;
+        padding: 2px !important;
+        font-size: small;
+    }
+    table td .select-size50 {
+        background: #fff;
+        height: 29px;
+        width: 50px;
+        padding: 2px !important;
+    }
+    table td .select-size50-height23 {
+        background: #fff;
+        height: 23px;
+        width: 50px;
+        padding: 2px !important;
+    }
+    table td .select-size70-height23 {
+        background: #fff;
+        height: 23px;
+        width: 70px;
+        padding: 2px !important;
+    }
+    table td .select-size110-height23 {
+        background: #fff;
+        height: 23px;
+        width: 110px;
+        padding: 2px !important;
+    }
+    .txtdisablerow {
+        margin: 0;
+        background: #fafafa;
+        height: 29px;
+        border: none;
+        text-align: right;
+        border-left: 1px solid #acc;
+        border-right: 1px solid #acc;
+        border-bottom: 1px solid #acc;
+        border-top: 1px solid #acc;
+        padding-right: 5px;
+    }
+    .txtdisablefooter {
+        margin: 0;
+        background: #ebe7d8;
+        height: 29px;
+        border: 1px solid #d7d1bc;
+        text-align: right;
+    }
+    table td .inputdisable {
+            margin: 0;
+            background: #f0f0de;
+            height: 25px;
+            border: 1px solid #BEBEBE;
+            width: 140px;
+        }  
+    table td .input-1 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 50px;
+            text-align: center;
+        }
+    table td .input-2 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 110px;
+            text-align: center;
+        }
+    .textright {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: right;
+        }
+    .textleft {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: left;
+        }
+    .textcenter {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: center;
+        }
+    .floatleft{
+        float:left;
+    }
+    .floatright{
+        float:right;
+    }
+    .text-size20 {
+            width: 20px !important;
+        }
+    .text-size30 {
+            width: 30px !important;
+        }
+    .text-size40 {
+            width: 40px !important;
+        }
+    .text-size50 {
+            width: 50px !important;
+        }
+    .text-size60 {
+            width: 60px !important;
+        }
+    .text-size80 {
+            width:80px !important;
+        }
+    .text-size70 {
+            width:70px !important;
+        }
+    .text-size90 {
+            width:90px !important;
+        }
+    .text-size100 {
+            width: 100px !important;
+        }
+    .text-size110 {
+            width: 110px !important;
+        }
+    .text-size120 {
+            width: 120px !important;
+        }
+    .text-size125 {
+            width: 125px !important;
+        }
+    .text-size123 {
+            width: 123px !important;
+        }
+    .text-size130 {
+            width: 130px !important;
+        }
+    .text-size135 {
+            width: 135px !important;
+        }
+    .text-size140 {
+            width: 140px !important;
+        }
+    .text-size150 {
+            width: 150px !important;
+        }
+    .text-size160 {
+            width: 160px !important;
+        }
+    .text-size165 {
+            width: 165px !important;
+        }
+    .text-size168 {
+            width: 168px !important;
+        }
+    .text-size170 {
+            width: 170px !important;
+        }
+    .text-size180 {
+            width: 180px !important;
+        }
+    .text-size200 {
+            width: 200px !important;
+        }
+    .text-size220 {
+            width: 220px !important;
+        }
+    .text-size250 {
+            width: 250px !important;
+        }
+    .text-size270 {
+            width: 270px !important;
+        }
+
+
+    table td .text-size50 {
+            width: 50px;
+        }
+    table td .text-size60 {
+            width: 60px;
+        }
+    table td .text-size80 {
+            width:80px;
+        }
+    table td .text-size90 {
+            width:90px;
+        }
+    table td .text-size100 {
+            width: 100px;
+        }
+    table td .text-size110 {
+            width: 110px;
+        }
+    table td .text-size120 {
+            width: 120px;
+        }
+    table td .text-size130 {
+            width: 130px;
+        }
+    table td .text-size140 {
+            width: 140px;
+        }
+    table td .text-size160 {
+            width: 160px;
+        }
+    table td .text-size165 {
+            width: 165px;
+        }
+    table td .text-size168 {
+            width: 168px;
+        }
+    table td .text-size170 {
+            width: 170px;
+        }
+    table td .text-size180 {
+            width: 180px;
+        }
+    table td .text-size200 {
+            width: 200px;
+        }
+    table td .input-4 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 130px;
+        }
+
+    #input-1
+    {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 50px;
+    }
+    table th .wraptext{
+        width: 40px; 
+        word-wrap: break-word;
+    }
+    table td .textalign{
+       text-align:right;
+       border-bottom: 1px solid #d7d1bc;
+       /*background: #f4eed6;*/
+       background: #f4f1e7;
+       padding-right: 20px;
+       font-weight: 700;
+    }
+
+    #input-1__c
+    {
+        margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 50px;
+    }
+
+    #msg {
+        width: 420px;
+        float: left;
+    }
+
+    button {
+        width: 100px;
+        height: 25px;
+        float: left;
+    }
+
+    .clr {
+        clear: both;
+    }
+
+    .row-cloner, .row-remover {
+        cursor: pointer;
+    }
+
+    pre, code {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+.form-style {
+    /*margin:10px auto;
+    max-width: 400px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
+    max-width: 400px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    /*float: left;*/
+    margin-right: 30px;
+}
+.marginbuttom-10{
+    margin-bottom: 10px;
+}
+
+.form-style li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+.form-style label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+.form-style .label-2 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 30%;
+}
+.form-style .label-4 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 33%;
+}
+.form-style .label-small {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 13%;
+}
+.form-style .label-small-2 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 14.5%;
+}
+.form-style .label-small-3 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 10%;
+}
+.form-style .label-small-16 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 16.5%;
+}
+.form-style .label-small-22 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 22%;
+}
+
+.form-style .label-small-4 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 1%;
+}
+.form-style .label-small-5 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 20.5%;
+}
+.form-style .label-small-6 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 54.5%;
+}
+.form-style .label-small-51 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 51.2%;
+}
+.form-style .label-big {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 41%;
+}
+.form-style .label-big-2 {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    margin-right: 36.5%;
+}
+   
+.form-style input[type=text], 
+.form-style input[type=date],
+.form-style input[type=datetime],
+.form-style input[type=number],
+.form-style input[type=search],
+.form-style input[type=time],
+.form-style input[type=url],
+.form-style input[type=email],
+textarea, 
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;  
+}
+.form-style input[type=text]:focus, 
+.form-style input[type=date]:focus,
+.form-style input[type=datetime]:focus,
+.form-style input[type=number]:focus,
+.form-style input[type=search]:focus,
+.form-style input[type=time]:focus,
+.form-style input[type=url]:focus,
+.form-style input[type=email]:focus,
+.form-style textarea:focus, 
+.form-style select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+.form-style .field-divided{
+    width: 49%;
+}
+
+.form-style .field-long{
+    width: 100%;
+}
+.form-style .field-select{
+    width: 99%;
+}
+.form-style .field-select-medium{
+    width: 40%;
+}
+.form-style .field-select-small{
+    width: 20%;
+}
+.form-style .field-select-small-2 {
+    width: 25%;
+}
+.form-style .field-select-small-3 {
+    /*background-color: #f0ede3;
+    border: none !important;
+    width: 35%;*/
+    background-color: #f0ede3;
+    width: 35%;
+}
+.form-style .field-select-big {
+    width: 80%;
+}
+.form-style .field-textarea{
+    height: 100px;
+    width: 250px;
+}
+.form-style input[type=submit], .form-style input[type=button]{
+    background: #4B99AD;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+.form-style input[type=submit]:hover, .form-style input[type=button]:hover{
+    background: #4691A4;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.form-style .required{
+    color:red;
+}
+@media screen and  (min-width:767px) {
+    .myDIV {
+        width: inherit;
+        /*overflow-x: auto !important;*/
+     }
+    .manDIV {
+        /*width:inherit;*/
+        width: 1200px;
+        overflow-x: auto !important;
+    }
+}
+@media screen and (max-width:680px) {
+    .imgpreview{
+        /*width: 248px;*/
+        width: 210px;
+        height: 170px;
+        margin-top: 5px;
+        background-color:#f5f5f5;
+        border-style: solid;
+        border-color: cadetblue;
+        border-width: 1px;
+        text-align: center;
+        font-family: monospace;
+        color: #dddddd;
+        font-size: -webkit-xxx-large;
+    }
+    table td select {
+        /*background: #fff;
+                height: 18px;
+                width: 90px;*/
+        background: #fff;
+        height: 29px;
+        width: 80px;
+        padding: 2px !important;
+    }
+    .textleft {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            text-align: left;
+            width: 120px;
+        }
+    .txtbox{
+        margin: 0;
+        background: #fff;
+        height: 25px;
+        width: 50px;
+    }
+    .datepick{
+        margin: 0;
+        background: #fff;
+        height: 25px;
+        width: 80px;
+    }
+    .tdno {
+        width: 25px;
+        margin: 0;
+        background: #eaebff;
+        height: 29px;
+        border: none;
+    }
+    .tdskill {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width: 220px;
+        }
+    table {
+        /*background: #D0E5F5;
+        border: 1px solid #c0c0c0;
+        width: 520px;*/
+        background: #fbfbf1;
+        width: 100%;
+    }
+    table td .txt-1 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width:125px;
+        }
+    table td .txt-2 {
+            margin: 0;
+            background: #fff;
+            height: 25px;
+            width:80px;
+        }
+    body .myDesktop{
+        visibility:hidden !important;
+
+    }
+    .myDIV {
+        width:300px;
+        overflow-x:auto;
+    }
+    .manDIV {
+        /*width:inherit;*/
+        width: 300px;
+        overflow-x: auto !important;
+    }
+    .DialogDiv
+    {
+        width: 270px;
+        overflow-x: auto;
+    }
+    .form-style {
+        max-width: 400px;
+        font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        /*float: left;*/
+        margin-right: 0px !important;
+    }
+
+    .form-style .label-small-3 {
+        margin: 0 0 3px 0;
+        padding: 0px;
+        display: block;
+        font-weight: bold;
+        float: left;
+        margin-right: 3%;
+    }
+    .form-style .label-small-5 {
+        margin: 0 0 3px 0;
+        padding: 0px;
+        display: block;
+        font-weight: bold;
+        float: left;
+        margin-right: 14.5%;
+    }
+    .form-style .label-small-6 {
+        margin: 0 0 3px 0;
+        padding: 0px;
+        display: block;
+        font-weight: bold;
+        float: left;
+        margin-right: 56%;
+    }
+        .example{
+        /*background: #D0E5F5;
+        border: 1px solid #c0c0c0;
+        width: 520px;*/
+        background: #fbfbf1;
+        border: 1px solid #c0c0c0;
+        width: inherit;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+}
