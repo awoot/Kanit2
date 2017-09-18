@@ -323,7 +323,7 @@ function CreateData() {
     //    var IsPrimary = $(this).find('.chkPrimary').is(":checked") == true ? '1' : '0';
     //    var dataObject = { CompID: CompID,
     //        TaxID: $("#txtTaxID").val(), Branch: $("#txtBranch").val(),
-    //        Addresss: $("#txtAddress").val(), Province: $("#cmbProvince").find(":selected").val(),Amphur:$("#cmbAmphur").find(":selected").val(),
+    //        Address: $("#txtAddress").val(), Province: $("#cmbProvince").find(":selected").val(),Amphur:$("#cmbAmphur").find(":selected").val(),
     //        Tambon: $("#cmbTambon").find(":selected").val(), PostCode: $("#txtPostCode").val(),
     //        TelNo: $("#txtTelNo").val(), TelExt: $("#txtTelExt").val(),
     //        MobileNo: $("#txtMobileNo").val(), FaxNo: $("#txtFaxNo").val(),

@@ -225,6 +225,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Company\AddressController.cs" />
     <Compile Include="Controllers\Company\CompanyController.cs" />
+    <Compile Include="Controllers\Company\ContactAddressController.cs" />
     <Compile Include="Controllers\Company\ContactPersonController.cs" />
     <Compile Include="Controllers\GM\AddressMasterController.cs" />
     <Compile Include="Controllers\GM\CheckAuthorizationController.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\Company\AddressDAL.cs" />
     <Compile Include="DAL\Company\CompanyDAL.cs" />
+    <Compile Include="DAL\Company\ContactAddressDAL.cs" />
     <Compile Include="DAL\Company\ContactPersonDAL.cs" />
     <Compile Include="DAL\GM\AddressMasterDAL.cs" />
     <Compile Include="DAL\GM\CheckAuthorizationDAL.cs" />
@@ -264,6 +266,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company\AddressModels.cs" />
     <Compile Include="Models\Company\CompanyModels.cs" />
+    <Compile Include="Models\Company\ContactAddressModels.cs" />
     <Compile Include="Models\Company\ContactPersonModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Product\Stock\ProductModels.cs" />

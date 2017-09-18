@@ -240,3 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/เอกสาร
+/KanitApi/KanitApi.sln
+/KanitMVC/KanitMVC.sln

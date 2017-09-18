@@ -1,6 +1,7 @@
 var row_index2 = 0;//RowCal
 $(document).ready(function () {
     CheckAuthorization();
+    $("#hidFlagOnchange").val(0);
     $(".nav-tabs a").click(function () {
         $(this).tab('show');
     });
@@ -283,68 +284,143 @@ function GetDistrictAll() {
     });
 }
 
+
 function GetContactProvince() {
+    alert("Onchange");
+    //สำหรับตอน create , Onchange
+        $.ajax({
+            url: 'http://localhost:13149/api/AddressMaster/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                $.each(data.Table, function (i) {
+                    //alert(data.Table[i].Detail);
+                    //$('.cmbContProvince:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                    $('.cmbContProvince').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                });
+                $('.cmbContProvince').find('option:first-child').attr('selected', true);
+                GetContactAmphurByProvince();
+            },
+            failure: function () {
+                alert('Error');
+            }
+        });
+}
+function GetContactAmphurByProvince() {
+    //สำหรับตอน create , Onchange
+        var ProvinceID = $('.cmbContProvince:last').find(":selected").val();
+        //alert("weng ");
+        var dataObject = { ProvinceID: parseInt(ProvinceID) };
+        $.ajax({
+            url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
+            type: 'GET',
+            dataType: 'json',
+            data: dataObject,
+            success: function (data) {
+                data = JSON.parse(data);
+                //alert('test');
+                    $('.cmbContAmphur:last').find("option").remove();
+                    $.each(data.Table, function (i) {
+                        $('.cmbContAmphur:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                    });
+                    $('.cmbContAmphur:last').find('option:first-child').attr('selected', true);
+
+                GetContactDistrictByAmphur();
+            },
+            failure: function () {
+                alert('Error');
+            }
+        });
+}
+function GetContactDistrictByAmphur() {
+    //สำหรับตอน create , Onchange
+        var AmphurID = $('.cmbContAmphur:last').find(":selected").val();
+        //alert(val);
+        var dataObject = { AmphurID: parseInt(AmphurID) };
+        $.ajax({
+            url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
+            type: 'GET',
+            dataType: 'json',
+            data: dataObject,
+            success: function (data) {
+                data = JSON.parse(data);
+                //alert('test');
+                    $('.cmbContTambon:last').find("option").remove();
+                    $.each(data.Table, function (i) {
+                        //alert(data.Table[i].Detail);
+                        $('.cmbContTambon:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                    });
+                    $('.cmbContTambon:last').find('option:first-child').attr('selected', true);
+                
+            },
+            failure: function () {
+                alert('Error');
+            }
+        });
+}
+
+function GetContactProvinceAll() {
+    alert("DataSource");
+    //สำหรับตอน Edit
     $.ajax({
         url: 'http://localhost:13149/api/AddressMaster/',
         type: 'GET',
         dataType: 'json',
-       
+        async: false,
         success: function (data) {
             data = JSON.parse(data);
             $.each(data.Table, function (i) {
                 //alert(data.Table[i].Detail);
-                $('.cmbContProvince:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('.cmbContProvince').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
-            $('.cmbContProvince:last').find('option:first-child').attr('selected', true);
-            //alert($('.cmbContProvince:last').val());
-            GetContactAmphurByProvince();
+            $('.cmbContProvince').find('option:first-child').attr('selected', true);
+            //alert("Province function" + $('.cmbContProvince').val());
+            GetContactAmphurAll();
         },
         failure: function () {
             alert('Error');
         }
     });
 }
-function GetContactAmphurByProvince() {
-    var ProvinceID = $('.cmbContProvince:last').find(":selected").val();
-    //alert("ProvinceID "+ProvinceID);
+function GetContactAmphurAll(provinceID) {
+    //สำหรับตอน Edit
+    var ProvinceID = provinceID;
     var dataObject = { ProvinceID: parseInt(ProvinceID) };
     $.ajax({
         url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
         type: 'GET',
         dataType: 'json',
+        async: false,
         data: dataObject,
         success: function (data) {
             data = JSON.parse(data);
-            //alert('test');
-            $('.cmbContAmphur:last').find("option").remove();
+            //$('#cmbAmphur').find("option").remove();
             $.each(data.Table, function (i) {
-                $('.cmbContAmphur:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('.cmbContAmphur').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
-            $('.cmbContAmphur:last').find('option:first-child').attr('selected', true);
-            GetContactDistrictByAmphur();
+            $('.cmbContAmphur').find('option:first-child').attr('selected', true);
         },
         failure: function () {
             alert('Error');
         }
     });
-    
 }
-function GetContactDistrictByAmphur() {
-    var AmphurID = $('.cmbContAmphur:last').find(":selected").val();
-    //alert(val);
-    var dataObject = { AmphurID: parseInt(AmphurID) };
+function GetContactDistrictAll(amphurID) {
+    //สำหรับตอน Edit
+    var AmphurID = amphurID;
+    var dataObject = { ProvinceID: parseInt(AmphurID) };
     $.ajax({
         url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
         type: 'GET',
         dataType: 'json',
+        async: false,
         data: dataObject,
         success: function (data) {
             data = JSON.parse(data);
-            //alert('test');
-            $('.cmbContTambon:last').find("option").remove();
+            //$('#cmbTambon').find("option").remove();
             $.each(data.Table, function (i) {
-                //alert(data.Table[i].Detail);
-                $('.cmbContTambon:last').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('.cmbContTambon').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
             $('.cmbContTambon').find('option:first-child').attr('selected', true);
         },
@@ -353,6 +429,7 @@ function GetContactDistrictByAmphur() {
         }
     });
 }
+
 
 function ControlEnable(Isview) {
     //var Isview = val;
@@ -695,43 +772,62 @@ function GetDataContactAddress(ContactID) {
     //alert("AddressID "+AddressID);
     if (ContactID > 0) {
         //alert("Edit ContAddress");
-        GetContactProvince();
-        GetContactAmphurByProvince();
-        GetContactDistrictByAmphur();
-        //var dataObject = { ID: ContactID }
-       // $.ajax(
-       //{
-       //    url: 'http://localhost:13149/api/ContactPerson',
-       //    type: 'GET',
-       //    async: false,
-       //    data: dataObject,
-       //    datatype: 'json',
-       //    success: function (data) {
-       //        data = JSON.parse(data);
-       //        GetSalutation();
-       //        GetEmailLetters();
+        var dataObject = { ID: ContactID }
+        $.ajax({
+            url: 'http://localhost:13149/api/ContactAddress',
+            type: 'GET',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                
+                if (data.Table.length > 0) {
+                    //alert("Test")
+                    $('.RowCal').remove();
 
-       //        $("#hidContactID").val(data.Table[0].ID);
-       //        $("#cmbSalutation").val(data.Table[0].Salutation);
-       //        $("#txtFirstNameTH").val(data.Table[0].FirstNameTH);
-       //        $("#txtFirstNameEN").val(data.Table[0].FirstNameEN);
-       //        $("#txtLastNameTH").val(data.Table[0].LastNameTH);
-       //        $("#txtLastNameEN").val(data.Table[0].LastNameEN);
-       //        $("#txtContactMobile").val(data.Table[0].MobileNo);
-       //        $("#txtContactEmail").val(data.Table[0].Email);
-       //        $("#cmbEmailLetter").val(data.Table[0].EmailLetters);
-       //    },
-       //    error: function (msg) {
-       //        alert(msg);
-       //    }
+                    for (var j = 0; j < data.Table.length; j++) {
+                        $("#add-row2").trigger("click");
+                        //AddRowContactAddress();
 
-       //});
-    }
-    else {
-        //alert("New ContAddress");
-        GetContactProvince();
-        GetContactAmphurByProvince();
-        GetContactDistrictByAmphur();
+                        GetContactProvinceAll();
+                        $('.cmbContProvince').eq(j).val(data.Table[j].Province).change();
+                        alert("BindProvince " + $('.cmbContProvince').val());
+
+                        GetContactAmphurAll($('.cmbContProvince').val());
+                        $('.cmbContAmphur').eq(j).val(data.Table[j].Amphur).change();
+                        alert("BindAmphur " + $('.cmbContAmphur').val());
+
+                        GetContactDistrictAll($('.cmbContAmphur').val());
+                        $('.cmbContTambon').eq(j).val(data.Table[j].Tambon).change();
+                        alert("BindTambon " + $('.cmbContTambon').val());
+                        
+                    }
+                    $('.RowCal:eq(' + data.Table.length + ')').remove();
+
+                    $(".RowCal").each(function (i) {
+                        $(this).find('.txtNo').val(data.Table[i].RowNum);
+                        $(this).find('.txtContAddress').val(data.Table[i].Address);
+                        //alert("Province " + data.Table[i].Province);
+                        //$(this).find('.cmbContProvince').val(data.Table[i].Province).change();
+                        //alert("Province BindData" + $('.cmbContProvince').val());
+                        //$(this).find('.cmbContAmphur').val(data.Table[i].Amphur).change();
+                        //$(this).find('.cmbContTambon').val(data.Table[i].Tambon).change();
+                        $(this).find('.txtContPostCode').val(data.Table[i].PostCode);
+                    });
+                    
+                    
+                }
+                else
+                {
+                    alert("test2");
+                    //GetContactProvince();
+                    //GetContactAmphurByProvince();
+                    //GetContactDistrictByAmphur();
+                }
+                
+            }
+        });
     }
 }
 function AddRowContactAddress()
@@ -887,57 +983,57 @@ function SaveContact(val) {
 
 }
 function SaveContactAddress(val) {
-    var ID = $("#hidContactID").val();
-    var CompID = val;
+    var ContactID = val
+    alert("ContactID " + ContactID);
+    //var CompID = val;
     //alert("ID " + ID);
-    if (ID > 0) {
-        //alert("Update");
-        var dataObject = {
-            ID: ID, Salutation: $("#cmbSalutation").find(":selected").val(), FirstNameTH: $("#txtFirstNameTH").val(),
-            LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
-            LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
-            Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
-            EditBy: 2
-        };
-        $.ajax(
-        {
-            url: 'http://localhost:13149/api/ContactPerson',
-            type: 'PUT',
-            async: false,
-            data: dataObject,
-            datatype: 'json',
+    //=================== DeleteContactAddress
+    //alert(val);
+    var dataObject = { ID: ContactID };
+    $.ajax({
+        url: 'http://localhost:13149/api/ContactAddress',
+        type: 'DELETE',
+        async: false,
+        data: dataObject,
+        datatype: 'json',
+        success: function (data) {
+        },
+        error: function (msg) {
+            alert(msg)
+        }
+    });
+    //alert("test");
+    alert("ID " + ContactID);
+    if (ContactID > 0) {
+        //alert("Save");
+        $(".RowCal").each(function () {
+            //alert("RequistionID "+$('#hidRequisitionID').val());
+            //dataObject.ID = $('#hidContactAddressID').val();
+            dataObject.ContactID = ContactID;
+            dataObject.Address = $(this).find('.txtContAddress').val();
+            dataObject.Province = $(this).find('.cmbContProvince').find(":selected").val();
+            dataObject.Amphur = $(this).find('.cmbContAmphur').find(":selected").val();
+            dataObject.Tambon = $(this).find('.cmbContTambon').find(":selected").val();
+            dataObject.PostCode = $(this).find('.txtContPostCode').val();
+            dataObject.CreateBy = 1;
+            dataObject.EditBy = 1;
+            //dataObject.EditBy = localStorage['UserID'];
 
-            success: function (data) {
-                //alert('Update is completed');
-                Redirect();
+            if (ContactID != '') {
+                $.ajax(
+                {
+                    url: 'http://localhost:13149/api/ContactAddress',
+                    type: 'POST',
+                    async: false,
+                    data: dataObject,
+                    datatype: 'json',
+                    success: function (data) {
+                    },
+                    error: function (msg) {
+                        alert(msg)
+                    }
+                });
             }
-            ,
-            error: function (msg) {
-                alert(msg);
-            }
-        });
-        window.location.href = "../Company/EditCompany?id=" + CompID;
-    }
-    else {
-        //alert("Insert");
-        var dataObject = {
-            CompID: CompID,
-            Salutation: $("#cmbSalutation").find(":selected").val(), FirstNameTH: $("#txtFirstNameTH").val(),
-            LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
-            LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
-            Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
-            CreateBy: 1, EditBy: 1
-        };
-        $.ajax(
-        {
-            url: 'http://localhost:13149/api/ContactPerson',
-            type: 'POST',
-            data: dataObject,
-            datatype: 'json',
-            async: false,
-            success: function (data) {
-            },
-            error: function (msg) { alert(msg); }
         });
         window.location.href = "../Company/EditCompany?id=" + CompID;
     }

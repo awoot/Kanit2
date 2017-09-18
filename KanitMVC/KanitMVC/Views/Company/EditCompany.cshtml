@@ -154,7 +154,7 @@
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Branch</th>
-                                                    <th>Addresss</th>
+                                                    <th>Address</th>
                                                     <th>Tel No.</th>
                                                     <th>Mobile No.</th>
                                                     <th>Address Type</th>
@@ -247,7 +247,7 @@
                             <!--<div class="clearfix visible-xs-block"></div>-->
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-xs-12 col-sm-3 control-label margintop15">Addresss</label>
+                                    <label class="col-xs-12 col-sm-3 control-label margintop15">Address</label>
                                     <div class="col-xs-12 col-sm-7">
                                         <input id="txtAddress" class="form-control m-bot15 margintop15" type="text">
                                     </div>
@@ -350,7 +350,7 @@
                             </div>
                         </div>
                         <input type="hidden" id="hidAddressID" />
-                        <button type="submit" id="btnAddressSave" class="btn btn-primary" onclick="SaveAddress(@Request.Params["id"])">Save</button>
+                        <button type="submit" id="btnAddressave" class="btn btn-primary" onclick="SaveAddress(@Request.Params["id"])">Save</button>
                     </div>
                 </div>
             </div>
@@ -444,6 +444,7 @@
         </div>
 
         @*================================================ Modal Contact Address*@
+        <input type="hidden" id="hidFlagOnchange" />
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="ModalContactAddress" class="modal fade">
             <div class="modal-dialog popup80">
                 <div class="modal-content">
@@ -473,12 +474,12 @@
                                             <td>
                                                 <img class="drag-handle fa fa fa-sort" src="" alt="" />
                                             </td>
-                                            <td><input id="txtNo" class="form-control width50" type="text" disabled></td>
-                                            <td><input id="txtContAddress" class="form-control width150" type="text"></td>
+                                            <td><input id="txtNo" class="txtNo form-control width50" type="text" disabled></td>
+                                            <td><input id="txtContAddress" class="txtContAddress form-control width150" type="text"></td>
                                             <td><select id="cmbContProvince" class="cmbContProvince form-control" onchange="GetContactAmphurByProvince()"></select></td>
                                             <td><select id="cmbContAmphur" class="cmbContAmphur form-control" onchange="GetContactDistrictByAmphur()"></select></td>
                                             <td><select id="cmbContTambon" class="cmbContTambon form-control"></select></td>
-                                            <td><input id="txtContPostCode" class="form-control width130" type="text"></td>
+                                            <td><input id="txtContPostCode" class="txtContPostCode form-control width130" type="text"></td>
                                             <td>
                                                 <div class="btn-group">
                                                     <img class="cloneRowSaleOrder row-cloner fa fa-plus-circle btn btn-success" src="" alt="" />
@@ -490,12 +491,12 @@
                                             <td>
                                                 <img class="drag-handle fa fa fa-sort" src="" alt="" />
                                             </td>
-                                            <td><input id="txtNo" class="form-control width50" type="text" disabled></td>
-                                            <td><input id="txtContAddress" class="form-control width150" type="text"></td>
+                                            <td><input id="txtNo" class="txtNo form-control width50" type="text" disabled></td>
+                                            <td><input id="txtContAddress" class="txtContAddress form-control width150" type="text"></td>
                                             <td><select id="cmbContProvince" class="cmbContProvince form-control" onchange="GetContactAmphurByProvince()"></select></td>
                                             <td><select id="cmbContAmphur" class="cmbContAmphur form-control" onchange="GetContactDistrictByAmphur()"></select></td>
                                             <td><select id="cmbContTambon" class="cmbContTambon form-control"></select></td>
-                                            <td><input id="txtContPostCode" class="form-control width130" type="text"></td>
+                                            <td><input id="txtContPostCode" class="txtContPostCode form-control width130" type="text"></td>
                                             <td>
                                                 <div class="btn-group">
                                                     <img class="cloneContactAddress row-cloner fa fa-plus-circle btn btn-success" src="" alt="" />
