@@ -1,7 +1,7 @@
 function CheckAuthorization() {
     //alert('test');
     var IsDashboard = 0;
-    var IsCompany = 0;
+    var IsQuotation = 0;
     var IsProduct = 0;
     var IsQuotation = 0;
     var IsWorkFlow = 0;
@@ -53,8 +53,8 @@ function CheckAuthorization() {
                             
                         }
                         if (data.Table[i].Role == 0) {
-                            $('.subCompany').attr("style", "display:none");
-                            IsCompany = 1;
+                            $('.subQuotation').attr("style", "display:none");
+                            IsQuotation = 1;
                         }
                     }
                     //Product
@@ -277,8 +277,8 @@ function CheckAuthorization() {
                     if (IsDashboard == 1) {
                         $('.mnDashboard').attr("style", "display:none");
                     }
-                    if (IsCompany == 1) {
-                        $('.mnCompany').attr("style", "display:none");
+                    if (IsQuotation == 1) {
+                        $('.mnQuotation').attr("style", "display:none");
                     }
                     if (IsProduct == 1) {
                         $('.mnProduct').attr("style", "display:none");

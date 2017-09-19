@@ -6,7 +6,7 @@ $(document).ready(function () {
     GetCreditTerm();
     GetPaymentType();
     GetCustomerSegment();
-    GetCompanyType();
+    GetQuotationType();
 
     // ========= Address
     //GetAddressType();
@@ -144,7 +144,7 @@ function GetCustomerSegment() {
         }
     });
 }
-function GetCompanyType() {
+function GetQuotationType() {
     var dataObject = { typeID: '007' };
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -156,9 +156,9 @@ function GetCompanyType() {
             data = JSON.parse(data);
             //alert('test');
             $.each(data.Table, function (i) {
-                $('#cmbCompanyType').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('#cmbQuotationType').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
-            $('#cmbCompanyType').find('option:first-child').attr('selected', true);
+            $('#cmbQuotationType').find('option:first-child').attr('selected', true);
         },
         failure: function () {
             alert('Error');
@@ -296,17 +296,17 @@ function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
     //alert($("#cmbCurrency").find(":selected").val());
     var dataObject = {
-        CompanyCode: $("#txtCompanyCode").val(), CompanyNameTH: $("#txtCompanyNameTH").val(),
-        CompanyNameEN: $("#txtCompanyNameEN").val(), CompanyTypeID: $("#cmbCompanyType").find(":selected").val(),
+        QuotationCode: $("#txtQuotationCode").val(), QuotationNameTH: $("#txtQuotationNameTH").val(),
+        QuotationNameEN: $("#txtQuotationNameEN").val(), QuotationTypeID: $("#cmbQuotationType").find(":selected").val(),
         CustSegment: $("#cmbCustomerSegment").find(":selected").val(), Validity: $("#txtValidity").val(),
         PaymentTypeID: $("#cmbPaymentType").find(":selected").val(), CreditTerm: $("#cmbCreditTerm").find(":selected").val(),
-        CreditLimit: $("#txtCreditLimit").val(), ParentCompany: $("#txtParentCompany").val(), KeyAccountSR: $("#txtKeyAccountSR").val(),
+        CreditLimit: $("#txtCreditLimit").val(), ParentQuotation: $("#txtParentQuotation").val(), KeyAccountSR: $("#txtKeyAccountSR").val(),
         CreateBy: 1, EditBy: 1
     };
     var CompID;
     $.ajax(
     {
-        url: 'http://localhost:13149/api/Company',
+        url: 'http://localhost:13149/api/Quotation',
         type: 'POST',
         data: dataObject,
         datatype: 'json',
@@ -361,12 +361,12 @@ function CreateData() {
     //        error: function (msg) { alert(msg); }
     //    });
     //}
-    window.location.href = "../Company/EditCompany?id" + CompID;
+    window.location.href = "../Quotation/EditQuotation?id" + CompID;
 }
 function convertFloat(str) {
     
     $(str).val($(str).val().replace(',', '')).formatNumber({ format: "#,###.00", locale: "us" });
 }
 function Redirect() {
-    window.location.href = "../Company/IndexCompany";
+    window.location.href = "../Quotation/IndexQuotation";
 }

@@ -89,9 +89,9 @@ function FirstPage() {
                         location = "../Home/DashBoard";
                         break;
                     }
-                //Company
+                //Quotation
                     else if (data.Table[i].MenuDetailID == "MN002") {
-                        location = "../Company/IndexCompany";
+                        location = "../Quotation/IndexQuotation";
                         break;
                     }
                 //Product

@@ -49,7 +49,8 @@ $(document).ready(function () {
             data = JSON.parse(data);
             var html = '<tbody>';
             for (var i = 0; i < data.Table.length; i++) {
-                var date = new Date(data.Table[i].UpdateDate);
+                var quotDate = new Date(data.Table[i].QuotationDate);
+                var warningDate = new Date(data.Table[i].WarningDate);
                 //<th>No.</th>
                 //<th>Quotation No.</th>
                 //<th>Customer</th>
@@ -60,7 +61,8 @@ $(document).ready(function () {
                 html += '<td class="">' + data.Table[i].RowNum + '</td>';
                 html += '<td class="">' + data.Table[i].QuotationNo + '</td>';
                 html += '<td class="">' + data.Table[i].CompanyName + '</td>';
-                html += '<td class="">' + data.Table[i].QuotationDate + '</td>';
+                html += '<td class="">' + quotDate.getDate() + '/' + (quotDate.getMonth() + 1) + '/' + quotDate.getFullYear() + '</td>';
+                html += '<td class="">' + warningDate.getDate() + '/' + (warningDate.getMonth() + 1) + '/' + warningDate.getFullYear() + '</td>';
                 html += '<td class="">' + data.Table[i].StateName + '</td>';
                 html += '<td><div class="btn-group">';
                 html += '<a class="btn btn-success" href="/Quotation/EditQuotation?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';

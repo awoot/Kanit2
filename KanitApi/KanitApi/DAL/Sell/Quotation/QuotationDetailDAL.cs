@@ -8,7 +8,7 @@ using System;
 
 namespace KanitApi.DAL.Sell.Quotation
 {
-    public class QuotationDetailDetailDAL
+    public class QuotationDetailDAL
     {
         string conStr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         int result = 0;

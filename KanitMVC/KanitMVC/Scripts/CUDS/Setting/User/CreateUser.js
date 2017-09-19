@@ -50,9 +50,9 @@ $(document).ready(function () {
             data = JSON.parse(data);
             //alert('test');
             $.each(data.Table, function (i) {
-                $('#cmbCompany').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('#cmbQuotation').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
-            $('#cmbCompany').find('option:first-child').attr('selected', true);
+            $('#cmbQuotation').find('option:first-child').attr('selected', true);
         },
         failure: function () {
             alert('Error');
@@ -136,7 +136,7 @@ $(function () {
 function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
     //alert($("#cmbCurrency").find(":selected").val());
-    var dataObject = { UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Company: $("#cmbCompany").find(":selected").val(), SecurityID: $("#cmbSecurityProfile").find(":selected").val(), CreateBy: 1, EditBy: 1 };
+    var dataObject = { UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Quotation: $("#cmbQuotation").find(":selected").val(), SecurityID: $("#cmbSecurityProfile").find(":selected").val(), CreateBy: 1, EditBy: 1 };
     $.ajax(
     {
         url: 'http://localhost:13149/api/User',

@@ -13,6 +13,7 @@ namespace KanitApi.Models.Sell.Quotation
         public string QuotationNo { get; set; }
         public string Ref { get; set; }
         public string IncoDetail { get; set; }
+        public string FileData { get; set; }
         public string CostSheet { get; set; }
         public string Reason { get; set; }
         public string Remark { get; set; }

@@ -11,7 +11,7 @@ namespace KanitApi.DAL.Sell.Quotation
     {
         string conStr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         int result = 0;
-        public void InsertData(QuotationModels QuotationModel)
+        public int InsertData(QuotationModels QuotationModel)
         {
             using (SqlConnection conObj = new SqlConnection(conStr))
             {
@@ -19,16 +19,16 @@ namespace KanitApi.DAL.Sell.Quotation
                 {
                     SqlCommand cmd = new SqlCommand("SP_Quotation_Ins", conObj);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@QuotationNo", QuotationModel.QuotationNo);
+                    cmd.Parameters.AddWithValue("@QuotationNo", QuotationModel.QuotationNo != null ? QuotationModel.QuotationNo : "");
                     cmd.Parameters.AddWithValue("@CompID", QuotationModel.CompID);
-                    cmd.Parameters.AddWithValue("@Ref", QuotationModel.Ref != null ? QuotationModel.CostSheet : "");
+                    cmd.Parameters.AddWithValue("@Ref", QuotationModel.Ref != null ? QuotationModel.Ref : "");
                     cmd.Parameters.AddWithValue("@QuotationDate", QuotationModel.QuotationDate);
                     cmd.Parameters.AddWithValue("@Validity", QuotationModel.Validity);
                     cmd.Parameters.AddWithValue("@DeliveryTime", QuotationModel.DeliveryTime);
                     cmd.Parameters.AddWithValue("@PaymentTerm", QuotationModel.PaymentTerm);
                     cmd.Parameters.AddWithValue("@WarningDate", QuotationModel.WarningDate);
                     cmd.Parameters.AddWithValue("@IncoTerm", QuotationModel.IncoTerm);
-                    cmd.Parameters.AddWithValue("@IncoDetail", QuotationModel.IncoDetail != null ? QuotationModel.CostSheet : "");
+                    cmd.Parameters.AddWithValue("@IncoDetail", QuotationModel.IncoDetail != null ? QuotationModel.IncoDetail : "");
                     cmd.Parameters.AddWithValue("@Discount", QuotationModel.Discount);
                     cmd.Parameters.AddWithValue("@Seller", QuotationModel.Seller);
                     cmd.Parameters.AddWithValue("@State", QuotationModel.State);
@@ -38,7 +38,9 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@CreateBy", QuotationModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", QuotationModel.EditBy);
                     conObj.Open();
-                    cmd.ExecuteNonQuery();
+                    object obj = cmd.ExecuteScalar();
+                    result = Convert.ToInt32(obj);
+                    return result;
                 }
                 catch (Exception ex)
                 {
@@ -60,16 +62,16 @@ namespace KanitApi.DAL.Sell.Quotation
                     SqlCommand cmd = new SqlCommand("SP_Quotation_Upd", conObj);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", QuotationModel.ID);
-                    cmd.Parameters.AddWithValue("@QuotationNo", QuotationModel.QuotationNo);
+                    cmd.Parameters.AddWithValue("@QuotationNo", QuotationModel.QuotationNo != null ? QuotationModel.QuotationNo : "");
                     cmd.Parameters.AddWithValue("@CompID", QuotationModel.CompID);
-                    cmd.Parameters.AddWithValue("@Ref", QuotationModel.Ref != null ? QuotationModel.CostSheet : "");
+                    cmd.Parameters.AddWithValue("@Ref", QuotationModel.Ref != null ? QuotationModel.Ref : "");
                     cmd.Parameters.AddWithValue("@QuotationDate", QuotationModel.QuotationDate);
                     cmd.Parameters.AddWithValue("@Validity", QuotationModel.Validity);
                     cmd.Parameters.AddWithValue("@DeliveryTime", QuotationModel.DeliveryTime);
                     cmd.Parameters.AddWithValue("@PaymentTerm", QuotationModel.PaymentTerm);
                     cmd.Parameters.AddWithValue("@WarningDate", QuotationModel.WarningDate);
                     cmd.Parameters.AddWithValue("@IncoTerm", QuotationModel.IncoTerm);
-                    cmd.Parameters.AddWithValue("@IncoDetail", QuotationModel.IncoDetail != null ? QuotationModel.CostSheet : "");
+                    cmd.Parameters.AddWithValue("@IncoDetail", QuotationModel.IncoDetail != null ? QuotationModel.IncoDetail : "");
                     cmd.Parameters.AddWithValue("@Discount", QuotationModel.Discount);
                     cmd.Parameters.AddWithValue("@Seller", QuotationModel.Seller);
                     cmd.Parameters.AddWithValue("@State", QuotationModel.State);

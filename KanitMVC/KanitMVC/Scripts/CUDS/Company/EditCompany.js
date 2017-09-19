@@ -575,14 +575,14 @@ function GetData(val) {
             }).css({ "color": "#C0C0C0" });
 
             var html = '<tbody>';
-            for (var i = 0; i < data.Table2.length; i++) {
+            for (var i = 0; i < data.Table1.length; i++) {
 
                 html += '<tr>';
-                html += '<td class="">' + data.Table2[i].RowNum + '</td>';
-                html += '<td class="">' + data.Table2[i].FullName + '</td>';
-                html += '<td class="">' + data.Table2[i].MobileNo + '</td>';
-                html += '<td class="">' + data.Table2[i].Email + '</td>';
-                html += '<td class="">' + data.Table2[i].EmailLettersName + '</td>';
+                html += '<td class="">' + data.Table1[i].RowNum + '</td>';
+                html += '<td class="">' + data.Table1[i].FullName + '</td>';
+                html += '<td class="">' + data.Table1[i].MobileNo + '</td>';
+                html += '<td class="">' + data.Table1[i].Email + '</td>';
+                html += '<td class="">' + data.Table1[i].EmailLettersName + '</td>';
                 html += '<td><div class="btn-group">';
                 html += '<a class="btn btn-default btnContAddress" href="#ModalContactAddress" data-toggle="modal" onclick="GetDataContactAddress(' + data.Table2[i].ID + ')"><i class="	fa fa-home"></i></a>';
                 html += '</div></td>';

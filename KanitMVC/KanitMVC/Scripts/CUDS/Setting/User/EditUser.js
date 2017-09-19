@@ -47,7 +47,7 @@ function GetPosition() {
         }
     });
 }
-function GetCompany() {
+function GetQuotation() {
     var dataObject = { typeID: '017' };
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -58,11 +58,11 @@ function GetCompany() {
         success: function (data) {
             data = JSON.parse(data);
             //alert('test');
-            $('#cmbCompany').find("option").remove();
+            $('#cmbQuotation').find("option").remove();
             $.each(data.Table, function (i) {
-                $('#cmbCompany').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('#cmbQuotation').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
-            $('#cmbCompany').find('option:first-child').attr('selected', true);
+            $('#cmbQuotation').find('option:first-child').attr('selected', true);
         },
         failure: function () {
             alert('Error');
@@ -112,13 +112,13 @@ function GetData(val) {
            data = JSON.parse(data);
            GetDepartment();
            GetPosition();
-           GetCompany();
+           GetQuotation();
            GetSecurityProfile()
            //alert("First "+$("#cmbCurrency").val());
            //alert(data.Table[0].ExpenseGroup);
            $("#cmbDepartment").val(data.Table[0].Department);
            $("#cmbPosition").val(data.Table[0].Position);
-           $("#cmbCompany").val(data.Table[0].Company);
+           $("#cmbQuotation").val(data.Table[0].Quotation);
            $("#cmbSecurityProfile").val(data.Table[0].SecurityID);
            $("#txtUserName").val(data.Table[0].UserName);
            $("#txtFirstName").val(data.Table[0].FirstName);
@@ -135,7 +135,7 @@ function GetData(val) {
 }
 function Update(val) {
     var SecurityID = parseInt($("#cmbSecurityProfile").find(":selected").val());
-    var dataObject = { ID: val, UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Company: $("#cmbCompany").find(":selected").val(), SecurityID: SecurityID, EditBy: 2 };
+    var dataObject = { ID: val, UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Quotation: $("#cmbQuotation").find(":selected").val(), SecurityID: SecurityID, EditBy: 2 };
         $.ajax(
         {
             url: 'http://localhost:13149/api/User',

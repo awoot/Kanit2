@@ -191,10 +191,10 @@ function CreateData() {
     if (SecurityID > 0)
     {
         $(".RowCal").each(function () {
-            if ($(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Company' && $(this).find('td:eq(1)').text() != '3. Product'
+            if ($(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Quotation' && $(this).find('td:eq(1)').text() != '3. Product'
             && $(this).find('td:eq(1)').text() != '4. Quotation' && $(this).find('td:eq(1)').text() != '5. Setting') {
                 dataObject.SecurityID = SecurityID;
-                dataObject.MenuID = $(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Company' && $(this).find('td:eq(1)').text() != '3. Product'
+                dataObject.MenuID = $(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Quotation' && $(this).find('td:eq(1)').text() != '3. Product'
             && $(this).find('td:eq(1)').text() != '4. Quotation' && $(this).find('td:eq(1)').text() != '5. Setting' ? $(this).find(".hidMenuTypeID").val() : 0;
                 dataObject.IsView = $(this).find('.IsView').is(":checked") == true ? 1 : 0;
                 dataObject.IsInsert = $(this).find('.IsInsert').is(":checked") == true ? 1 : 0;

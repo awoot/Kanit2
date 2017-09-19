@@ -21,5 +21,11 @@ namespace KanitApi.Controllers.GM
             var response = masterServicedb.SelectMasterByType(typeID);
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
+
+        public string Get(int ID)
+        {
+            var response = masterServicedb.SelectUserByID(ID);
+            return JsonConvert.SerializeObject(response, Formatting.Indented);
+        }
     }
 }
