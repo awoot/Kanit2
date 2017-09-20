@@ -11,7 +11,7 @@ $(document).ready(function () {
         $('.cloneContactAddress').click(function () {
             $('.RowCal:last').find('td input[type=text]').eq(0).val('');
             $('.RowCal:last').find('td input[type=text]').eq(1).val('');
-            CalSum();
+            //CalSum();
         });
     });
     //GetExpenseGroup();
@@ -286,7 +286,7 @@ function GetDistrictAll() {
 
 
 function GetContactProvince() {
-    alert("Onchange");
+    //alert("Onchange");
     //สำหรับตอน create , Onchange
         $.ajax({
             url: 'http://localhost:13149/api/AddressMaster/',

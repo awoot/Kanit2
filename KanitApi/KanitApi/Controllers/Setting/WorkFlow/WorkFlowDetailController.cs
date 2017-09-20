@@ -14,14 +14,14 @@ using System.Web.Http.Cors;
 namespace KanitApi.Controllers.Setting.WorkFlow
 {
     [EnableCorsAttribute("*", "*", "*")]
-    public class WorkFlowController : ApiController
+    public class WorkFlowDetailController : ApiController
     {
-        static WorkFlowDAL WorkFlowdb = new WorkFlowDAL();
+        static WorkFlowDetailDAL WorkFlowDetaildb = new WorkFlowDetailDAL();
 
         [HttpGet]
         public string Get()
         {
-            var response = WorkFlowdb.SelectData();
+            var response = WorkFlowDetaildb.SelectData();
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
 
@@ -29,29 +29,29 @@ namespace KanitApi.Controllers.Setting.WorkFlow
         [HttpGet]
         public string Get(int id)
         {
-            var response = WorkFlowdb.SelectByID(id);
+            var response = WorkFlowDetaildb.SelectByID(id);
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
 
         [HttpPost]
-        public int Post(WorkFlowModels WorkFlowModel)
+        public int Post(WorkFlowDetailModels WorkFlowDetailModel)
         {
-            var response = WorkFlowdb.InsertData(WorkFlowModel);
+            var response = WorkFlowDetaildb.InsertData(WorkFlowDetailModel);
             return response;
         }
 
         [EnableCorsAttribute("*", "*", "*")]
         [HttpPut]
-        public int Put(WorkFlowModels WorkFlowModel)
+        public int Put(WorkFlowDetailModels WorkFlowDetailModel)
         {
-            var response = WorkFlowdb.UpdateData(WorkFlowModel);
+            var response = WorkFlowDetaildb.UpdateData(WorkFlowDetailModel);
             return response;
         }
 
         [HttpDelete]
-        public int Delete(WorkFlowModels WorkFlowModel)
+        public int Delete(WorkFlowDetailModels WorkFlowDetailModel)
         {
-            var response = WorkFlowdb.DeleteData(WorkFlowModel);
+            var response = WorkFlowDetaildb.DeleteData(WorkFlowDetailModel);
             return response;
         }
     }

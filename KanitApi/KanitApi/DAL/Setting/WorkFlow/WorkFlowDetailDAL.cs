@@ -12,7 +12,7 @@ namespace KanitApi.DAL.Setting.WorkFlow
     {
         string conStr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         int result = 0;
-        public void InsertData(WorkFlowDetailModels WorkFlowDetailModel)
+        public int InsertData(WorkFlowDetailModels WorkFlowDetailModel)
         {
             using (SqlConnection conObj = new SqlConnection(conStr))
             {
@@ -34,7 +34,9 @@ namespace KanitApi.DAL.Setting.WorkFlow
                     cmd.Parameters.AddWithValue("@CreateBy", WorkFlowDetailModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", WorkFlowDetailModel.EditBy);
                     conObj.Open();
-                    cmd.ExecuteNonQuery();
+                    object obj = cmd.ExecuteScalar();
+                    result = Convert.ToInt32(obj);
+                    return result;
                 }
                 catch (Exception ex)
                 {
@@ -136,6 +138,7 @@ namespace KanitApi.DAL.Setting.WorkFlow
                 }
             }
         }
+
         public DataSet SelectData()
         {
             DataSet ds = null;
