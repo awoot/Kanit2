@@ -223,7 +223,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="text-right">0.00</td>
+                                                <td class="width50"><input class="form-control width100 text-right" type="text" id="txtSubTotal" value="0"></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -234,29 +234,40 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="width20"><input class="form-control width50 text-right" type="text" id="txtDiscount" value="0"></td>
+                                                <td class="width50"><input class="form-control width100 text-right" type="text" id="txtDiscount" value="0"></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td>Vat 7%</td>
+                                                <td>Total</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="text-right">0.00</td>
+                                                <td class="width50"><input class="form-control width100 text-right" type="text" id="txtTotal" value="0"></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td class="fontbold">Total</td>
+                                                <td><div class="floatleft mgn-right5">Vat(%)</div><select id="cmbVat" class="form-control width60"></select></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="text-right">0.00</td>
+                                                <td class="width50"><input class="form-control width100 text-right" type="text" id="txtVal" value="0"></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fontbold">Net Total</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="width50"><input class="form-control width100 text-right" type="text" id="txtNetTotal" value="0"></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>
@@ -321,7 +332,7 @@
                                     <div class="form-group">
                                         <label class="col-xs-12 col-sm-3 control-label">Unit Price</label>
                                         <div class="col-xs-12 col-sm-4">
-                                            <input id="txtUnitPrice" class="form-control m-bot15" type="text">
+                                            <input id="txtUnitPrice" class="form-control m-bot15" type="text" onblur="CalAmount()" value="0.00">
                                         </div>
                                     </div>
                                 </div>
@@ -330,11 +341,11 @@
                                     <div class="form-group">
                                         <label class="col-xs-12 col-sm-3 control-label">Currency</label>
                                         <div class="col-xs-12 col-sm-3">
-                                            <select id="cmbCurrency" class="form-control m-bot15"></select>
+                                            <select id="cmbCurrency" class="form-control m-bot15" onchange="GetRate()"></select>
                                         </div>
                                         <!--<label class="col-xs-12 col-sm-1 control-label">Unit</label>-->
                                         <div class="col-xs-12 col-sm-3">
-                                            <input id="txtRate" class="form-control m-bot15 text-right" type="text" value="32.52" disabled>
+                                            <input id="txtRate" class="form-control m-bot15 text-right" type="text" value="0" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -345,6 +356,7 @@
                                             <div class="input-group date">
                                                 <input id="txtProductCodepopup" type="text" class="form-control" />
                                                 <input type="hidden" id="hidProductID" />
+                                                <input type="hidden" id="hidQuoteID" />
                                                 <span class="input-group-addon">
                                                     <a href="#ModalProducts" data-toggle="modal" onclick="BrowseProduct()">
                                                         <span class="fa fa-search iconcolor">
@@ -360,7 +372,7 @@
                                     <div class="form-group">
                                         <label class="col-xs-12 col-sm-3 control-label">Amount</label>
                                         <div class="col-xs-12 col-sm-4">
-                                            <input id="txtAmount" class="form-control m-bot15" type="text" value="1000" disabled>
+                                            <input id="txtAmount" class="form-control m-bot15" type="text" value="0" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -399,41 +411,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="resultProduct">
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Fisher-0001</td>
-                                                        <td>ECA</td>
-                                                        <td>30,000</td>
-                                                        <td>200</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Fisher-0002</td>
-                                                        <td>SET</td>
-                                                        <td>27,000</td>
-                                                        <td>100</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Fisher-0003</td>
-                                                        <td>EA</td>
-                                                        <td>29,430</td>
-                                                        <td>120</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Fisher-0004</td>
-                                                        <td>EA</td>
-                                                        <td>29,430</td>
-                                                        <td>125</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Fisher-0005</td>
-                                                        <td>EA</td>
-                                                        <td>29,430</td>
-                                                        <td>180</td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>

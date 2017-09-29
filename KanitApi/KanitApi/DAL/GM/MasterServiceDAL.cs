@@ -69,5 +69,34 @@ namespace KanitApi.DAL.GM
                 }
             }
         }
+
+        public DataSet SelectRate(int ID)
+        {
+            DataSet ds = null;
+            using (SqlConnection conObj = new SqlConnection(conStr))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SP_GetRate", conObj);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    conObj.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = cmd;
+                    ds = new DataSet();
+                    da.Fill(ds);
+
+                    return ds;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conObj.Close();
+                }
+            }
+        }
     }
 }

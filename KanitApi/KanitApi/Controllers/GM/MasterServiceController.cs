@@ -27,5 +27,14 @@ namespace KanitApi.Controllers.GM
             var response = masterServicedb.SelectUserByID(ID);
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
+
+        [EnableCorsAttribute("*", "*", "*")]
+        [HttpGet]
+        [Route("api/MasterService/GetRate")]
+        public string GetRate(int ID)
+        {
+            var response = masterServicedb.SelectRate(ID);
+            return JsonConvert.SerializeObject(response, Formatting.Indented);
+        }
     }
 }

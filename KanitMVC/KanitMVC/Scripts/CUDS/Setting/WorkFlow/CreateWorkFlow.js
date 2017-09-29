@@ -300,8 +300,7 @@ function AddRowWorkFlowDetail() {
 }
 function BindStepToCollumn()
 {
-    
-
+   
     $(".RowCal").each(function () {
         //alert("Test");
         //alert(row_index);
@@ -321,6 +320,7 @@ function BindStepToCollumn()
         $('.txtStep5').eq(row_index).val(Step5);
         $('.txtStep6').eq(row_index).val(Step6);
 
+        var strDetail;
         var arrDetail = [];
         arrDetail.push($(".hidPositionName1").val());
         arrDetail.push($(".hidPositionName2").val());
@@ -328,12 +328,9 @@ function BindStepToCollumn()
         arrDetail.push($(".hidPositionName4").val());
         arrDetail.push($(".hidPositionName5").val());
         arrDetail.push($(".hidPositionName6").val());
-        alert(arrDetail);
-        for (i = 0; i < arrDetail.length; ++i) {
-            arrDetail[i] = arrDetail[i].replaceAll("/", ",")
-        }
-        alert(rate);
-        
+        var arrDetail2 = arrDetail.filter(n=>n != '');
+        strDetail = arrDetail2.join(" > ");
+        $('.txtDetail').eq(row_index).val(strDetail);
     });
 
     $("#txtUser1").val('');
@@ -378,10 +375,10 @@ function CreateData() {
         error: function (msg) { alert(msg); }
     });
     // =============================== Create WorkFlowDetail ===============================
-    alert("WorkFlowID " + WorkFlowID);
+    //alert("WorkFlowID " + WorkFlowID);
     if (WorkFlowID > 0)
     {
-        alert("Test");
+        //alert("Test");
         var dataObject = {};
         $(".RowCal").each(function () {
             dataObject.WorkFlowID = WorkFlowID;

@@ -93,7 +93,6 @@ namespace KanitApi.DAL.Setting.WorkFlow
                     SqlCommand cmd = new SqlCommand("SP_WorkFlowDetail_Del", conObj);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", WorkFlowDetailModel.ID);
-                    cmd.Parameters.AddWithValue("@EditBy", WorkFlowDetailModel.EditBy);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();
                     return result;

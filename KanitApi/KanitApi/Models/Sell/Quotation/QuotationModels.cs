@@ -27,6 +27,7 @@ namespace KanitApi.Models.Sell.Quotation
         public int Seller { get; set; }
         public int State { get; set; }
         public int IncoTerm { get; set; }
+        public int Vat { get; set; }
         public int CreateBy { get; set; }
         public int EditBy { get; set; }
 

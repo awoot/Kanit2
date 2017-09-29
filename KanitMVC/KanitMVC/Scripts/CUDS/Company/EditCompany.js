@@ -361,7 +361,7 @@ function GetContactDistrictByAmphur() {
 }
 
 function GetContactProvinceAll() {
-    alert("DataSource");
+    //alert("DataSource");
     //สำหรับตอน Edit
     $.ajax({
         url: 'http://localhost:13149/api/AddressMaster/',
@@ -578,11 +578,11 @@ function GetData(val) {
             for (var i = 0; i < data.Table1.length; i++) {
 
                 html += '<tr>';
-                html += '<td class="">' + data.Table1[i].RowNum + '</td>';
-                html += '<td class="">' + data.Table1[i].FullName + '</td>';
-                html += '<td class="">' + data.Table1[i].MobileNo + '</td>';
-                html += '<td class="">' + data.Table1[i].Email + '</td>';
-                html += '<td class="">' + data.Table1[i].EmailLettersName + '</td>';
+                html += '<td class="">' + data.Table2[i].RowNum + '</td>';
+                html += '<td class="">' + data.Table2[i].FullName + '</td>';
+                html += '<td class="">' + data.Table2[i].MobileNo + '</td>';
+                html += '<td class="">' + data.Table2[i].Email + '</td>';
+                html += '<td class="">' + data.Table2[i].EmailLettersName + '</td>';
                 html += '<td><div class="btn-group">';
                 html += '<a class="btn btn-default btnContAddress" href="#ModalContactAddress" data-toggle="modal" onclick="GetDataContactAddress(' + data.Table2[i].ID + ')"><i class="	fa fa-home"></i></a>';
                 html += '</div></td>';
@@ -714,9 +714,9 @@ function GetDataAddress(AddressID)
     }
 }
 function GetDataContactPerson(ContactID) {
-    //alert("GetDataAddress");
+    //alert("GetDataContactPerson");
     var ContactID = ContactID;
-    //alert("AddressID "+AddressID);
+    //alert("ContactID " + ContactID);
     if (ContactID > 0) {
         var dataObject = { ID: ContactID }
         $.ajax(
@@ -771,7 +771,7 @@ function GetDataContactAddress(ContactID) {
     var ContactID = ContactID;
     //alert("AddressID "+AddressID);
     if (ContactID > 0) {
-        //alert("Edit ContAddress");
+        //alert("ContactID " + ContactID);
         var dataObject = { ID: ContactID }
         $.ajax({
             url: 'http://localhost:13149/api/ContactAddress',
@@ -792,15 +792,15 @@ function GetDataContactAddress(ContactID) {
 
                         GetContactProvinceAll();
                         $('.cmbContProvince').eq(j).val(data.Table[j].Province).change();
-                        alert("BindProvince " + $('.cmbContProvince').val());
+                        //alert("BindProvince " + $('.cmbContProvince').val());
 
                         GetContactAmphurAll($('.cmbContProvince').val());
                         $('.cmbContAmphur').eq(j).val(data.Table[j].Amphur).change();
-                        alert("BindAmphur " + $('.cmbContAmphur').val());
+                        //alert("BindAmphur " + $('.cmbContAmphur').val());
 
                         GetContactDistrictAll($('.cmbContAmphur').val());
                         $('.cmbContTambon').eq(j).val(data.Table[j].Tambon).change();
-                        alert("BindTambon " + $('.cmbContTambon').val());
+                        //alert("BindTambon " + $('.cmbContTambon').val());
                         
                     }
                     $('.RowCal:eq(' + data.Table.length + ')').remove();
@@ -820,7 +820,7 @@ function GetDataContactAddress(ContactID) {
                 }
                 else
                 {
-                    alert("test2");
+                    //alert("test2");
                     //GetContactProvince();
                     //GetContactAmphurByProvince();
                     //GetContactDistrictByAmphur();
@@ -865,6 +865,7 @@ function Update(val) {
 }
 function SaveAddress(val)
 {
+    //alert("test");
     var ID = $("#hidAddressID").val();
     var CompID = val;
     //alert("ID " + ID);
@@ -888,13 +889,14 @@ function SaveAddress(val)
 
             success: function (data) {
                 //alert('Update is completed');
-                Redirect();
+                //Redirect();
             }
             ,
             error: function (msg) {
                 alert(msg);
             }
         });
+        //alert(CompID);
         window.location.href = "../Company/EditCompany?id=" + CompID;
     }
     else
@@ -920,11 +922,13 @@ function SaveAddress(val)
                 },
                 error: function (msg) { alert(msg); }
             });
+            //alert(CompID);
             window.location.href = "../Company/EditCompany?id=" + CompID;
     }
 
 }
 function SaveContact(val) {
+    //alert("test SaveContact");
     var ID = $("#hidContactID").val();
     var CompID = val;
     //alert("ID " + ID);
@@ -984,7 +988,7 @@ function SaveContact(val) {
 }
 function SaveContactAddress(val) {
     var ContactID = val
-    alert("ContactID " + ContactID);
+    //alert("ContactID " + ContactID);
     //var CompID = val;
     //alert("ID " + ID);
     //=================== DeleteContactAddress
@@ -1003,7 +1007,7 @@ function SaveContactAddress(val) {
         }
     });
     //alert("test");
-    alert("ID " + ContactID);
+    //alert("ID " + ContactID);
     if (ContactID > 0) {
         //alert("Save");
         $(".RowCal").each(function () {

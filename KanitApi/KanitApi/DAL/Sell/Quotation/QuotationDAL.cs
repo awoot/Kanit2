@@ -35,6 +35,7 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@CostSheet", QuotationModel.CostSheet != null ? QuotationModel.CostSheet : "");
                     cmd.Parameters.AddWithValue("@Reason", QuotationModel.Reason != null ? QuotationModel.Reason : "");
                     cmd.Parameters.AddWithValue("@Remark", QuotationModel.Remark != null ? QuotationModel.Remark : "");
+                    cmd.Parameters.AddWithValue("@Vat", QuotationModel.Vat);
                     cmd.Parameters.AddWithValue("@CreateBy", QuotationModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", QuotationModel.EditBy);
                     conObj.Open();
@@ -78,6 +79,7 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@CostSheet", QuotationModel.CostSheet != null ? QuotationModel.CostSheet : "");
                     cmd.Parameters.AddWithValue("@Reason", QuotationModel.Reason != null ? QuotationModel.Reason : "");
                     cmd.Parameters.AddWithValue("@Remark", QuotationModel.Remark != null ? QuotationModel.Remark : "");
+                    cmd.Parameters.AddWithValue("@Vat", QuotationModel.Vat);
                     cmd.Parameters.AddWithValue("@EditBy", QuotationModel.EditBy);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();

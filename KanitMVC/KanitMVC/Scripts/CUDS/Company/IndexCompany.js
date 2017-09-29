@@ -20,10 +20,10 @@ $(document).ready(function () {
     function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
 
     //filter
-    $("#txtSearchQuotation").keyup(function () {
-        $("#resultQuotation").find("tr").hide();
+    $("#txtSearchCompany").keyup(function () {
+        $("#resultCompany").find("tr").hide();
         var data = this.value.split(" ");
-        var jo = $("#resultQuotation").find("tr");
+        var jo = $("#resultCompany").find("tr");
         $.each(data, function (i, v) {
             //jo = jo.filter("*:contains('" + v + "')");
             jo = jo.filter(function () {
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/Quotation/',
+        url: 'http://localhost:13149/api/Company/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -52,15 +52,15 @@ $(document).ready(function () {
                 var date = new Date(data.Table[i].UpdateDate);
                 html += '<tr>';
                 html += '<td class="">' + data.Table[i].RowNum + '</td>';
-                html += '<td class="">' + data.Table[i].QuotationCode + '</td>';
-                html += '<td class="">' + data.Table[i].QuotationNameTH + '</td>';
-                html += '<td class="">' + data.Table[i].QuotationTypeName + '</td>';
+                html += '<td class="">' + data.Table[i].CompanyCode + '</td>';
+                html += '<td class="">' + data.Table[i].CompanyNameTH + '</td>';
+                html += '<td class="">' + data.Table[i].CompanyTypeName + '</td>';
                 html += '<td class="">' + data.Table[i].CustSegmentName + '</td>';
                 html += '<td class="">' + data.Table[i].PaymentTypeName + '</td>';
                 html += '<td class="">' + data.Table[i].CreditTermName + '</td>';
                 html += '<td><div class="btn-group">';
-                html += '<a class="btn btn-success" href="/Quotation/EditQuotation?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
-                html += '<a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation'" + ',' + data.Table[i].ID + ')" ><i class="icon_close_alt2"></i></a>';
+                html += '<a class="btn btn-success" href="/Company/EditCompany?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
+                html += '<a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Company'" + ',' + data.Table[i].ID + ')" ><i class="icon_close_alt2"></i></a>';
                     //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
                     //html += '<a href="#" id="del' + data.Table[i].ID + '" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'ExpenseMaster'" + ',' + data.Table[i].ID + ')" style="margin-right: 5px;" >' + '<img src="/Images/delete.png" class="imgExpenseDelete" /></a>';
                     //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '&IsView=' + true + '" id="edit' + data.Table[i].ID + '">' + '<img src="/Images/view.png" class="imgExpenseView" /></a>';
@@ -68,9 +68,9 @@ $(document).ready(function () {
                 html += '</tr>';
             }
             html += '</tbody>';
-            document.getElementById("resultQuotation").innerHTML = html;
+            document.getElementById("resultCompany").innerHTML = html;
             
-            //$('#tblQuotation').paging({
+            //$('#tblCompany').paging({
             //    limit: 30,
             //    rowDisplayStyle: 'block',
             //    activePage: 0,
@@ -87,14 +87,14 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: 2 };
     $.ajax(
         {
-            url: 'http://localhost:13149/api/Quotation/Delete',
+            url: 'http://localhost:13149/api/Company/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',
             async: false,
             success: function (result) {
                 //alert('Delete is completed')
-                window.location.href = "../Quotation/IndexQuotation";
+                window.location.href = "../Company/IndexCompany";
             }
             ,
             error: function (msg) {

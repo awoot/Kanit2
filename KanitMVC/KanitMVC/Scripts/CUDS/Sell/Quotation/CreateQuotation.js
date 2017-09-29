@@ -22,6 +22,7 @@ $(document).ready(function () {
     GetIncoTerm();
     GetState();
     GetSeller();
+    GetVat();
 });
 
 $(document).on('click', '#close-preview', function () {
@@ -214,6 +215,27 @@ function BrowseCompany()
         }
     });
 }
+function GetVat() {
+    var dataObject = { typeID: '018' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbVat').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbVat').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
 function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
         var readResult;
@@ -274,6 +296,7 @@ function CreateData() {
             CostSheet: '',
             Reason: $("#txtReason").val(),
             Remark: $("#txtRemark").val(),
+            Vat: $("#cmbVat").find(":selected").val(),
             CreateBy: 1, EditBy: 1
         };
         $.ajax(
@@ -292,6 +315,7 @@ function CreateData() {
     
     window.location.href = "../Quotation/EditQuotation?id" + QuotationID;
 }
+
 function convertFloat(str) {
     
     $(str).val($(str).val().replace(',', '')).formatNumber({ format: "#,###.00", locale: "us" });

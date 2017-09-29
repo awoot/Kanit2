@@ -4,20 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace KanitMVC.Controllers.Quotation
+namespace KanitMVC.Controllers.Company
 {
-    public class QuotationController : Controller
+    public class CompanyController : Controller
     {
         // GET: Quotation
-        public ActionResult IndexQuotation()
+        public ActionResult IndexCompany()
         {
             return View();
         }
-        public ActionResult CreateQuotation()
+        public ActionResult CreateCompany()
         {
             return View();
         }
-        public ActionResult EditQuotation()
+        public ActionResult EditCompany()
         {
             return View();
         }
