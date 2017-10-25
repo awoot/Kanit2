@@ -19,7 +19,10 @@
         <section class="panel">
             <!--<div class="col-lg-6"></div>-->
             <header class="panel-heading">
-                <div class="col-lg-9">Quotation</div>
+                <div class="col-lg-7">Quotation</div>
+                <div class="col-lg-2">
+                    <label class="checkboxstyle"><input type="checkbox" id="chkShowAll" class="mgr5" value=""  onchange="GetChecked(this)">Show All</label>
+                </div>
                 <div class="col-lg-3 padding7"><input id="txtSearchQuotation" class="form-control" placeholder="Search" type="text"></div>
             </header>
             <div class="table-responsive">
@@ -27,6 +30,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
+                            <th>Docver</th>
                             <th>Quotation No.</th>
                             <th>Customer</th>
                             <th>Quotation Date</th>

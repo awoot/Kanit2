@@ -19,7 +19,7 @@ version 1.5.1 (4/9/11)
 
 version 1.5 (3/19/11)
 	- slicker default styling for buttons
-	- reworked a lot of the calendar's HTML and accompanying CSS
+	- reworked a lot of the calendar's HTML and acQuotationing CSS
 	  (solves issues 327 and 395)
 	- more printer-friendly (fullcalendar-print.css)
 	- fullcalendar now inherits styles from jquery-ui themes differently.

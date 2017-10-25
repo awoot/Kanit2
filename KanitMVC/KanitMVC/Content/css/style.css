@@ -1396,7 +1396,8 @@ div[data-role="editor-toolbar"] {
 
 .dropdown-menu.extended li a {
 
-    padding: 15px 10px !important;
+    /*padding: 15px 10px !important;*/
+    padding: 10px 10px !important;
 
     width: 100%;
 

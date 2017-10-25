@@ -24,6 +24,9 @@ $(function () {
 
     $('#tblContactAddress').dynoTable2();
     //GetPriceList();
+    $('.multiselect-ui').multiselect({
+        includeSelectAllOption: true
+    });
 });
 function SetRowIndex() {
     $('.RowCal td').click(function () {
@@ -441,6 +444,22 @@ function ControlEnable(Isview) {
         document.getElementById("cmbExpenseGroup").disabled = true;
     }
 }
+function CheckParentCompany(valParentCompany)
+{
+    var len = document.getElementById("cmbParentCompany").options.length;
+   
+    //alert("len " + len);
+    for (var i = 0; i < len; i++) {
+        var Total = document.getElementById("cmbParentCompany").options[i].index;
+        //alert("Total " + Total);
+        //alert("valParentCompany " + valParentCompany);
+        if (Total == valParentCompany)
+        {
+            //alert("test222")
+            //$('#cmbParentCompany').
+        }
+    }
+}
 function GetData(val) {
     $('#hidCompID').val(val);
     var dataObject = { ID: val}
@@ -460,6 +479,12 @@ function GetData(val) {
            GetCustomerSegment();
            GetCompanyType();
            var creditLimit = AddComma(parseFloat(data.Table[0].CreditLimit).toFixed(2));
+
+           //$.each(data.Table, function (i) {
+           //    $('#cmbParentCompany').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+           //});
+           //$('#cmbParentCompany').find('option:first-child').attr('selected', true);
+
            $("#txtCompanyCode").val(data.Table[0].CompanyCode);
            $("#txtCompanyNameTH").val(data.Table[0].CompanyNameTH);
            $("#txtCompanyNameEN").val(data.Table[0].CompanyNameEN);
@@ -471,6 +496,22 @@ function GetData(val) {
            $("#txtCreditLimit").val(creditLimit);
            $("#txtParentCompany").val(data.Table[0].ParentCompany);
            $("#txtKeyAccountSR").val(data.Table[0].KeyAccountSR);
+
+           if (data.Table3.length > 0) {
+
+                   var html = '';
+                   for (var i = 0; i < data.Table3.length; i++) {
+                       var IsSelect = data.Table3[i].IsSelect == '1' ? 'Checked' : '';
+                       html += '<tr class="RowCal">';
+                       ////html += '<td class="hidecolumn"><input type="hidden" class="hidTempGroupName" value="' + data.Table[i].GroupName + '"/></td>';
+                       html += '<td class="hidecolumn"><input type="hidden" class="hidMenuTypeID" value="' + data.Table3[i].ID + '"/></td>';
+                       html += '<td class="width50"><input id="chkIsSelect" type="checkbox" class="IsSelect" ' + IsSelect + ' ></td>';
+                       //html += '<td class="width50">' + data.Table3[i].RowNum + '</td>';
+                       html += '<td>' + data.Table3[i].Detail + '</td>';
+                       html += '</tr>';
+                   }
+                   document.getElementById("resultSecurityProfile").innerHTML = html;
+           }
 
            // =================================================================================== Address
            $('th').click(function () {
@@ -580,6 +621,7 @@ function GetData(val) {
                 html += '<tr>';
                 html += '<td class="">' + data.Table2[i].RowNum + '</td>';
                 html += '<td class="">' + data.Table2[i].FullName + '</td>';
+                html += '<td class="">' + data.Table2[i].Position + '</td>';
                 html += '<td class="">' + data.Table2[i].MobileNo + '</td>';
                 html += '<td class="">' + data.Table2[i].Email + '</td>';
                 html += '<td class="">' + data.Table2[i].EmailLettersName + '</td>';
@@ -740,6 +782,7 @@ function GetDataContactPerson(ContactID) {
                $("#txtContactMobile").val(data.Table[0].MobileNo);
                $("#txtContactEmail").val(data.Table[0].Email);
                $("#cmbEmailLetter").val(data.Table[0].EmailLetters);
+               $("#txtPosition").val(data.Table[0].Position);
            },
            error: function (msg) {
                alert(msg);
@@ -763,7 +806,7 @@ function GetDataContactPerson(ContactID) {
         $("#txtContactMobile").val('');
         $("#txtContactEmail").val('');
         $("#cmbEmailLetter").val('');
-
+        $("#txtPosition").val('');
     }
 }
 function GetDataContactAddress(ContactID) {
@@ -839,12 +882,16 @@ function AddRowContactAddress()
 function Update(val) {
     //var rate = $("#txtRate").val().replace(',', '');
     var creditLimit = $("#txtCreditLimit").val().replace(',', '');
+    var parentCompany = "'"+$("#cmbParentCompany").val()+"'";
+    //alert('parentCompany '+parentCompany);
     var dataObject = { ID: val, CompanyCode: $("#txtCompanyCode").val(), CompanyNameTH: $("#txtCompanyNameTH").val(),
         CompanyNameEN: $("#txtCompanyNameEN").val(), CompanyTypeID: $("#cmbCompanyType").find(":selected").val(),
         CustSegment: $("#cmbCustomerSegment").find(":selected").val(), Validity: $("#txtValidity").val(),
         PaymentTypeID: $("#cmbPaymentType").find(":selected").val(), CreditTerm: $("#cmbCreditTerm").find(":selected").val(),
-        CreditLimit: creditLimit, ParentCompany: $("#txtParentCompany").val(), KeyAccountSR: $("#txtKeyAccountSR").val(),
-        EditBy: 2};
+        CreditLimit: creditLimit, ParentCompany: parentCompany, KeyAccountSR: $("#txtKeyAccountSR").val(),
+        EditBy: 2
+    };
+
         $.ajax(
         {
             url: 'http://localhost:13149/api/Company',
@@ -860,6 +907,22 @@ function Update(val) {
             ,
             error: function (msg) {
                 alert(msg);
+            }
+        });
+        var dataObject = { ID: val };
+        $.ajax(
+        {
+            url: 'http://localhost:13149/api/SecurityProfileDetail',
+            type: 'DELETE',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+            success: function (data) {
+                //alert('data ' + data);
+            }
+            ,
+            error: function (msg) {
+                alert(msg)
             }
         });
 }
@@ -939,7 +1002,7 @@ function SaveContact(val) {
                     LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
                     LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
                     Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
-                    EditBy: 2
+                    Position: $("#txtPosition").val(),EditBy: 2
         };
         $.ajax(
         {
@@ -968,7 +1031,7 @@ function SaveContact(val) {
             LastNameTH: $("#txtLastNameTH").val(), FirstNameEN: $("#txtFirstNameEN").val(),
             LastNameEN: $("#txtLastNameEN").val(), MobileNo: $("#txtContactMobile").val(),
             Email: $("#txtContactEmail").val(), EmailLetters: $("#cmbEmailLetter").find(":selected").val(),
-            CreateBy: 1, EditBy: 1
+            Position: $("#txtPosition").val(),CreateBy: 1, EditBy: 1
         };
         $.ajax(
         {

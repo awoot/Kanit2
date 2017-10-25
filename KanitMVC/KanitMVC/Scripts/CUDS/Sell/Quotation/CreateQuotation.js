@@ -23,6 +23,9 @@ $(document).ready(function () {
     GetState();
     GetSeller();
     GetVat();
+
+    document.getElementById("verNo").innerHTML = "(1)";
+    $("#hidDocver").val(1);
 });
 
 $(document).on('click', '#close-preview', function () {
@@ -297,6 +300,7 @@ function CreateData() {
             Reason: $("#txtReason").val(),
             Remark: $("#txtRemark").val(),
             Vat: $("#cmbVat").find(":selected").val(),
+            Docver: parseInt($("#hidDocver").val()),
             CreateBy: 1, EditBy: 1
         };
         $.ajax(
@@ -313,7 +317,7 @@ function CreateData() {
             error: function (msg) { alert(msg); }
         });
     
-    window.location.href = "../Quotation/EditQuotation?id" + QuotationID;
+    window.location.href = "../Quotation/EditQuotation?id=" + QuotationID;
 }
 
 function convertFloat(str) {

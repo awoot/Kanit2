@@ -36,6 +36,7 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@Reason", QuotationModel.Reason != null ? QuotationModel.Reason : "");
                     cmd.Parameters.AddWithValue("@Remark", QuotationModel.Remark != null ? QuotationModel.Remark : "");
                     cmd.Parameters.AddWithValue("@Vat", QuotationModel.Vat);
+                    cmd.Parameters.AddWithValue("@Docver", QuotationModel.Docver);
                     cmd.Parameters.AddWithValue("@CreateBy", QuotationModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", QuotationModel.EditBy);
                     conObj.Open();
@@ -80,6 +81,7 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@Reason", QuotationModel.Reason != null ? QuotationModel.Reason : "");
                     cmd.Parameters.AddWithValue("@Remark", QuotationModel.Remark != null ? QuotationModel.Remark : "");
                     cmd.Parameters.AddWithValue("@Vat", QuotationModel.Vat);
+                    cmd.Parameters.AddWithValue("@Docver", QuotationModel.Docver);
                     cmd.Parameters.AddWithValue("@EditBy", QuotationModel.EditBy);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();
@@ -158,6 +160,34 @@ namespace KanitApi.DAL.Sell.Quotation
                 try
                 {
                     SqlCommand cmd = new SqlCommand("SP_Quotation_Sel", conObj);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    conObj.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = cmd;
+                    ds = new DataSet();
+                    da.Fill(ds);
+                    return ds;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conObj.Close();
+                }
+            }
+        }
+
+        public DataSet SelectByLastVersion()
+        {
+            DataSet ds = null;
+            using (SqlConnection conObj = new SqlConnection(conStr))
+            {
+                try
+                {
+
+                    SqlCommand cmd = new SqlCommand("SP_Quotation_SelMaxVersion", conObj);
                     cmd.CommandType = CommandType.StoredProcedure;
                     conObj.Open();
                     SqlDataAdapter da = new SqlDataAdapter();

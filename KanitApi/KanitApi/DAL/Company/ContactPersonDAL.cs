@@ -29,6 +29,7 @@ namespace KanitApi.DAL.Company
                     cmd.Parameters.AddWithValue("@MobileNo", ContactPersonModel.MobileNo);
                     cmd.Parameters.AddWithValue("@Email", ContactPersonModel.Email);
                     cmd.Parameters.AddWithValue("@EmailLetters", ContactPersonModel.EmailLetters);
+                    cmd.Parameters.AddWithValue("@Position", ContactPersonModel.Position);
                     cmd.Parameters.AddWithValue("@CreateBy", ContactPersonModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", ContactPersonModel.EditBy);
                     conObj.Open();
@@ -64,6 +65,7 @@ namespace KanitApi.DAL.Company
                     cmd.Parameters.AddWithValue("@MobileNo", ContactPersonModel.MobileNo);
                     cmd.Parameters.AddWithValue("@Email", ContactPersonModel.Email);
                     cmd.Parameters.AddWithValue("@EmailLetters", ContactPersonModel.EmailLetters);
+                    cmd.Parameters.AddWithValue("@Position", ContactPersonModel.Position);
                     cmd.Parameters.AddWithValue("@EditBy", ContactPersonModel.EditBy);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();

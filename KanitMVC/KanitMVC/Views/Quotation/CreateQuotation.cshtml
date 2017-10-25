@@ -17,10 +17,12 @@
             <div class="row m-bot15">
                 @*<a href="#" id="btnSave" class="btn btn-primary">Save</a>*@
                 @*<a href="IndexUser.aspx" id="btnDiscard" class="btn btn-danger">Discard</a>*@
-                <button type="button" id="btnSave" class="btn btn-primary" onclick="Isvalidate('Create', 'Quotation', 0)">Submit</button>
+                <button type="button" id="btnSave" class="btn btn-primary" onclick="Isvalidate('Create', 'Quotation', 0)">Send To Approve</button>
                 <button type="button" id="btnSave" class="btn btn-warning" onclick="Isvalidate('Create', 'Quotation', 0)">Save Draft</button>
                 @*<button type="button" id="btnSave" class="btn btn-primary" onclick="CreateData()">Save</button>*@
                 <button type="button" id="btnDiscard" class="btn btn-danger" onclick="Redirect()">Discard</button>
+                <button type="button" id="btnRevise" class="btn btn-default" disabled>Revise<p id="verNo" class="revise"></p></button>
+                <input type="hidden" id="hidDocver" />
             </div>
         </div>
     </div>

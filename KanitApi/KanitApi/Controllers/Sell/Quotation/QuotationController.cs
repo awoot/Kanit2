@@ -34,6 +34,22 @@ namespace KanitApi.Controllers.Sell.Quotation
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
 
+        [HttpGet]
+        public string Get(bool isLastVersion)
+        {
+            DataSet ds = new DataSet();
+
+            if (isLastVersion)
+            {
+                ds = Quotationdb.SelectData();
+            }
+            else
+            {
+                ds = Quotationdb.SelectByLastVersion();
+            }
+
+            return JsonConvert.SerializeObject(ds, Formatting.Indented);
+        }
         [HttpPost]
         public int Post(QuotationModels QuotationModel)
         {

@@ -405,6 +405,15 @@ function BrowseQuotation() {
     });
 }
 
+function GetDocversion() {
+    var x;
+    x = parseInt($("#hidDocver").val());
+    var Docver = x + 1;
+
+    $("#hidDocver").val(Docver);
+    document.getElementById("verNo").innerHTML = "(" + Docver + ")";
+}
+
 function ControlEnable(Isview) {
     //var Isview = val;
     if (Isview) {
@@ -452,6 +461,9 @@ function GetData(val) {
             $("#txtRemark").val(data.Table[0].Remark);
             //alert(data.Table[0].Vat);
             $("#cmbVat").val(data.Table[0].Vat);
+            //alert("Docver "+data.Table[0].Docver);
+            $("#hidDocver").val(data.Table[0].Docver);
+            document.getElementById("verNo").innerHTML = "("+ data.Table[0].Docver +")";
            // =================================================================================== Description
             if (data.Table1.length > 0) {
                 $('th').click(function () {
@@ -609,6 +621,7 @@ function Update(val) {
         Reason: $("#txtReason").val(),
         Remark: $("#txtRemark").val(),
         Vat: $("#cmbVat").find(":selected").val(),
+        Docver: $("#hidDocver").val(),
         CreateBy: 1, EditBy: 1
     };
         $.ajax(

@@ -184,18 +184,18 @@ the scope of this License.
 under Section 2) in object code or executable form under the terms of
 Sections 1 and 2 above provided that you also do one of the following:
 
-    a) Accompany it with the complete corresponding machine-readable
+    a) AcQuotation it with the complete corresponding machine-readable
     source code, which must be distributed under the terms of Sections
     1 and 2 above on a medium customarily used for software interchange; or,
 
-    b) Accompany it with a written offer, valid for at least three
+    b) AcQuotation it with a written offer, valid for at least three
     years, to give any third party, for a charge no more than your
     cost of physically performing source distribution, a complete
     machine-readable copy of the corresponding source code, to be
     distributed under the terms of Sections 1 and 2 above on a medium
     customarily used for software interchange; or,
 
-    c) Accompany it with the information you received as to the offer
+    c) AcQuotation it with the information you received as to the offer
     to distribute corresponding source code.  (This alternative is
     allowed only for noncommercial distribution and only if you
     received the program in object code or executable form with such
@@ -391,7 +391,7 @@ author's reputation will not be affected by problems that might be
 introduced by others.
 
   Finally, software patents pose a constant threat to the existence of
-any free program.  We wish to make sure that a company cannot
+any free program.  We wish to make sure that a Quotation cannot
 effectively restrict the users of a free program by obtaining a
 restrictive license from a patent holder.  Therefore, we insist that
 any patent license obtained for a version of the library must be
@@ -560,7 +560,7 @@ the Library into a program that is not a library.
 
   4. You may copy and distribute the Library (or a portion or
 derivative of it, under Section 2) in object code or executable form
-under the terms of Sections 1 and 2 above provided that you accompany
+under the terms of Sections 1 and 2 above provided that you acQuotation
 it with the complete corresponding machine-readable source code, which
 must be distributed under the terms of Sections 1 and 2 above on a
 medium customarily used for software interchange.
@@ -617,7 +617,7 @@ copyright notice for the Library among them, as well as a reference
 directing the user to the copy of this License.  Also, you must do one
 of these things:
 
-    a) Accompany the work with the complete corresponding
+    a) AcQuotation the work with the complete corresponding
     machine-readable source code for the Library including whatever
     changes were used in the work (which must be distributed under
     Sections 1 and 2 above); and, if the work is an executable linked
@@ -637,7 +637,7 @@ of these things:
     the user installs one, as long as the modified version is
     interface-compatible with the version that the work was made with.
 
-    c) Accompany the work with a written offer, valid for at
+    c) AcQuotation the work with a written offer, valid for at
     least three years, to give the same user the materials
     specified in Subsection 6a, above, for a charge no more
     than the cost of performing this distribution.
@@ -660,7 +660,7 @@ the executable.
 
   It may happen that this requirement contradicts the license
 restrictions of other proprietary libraries that do not normally
-accompany the operating system.  Such a contradiction means you cannot
+acQuotation the operating system.  Such a contradiction means you cannot
 use both them and the Library together in an executable that you
 distribute.
 
@@ -671,14 +671,14 @@ library, provided that the separate distribution of the work based on
 the Library and of the other library facilities is otherwise
 permitted, and provided that you do these two things:
 
-    a) Accompany the combined library with a copy of the same work
+    a) AcQuotation the combined library with a copy of the same work
     based on the Library, uncombined with any other library
     facilities.  This must be distributed under the terms of the
     Sections above.
 
     b) Give prominent notice with the combined library of the fact
     that part of it is a work based on the Library, and explaining
-    where to find the accompanying uncombined form of the same work.
+    where to find the acQuotationing uncombined form of the same work.
 
   8. You may not copy, modify, sublicense, link with, or distribute
 the Library except as expressly provided under this License.  Any

@@ -29,6 +29,8 @@ namespace KanitApi.Models.Company
 
         public int EmailLetters { get; set; }
 
+        public string Position { get; set; }
+
         public int CreateBy { get; set; }
 
         public int EditBy { get; set; }

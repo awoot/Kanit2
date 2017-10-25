@@ -8,6 +8,9 @@
 @* ---------------------------- Dynamictable -------------------------- *@
 @Scripts.Render("~/Scripts/js/EditableGrid/jquery.dynotable.js")
 @Scripts.Render("~/Scripts/js/EditableGrid/highlight.min.js")
+@* ---------------------------- DropDown Multisel -------------------------- *@
+@Styles.Render("~/Content/css/DDmulti.css")
+@Scripts.Render("~/Scripts/js/DDmulti/DDmulti.js")
 <div class="modal fade" id="ShowDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 <div class="row">
     <div class="col-lg-12">
@@ -52,9 +55,61 @@
                     </div>
                     <div class="col-xs-6 col-sm-6">
                         <div class="form-group">
+                            <label class="col-sm-4 control-label">Payment Type</label>
+                            <div class="col-sm-5">
+                                <select id="cmbPaymentType" class="form-control m-bot15"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-xs-block"></div>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
                             <label class="col-sm-4 control-label">Company Name (EN)</label>
                             <div class="col-sm-8">
                                 <input id="txtCompanyNameEN" class="form-control m-bot15" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Parent Company</label>
+                            <div class="col-sm-8">
+                                <input id="txtParentCompany" class="form-control m-bot15" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-xs-block"></div>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Customer Segment</label>
+                            <div class="col-sm-4">
+                                <select id="cmbCustomerSegment" class="form-control m-bot15"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 spandiv">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Industry</label>
+                            <div class="col-sm-8">
+                                <section class="panel multisel">
+                                    <div class="table-responsive">
+                                        <table id="tblSecurityProfile" class="table table-striped table-hover">
+                                            <thead>
+                                                <tr></tr>
+                                            </thead>
+                                            <tbody id="resultSecurityProfile"></tbody>
+                                        </table>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-xs-block"></div>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Credit Limit</label>
+                            <div class="col-sm-4">
+                                <input id="txtCreditLimit" class="form-control m-bot15 text-right" type="text">
                             </div>
                         </div>
                     </div>
@@ -67,28 +122,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Customer Segment</label>
-                            <div class="col-sm-4">
-                                <select id="cmbCustomerSegment" class="form-control m-bot15"></select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="clearfix visible-xs-block"></div>
                     <div class="col-xs-6 col-sm-6">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Validity (Day)</label>
                             <div class="col-sm-3">
                                 <input id="txtValidity" class="form-control m-bot15 text-right" type="text" value="15">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Payment Type</label>
-                            <div class="col-sm-5">
-                                <select id="cmbPaymentType" class="form-control m-bot15"></select>
                             </div>
                         </div>
                     </div>
@@ -101,14 +140,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Credit Limit</label>
-                            <div class="col-sm-4">
-                                <input id="txtCreditLimit" class="form-control m-bot15 text-right" type="text">
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="clearfix visible-xs-block"></div>
                     <div class="col-xs-6 col-sm-6">
                         <div class="form-group">
@@ -118,14 +150,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Parent Company</label>
-                            <div class="col-sm-8">
-                                <input id="txtParentCompany" class="form-control m-bot15" type="text">
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <div class="clearfix visible-xs-block"></div>
+                    
                 </div>
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#home">Address</a></li>
@@ -193,6 +220,7 @@
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Full Name</th>
+                                                    <th>Position</th>
                                                     <th>Mobile No.</th>
                                                     <th>Email Address</th>
                                                     <th>E-mail Letters</th>
@@ -432,6 +460,14 @@
                                     <label class="col-xs-12 col-sm-4 control-label">E-mail Letters</label>
                                     <div class="col-xs-12 col-sm-3">
                                         <select id="cmbEmailLetter" class="form-control m-bot15"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-4 control-label">Position</label>
+                                    <div class="col-xs-12 col-sm-7">
+                                        <input id="txtPosition" class="form-control m-bot15" type="text">
                                     </div>
                                 </div>
                             </div>

@@ -80,6 +80,7 @@
     @Scripts.Render("~/Scripts/CUDS/General/CheckAuthorization.js")
     @Scripts.Render("~/Scripts/js/DatepickerBS/js/moment.min.js")
     @Scripts.Render("~/Scripts/js/DatepickerBS/js/bootstrap-datetimepicker.min.js")
+    @Scripts.Render("~/Scripts/CUDS/General/GetAnnounce.js")
     
 
     <script>
@@ -102,6 +103,7 @@
                 singleItem: true
 
             });
+            GetWarning();
         });
 
         //custom select box
@@ -176,33 +178,7 @@
                     </li>
                     <!-- task notificatoin end -->
                     <!-- alert notification start-->
-                    <li id="alert_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                            <i class="icon-bell-l"></i>
-                            <span class="badge bg-important">2</span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <p class="blue">You have 2 new notifications</p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="label label-danger"></span>
-                                    แจ้งปิดระบบ วันที่
-                                    <span class="small italic pull-right">8/8/2017 01.00 น.</span>
-                                </a>
-                                <a href="#">
-                                    <span class="label label-danger"></span>
-                                    Low Stock (Fisher-0001)
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">See all notifications</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li id="alert_notificatoin_bar" class="dropdown"></li>
                     <!-- alert notification end-->
                     <!-- user login dropdown start-->
                     <li class="dropdown">
@@ -268,7 +244,7 @@
                         <a href="javascript:;" class="">
                             <i class="icon_genius"></i>
                             <!--<span>UI Fitures</span>-->
-                            <span>Sell</span>
+                            <span>Sale</span>
                             <span class="menu-arrow arrow_carrot-right"></span>
                         </a>
                         <ul class="sub">
@@ -288,6 +264,7 @@
                             <li class="subExchangeRate">@Html.ActionLink("Exchange Rate", "IndexExchangeRate", "ExchangeRate")</li>
                             <li class="subSecurityProfile">@Html.ActionLink("Security Profile", "IndexSecurityProfile", "SecurityProfile")</li>
                             <li class="subUser">@Html.ActionLink("User", "IndexUser", "User")</li>
+                            <li class="subUser">@Html.ActionLink("Announce", "IndexAnnounce", "Announce")</li>
                         </ul>
                     </li>
                 </ul>

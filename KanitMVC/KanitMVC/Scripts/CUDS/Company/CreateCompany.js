@@ -7,6 +7,7 @@ $(document).ready(function () {
     GetPaymentType();
     GetCustomerSegment();
     GetCompanyType();
+    GetCompanyParent();
 
     // ========= Address
     //GetAddressType();
@@ -234,6 +235,35 @@ function GetDistrictByAmphur() {
         }
     });
 }
+function GetCompanyParent()
+{
+    var TempMenu;
+    $.ajax({
+        url: 'http://localhost:13149/api/IndustryMaster',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        //data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            var html = '';
+            for (var i = 0; i < data.Table.length; i++) {
+                html += '<tr class="RowCal">';
+                ////html += '<td class="hidecolumn"><input type="hidden" class="hidTempGroupName" value="' + data.Table[i].GroupName + '"/></td>';
+                html += '<td class="hidecolumn"><input type="hidden" class="hidMenuTypeID" value="' + data.Table[i].ID + '"/></td>';
+                html += '<td class="width50"><input id="chkIsSelect" type="checkbox" class="IsSelect"></td>';
+                //html += '<td class="width50">'+ data.Table[i].RowNum + '</td>';
+                html += '<td>'+ data.Table[i].Detail + '</td>';
+                html += '</tr>';
+            }
+            document.getElementById("resultSecurityProfile").innerHTML = html;
+
+        },
+        error: function (msg) {
+            alert(msg)
+        }
+    });
+}
 
 $(document).on('click', '#close-preview', function () {
     $('.image-preview').popover('hide');
@@ -295,6 +325,25 @@ $(function () {
 function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
     //alert($("#cmbCurrency").find(":selected").val());
+    var dataObject = {};
+    //var temp = [];
+    //var temp1;
+    //$(".RowCal").each(function () {
+    //    if ($(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Quotation' && $(this).find('td:eq(1)').text() != '3. Product'
+    //    && $(this).find('td:eq(1)').text() != '4. Quotation' && $(this).find('td:eq(1)').text() != '5. Setting') {
+    //        //dataObject.SecurityID = SecurityID;
+    //        dataObject.MenuID = $(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Quotation' && $(this).find('td:eq(1)').text() != '3. Product'
+    //    && $(this).find('td:eq(1)').text() != '4. Quotation' && $(this).find('td:eq(1)').text() != '5. Setting' ? $(this).find(".hidMenuTypeID").val() : 0;
+    //        dataObject.IsView = $(this).find('.IsView').is(":checked") == true ? 1 : 0;
+    //        if ($(this).find('.IsView').is(":checked"))
+    //        {
+    //            temp.push(dataObject.MenuID);
+    //            temp1 = temp.toString();;
+    //        }
+    //    }
+    //});
+    //console.log(temp1);
+    //alert(temp1);
     var dataObject = {
         CompanyCode: $("#txtCompanyCode").val(), CompanyNameTH: $("#txtCompanyNameTH").val(),
         CompanyNameEN: $("#txtCompanyNameEN").val(), CompanyTypeID: $("#cmbCompanyType").find(":selected").val(),
@@ -317,6 +366,33 @@ function CreateData() {
         },
         error: function (msg) { alert(msg); }
     });
+    //alert(CompID);
+    if (CompID > 0)
+    {
+        $(".RowCal").each(function () {
+                dataObject.CompID = CompID;
+                dataObject.IsSelect = $(this).find('.IsSelect').is(":checked") == true ? 1 : 0;
+                dataObject.MasterID = $(this).find(".hidMenuTypeID").val();
+            //    dataObject.MenuID = $(this).find('td:eq(1)').text() != '1. DashBoard' && $(this).find('td:eq(1)').text() != '2. Quotation' && $(this).find('td:eq(1)').text() != '3. Product'
+            //&& $(this).find('td:eq(1)').text() != '4. Quotation' && $(this).find('td:eq(1)').text() != '5. Setting' ? $(this).find(".hidMenuTypeID").val() : 0;
+                dataObject.CreateBy = 1;
+                dataObject.EditBy = 1;
+                $.ajax(
+                {
+                    url: 'http://localhost:13149/api/CompanyDetail',
+                    type: 'POST',
+                    async: false,
+                    data: dataObject,
+                    datatype: 'json',
+                    success: function (data) {
+
+                    },
+                    error: function (msg) {
+                        alert(msg)
+                    }
+                });
+        });
+    }
     //if (CompID > 0)
     //{
     //    //================================================== Address =====================================================
