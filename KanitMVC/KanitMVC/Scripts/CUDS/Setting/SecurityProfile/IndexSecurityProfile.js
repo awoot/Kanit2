@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/SecurityProfile/',
+        url: 'http://localhost:13149/api/SecurityProfile/',
         type: 'GET',
         datatype: 'json',
         async: false,
@@ -82,7 +82,7 @@ function RowDelete(id) {
     var dataObject = { ID: id};
     $.ajax(
         {
-            url: 'http://61.91.120.148/api/SecurityProfile/Delete',
+            url: 'http://localhost:13149/api/SecurityProfile/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

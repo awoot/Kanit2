@@ -58,7 +58,7 @@ function BrowseCompany() {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Company/',
+        url: 'http://localhost:13149/api/Company/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -92,7 +92,7 @@ function BrowseCompany() {
 function GetUnit() {
     var dataObject = { typeID: '008' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -113,7 +113,7 @@ function GetUnit() {
 function GetCurrency() {
     //var dataObject = { typeID: '011' };
     $.ajax({
-        url: 'http://61.91.120.148/api/ExchangeRate/',
+        url: 'http://localhost:13149/api/ExchangeRate/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -138,7 +138,7 @@ function GetRate()
     var CurrencyID = $('#cmbCurrency:last').find(":selected").val();
     var dataObject = { ID: parseInt(CurrencyID) };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/GetRate/',
+        url: 'http://localhost:13149/api/MasterService/GetRate/',
         type: 'GET',
         dataType: 'json',
         //async: false,
@@ -184,7 +184,7 @@ function GetVat()
 {
     var dataObject = { typeID: '018' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -242,7 +242,7 @@ function BrowseProduct() {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Product/',
+        url: 'http://localhost:13149/api/Product/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -273,7 +273,7 @@ function BrowseProduct() {
 function GetIncoTerm() {
     var dataObject = { typeID: '010' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -294,7 +294,7 @@ function GetIncoTerm() {
 function GetState() {
     var dataObject = { typeID: '009' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -316,7 +316,7 @@ function GetSeller() {
     //61= Sale
     var dataObject = { ID: 61 };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -373,7 +373,7 @@ function BrowseQuotation() {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Quotation/',
+        url: 'http://localhost:13149/api/Quotation/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -428,7 +428,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://61.91.120.148/api/Quotation',
+       url: 'http://localhost:13149/api/Quotation',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -548,7 +548,7 @@ function GetDataDescription(QuoDetailID) {
         var dataObject = { ID: quoDetailID }
         $.ajax(
        {
-           url: 'http://61.91.120.148/api/QuotationDetail',
+           url: 'http://localhost:13149/api/QuotationDetail',
            type: 'GET',
            async: false,
            data: dataObject,
@@ -626,7 +626,7 @@ function Update(val) {
     };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/Quotation',
+            url: 'http://localhost:13149/api/Quotation',
             type: 'PUT',
             async: false,
             data: dataObject,
@@ -658,7 +658,7 @@ function SaveQuotationDetail(val) {
         };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/QuotationDetail',
+            url: 'http://localhost:13149/api/QuotationDetail',
             type: 'PUT',
             async: false,
             data: dataObject,
@@ -687,7 +687,7 @@ function SaveQuotationDetail(val) {
         };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/QuotationDetail',
+            url: 'http://localhost:13149/api/QuotationDetail',
             type: 'POST',
             data: dataObject,
             datatype: 'json',

@@ -36,7 +36,7 @@ function SetRowIndex() {
 function GetSalutation() {
     var dataObject = { typeID: '001' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -57,7 +57,7 @@ function GetSalutation() {
 function GetEmailLetters() {
     var dataObject = { typeID: '002' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -78,7 +78,7 @@ function GetEmailLetters() {
 function GetAddressType() {
     var dataObject = { typeID: '003' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -99,7 +99,7 @@ function GetAddressType() {
 function GetCreditTerm() {
     var dataObject = { typeID: '004' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -120,7 +120,7 @@ function GetCreditTerm() {
 function GetPaymentType() {
     var dataObject = { typeID: '005' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -141,7 +141,7 @@ function GetPaymentType() {
 function GetCustomerSegment() {
     var dataObject = { typeID: '006' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -162,7 +162,7 @@ function GetCustomerSegment() {
 function GetCompanyType() {
     var dataObject = { typeID: '007' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -182,7 +182,7 @@ function GetCompanyType() {
 }
 function GetProvince() {
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/',
+        url: 'http://localhost:13149/api/AddressMaster/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -203,7 +203,7 @@ function GetAmphurByProvince() {
     //alert(val);
     var dataObject = { ProvinceID: parseInt(ProvinceID) };
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/GetAmphurByProvinceID',
+        url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -228,7 +228,7 @@ function GetDistrictByAmphur() {
     //alert(val);
     var dataObject = { AmphurID: parseInt(AmphurID) };
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/GetDistrictByAmphurID',
+        url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -250,7 +250,7 @@ function GetDistrictByAmphur() {
 }
 function GetAmphurAll() {
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/GetAmphurAll',
+        url: 'http://localhost:13149/api/AddressMaster/GetAmphurAll',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -269,7 +269,7 @@ function GetAmphurAll() {
 }
 function GetDistrictAll() {
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/GetDistrictAll',
+        url: 'http://localhost:13149/api/AddressMaster/GetDistrictAll',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -292,7 +292,7 @@ function GetContactProvince() {
     //alert("Onchange");
     //สำหรับตอน create , Onchange
         $.ajax({
-            url: 'http://61.91.120.148/api/AddressMaster/',
+            url: 'http://localhost:13149/api/AddressMaster/',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -316,7 +316,7 @@ function GetContactAmphurByProvince() {
         //alert("weng ");
         var dataObject = { ProvinceID: parseInt(ProvinceID) };
         $.ajax({
-            url: 'http://61.91.120.148/api/AddressMaster/GetAmphurByProvinceID',
+            url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
             type: 'GET',
             dataType: 'json',
             data: dataObject,
@@ -342,7 +342,7 @@ function GetContactDistrictByAmphur() {
         //alert(val);
         var dataObject = { AmphurID: parseInt(AmphurID) };
         $.ajax({
-            url: 'http://61.91.120.148/api/AddressMaster/GetDistrictByAmphurID',
+            url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
             type: 'GET',
             dataType: 'json',
             data: dataObject,
@@ -367,7 +367,7 @@ function GetContactProvinceAll() {
     //alert("DataSource");
     //สำหรับตอน Edit
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/',
+        url: 'http://localhost:13149/api/AddressMaster/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -391,7 +391,7 @@ function GetContactAmphurAll(provinceID) {
     var ProvinceID = provinceID;
     var dataObject = { ProvinceID: parseInt(ProvinceID) };
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/GetAmphurByProvinceID',
+        url: 'http://localhost:13149/api/AddressMaster/GetAmphurByProvinceID',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -414,7 +414,7 @@ function GetContactDistrictAll(amphurID) {
     var AmphurID = amphurID;
     var dataObject = { ProvinceID: parseInt(AmphurID) };
     $.ajax({
-        url: 'http://61.91.120.148/api/AddressMaster/GetDistrictByAmphurID',
+        url: 'http://localhost:13149/api/AddressMaster/GetDistrictByAmphurID',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -465,7 +465,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://61.91.120.148/api/Company',
+       url: 'http://localhost:13149/api/Company',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -651,7 +651,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: localStorage['UserID'] };
     $.ajax(
         {
-            url: 'http://61.91.120.148/api/Address/Delete',
+            url: 'http://localhost:13149/api/Address/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',
@@ -672,7 +672,7 @@ function RowDeleteContactPerson(id) {
     var dataObject = { ID: id, EditBy: localStorage['UserID'] };
     $.ajax(
         {
-            url: 'http://61.91.120.148/api/ContactPerson/Delete',
+            url: 'http://localhost:13149/api/ContactPerson/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',
@@ -699,7 +699,7 @@ function GetDataAddress(AddressID)
         var dataObject = { ID: AddressID }
         $.ajax(
        {
-           url: 'http://61.91.120.148/api/Address',
+           url: 'http://localhost:13149/api/Address',
            type: 'GET',
            async: false,
            data: dataObject,
@@ -763,7 +763,7 @@ function GetDataContactPerson(ContactID) {
         var dataObject = { ID: ContactID }
         $.ajax(
        {
-           url: 'http://61.91.120.148/api/ContactPerson',
+           url: 'http://localhost:13149/api/ContactPerson',
            type: 'GET',
            async: false,
            data: dataObject,
@@ -817,7 +817,7 @@ function GetDataContactAddress(ContactID) {
         //alert("ContactID " + ContactID);
         var dataObject = { ID: ContactID }
         $.ajax({
-            url: 'http://61.91.120.148/api/ContactAddress',
+            url: 'http://localhost:13149/api/ContactAddress',
             type: 'GET',
             async: false,
             data: dataObject,
@@ -894,7 +894,7 @@ function Update(val) {
 
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/Company',
+            url: 'http://localhost:13149/api/Company',
             type: 'PUT',
             async: false,
             data: dataObject,
@@ -912,7 +912,7 @@ function Update(val) {
         var dataObject = { ID: val };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/CompanyDetail',
+            url: 'http://localhost:13149/api/CompanyDetail',
             type: 'DELETE',
             async: false,
             data: dataObject,
@@ -935,7 +935,7 @@ function Update(val) {
                 dataObject.EditBy = 2;
                 $.ajax(
                 {
-                    url: 'http://61.91.120.148/api/CompanyDetail',
+                    url: 'http://localhost:13149/api/CompanyDetail',
                     type: 'POST',
                     async: false,
                     data: dataObject,
@@ -967,7 +967,7 @@ function SaveAddress(val)
                     AddressTypeID: $("#cmbAddressType").find(":selected").val(), IsPrimary: IsPrimary, EditBy: 2 };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/Address',
+            url: 'http://localhost:13149/api/Address',
             type: 'PUT',
             async: false,
             data: dataObject,
@@ -999,7 +999,7 @@ function SaveAddress(val)
             };
             $.ajax(
             {
-                url: 'http://61.91.120.148/api/Address',
+                url: 'http://localhost:13149/api/Address',
                 type: 'POST',
                 data: dataObject,
                 datatype: 'json',
@@ -1029,7 +1029,7 @@ function SaveContact(val) {
         };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/ContactPerson',
+            url: 'http://localhost:13149/api/ContactPerson',
             type: 'PUT',
             async: false,
             data: dataObject,
@@ -1058,7 +1058,7 @@ function SaveContact(val) {
         };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/ContactPerson',
+            url: 'http://localhost:13149/api/ContactPerson',
             type: 'POST',
             data: dataObject,
             datatype: 'json',
@@ -1081,7 +1081,7 @@ function SaveContactAddress(val) {
     //alert(val);
     var dataObject = { ID: ContactID };
     $.ajax({
-        url: 'http://61.91.120.148/api/ContactAddress',
+        url: 'http://localhost:13149/api/ContactAddress',
         type: 'DELETE',
         async: false,
         data: dataObject,
@@ -1112,7 +1112,7 @@ function SaveContactAddress(val) {
             if (ContactID != '') {
                 $.ajax(
                 {
-                    url: 'http://61.91.120.148/api/ContactAddress',
+                    url: 'http://localhost:13149/api/ContactAddress',
                     type: 'POST',
                     async: false,
                     data: dataObject,

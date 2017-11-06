@@ -6,7 +6,7 @@ $(document).ready(function () {
 function GetAnnounceType() {
     var dataObject = { typeID: '019' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -39,7 +39,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://61.91.120.148/api/Announce',
+       url: 'http://localhost:13149/api/Announce',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -68,7 +68,7 @@ function Update(val) {
     var dataObject = { ID: val, Currency: $("#cmbAnnounceType").find(":selected").val(), Description: $("#txtDescription").val(), WarningDate: warningDate, EditBy: 2 };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/Announce',
+            url: 'http://localhost:13149/api/Announce',
             type: 'PUT',
             async: false,
             data: dataObject,

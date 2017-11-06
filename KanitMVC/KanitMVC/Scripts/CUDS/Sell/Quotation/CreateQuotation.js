@@ -89,7 +89,7 @@ function GetIncoTerm()
 {
     var dataObject = { typeID: '010' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -109,7 +109,7 @@ function GetIncoTerm()
 function GetState() {
     var dataObject = { typeID: '009' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -130,7 +130,7 @@ function GetSeller() {
     //61= Sale
     var dataObject = { ID: 61 };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -187,7 +187,7 @@ function BrowseCompany()
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Company/',
+        url: 'http://localhost:13149/api/Company/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -221,7 +221,7 @@ function BrowseCompany()
 function GetVat() {
     var dataObject = { typeID: '018' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -305,7 +305,7 @@ function CreateData() {
         };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/Quotation',
+            url: 'http://localhost:13149/api/Quotation',
             type: 'POST',
             data: dataObject,
             datatype: 'json',

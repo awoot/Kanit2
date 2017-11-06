@@ -51,7 +51,7 @@ function GetData(val) {
     var dataObject = { isLastVersion: val };
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Quotation/',
+        url: 'http://localhost:13149/api/Quotation/',
         type: 'GET',
         datatype: 'json',
         data: dataObject,
@@ -91,7 +91,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: localStorage['UserID'] };
     $.ajax(
         {
-            url: 'http://61.91.120.148/api/Quotation/Delete',
+            url: 'http://localhost:13149/api/Quotation/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

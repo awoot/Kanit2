@@ -14,7 +14,7 @@ function CheckAuthorization() {
     //if (localStorage['UserID'] != undefined) {
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/CheckAuthorization',
+            url: 'http://localhost:13149/api/CheckAuthorization',
             type: 'GET',
             async: false,
             data: dataObject,
