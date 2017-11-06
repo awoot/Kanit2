@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/ExchangeRate/',
+        url: 'http://61.91.120.148/api/ExchangeRate/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -55,7 +55,7 @@ $(document).ready(function () {
                 html += '<td class="">' + data.Table[i].CurrencyName + '</td>';
                 html += '<td class="">' + AddComma(parseFloat(data.Table[i].Rate).toFixed(2)) + '</td>';
                 html += '<td class="">' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + '</td>';
-                html += '<td><div class="btn-group">';
+                html += '<td><div class="btn-group widthmax">';
                 html += '<a class="btn btn-success" href="/ExchangeRate/EditExchangeRate?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
                 html += '<a class="btn btn-danger" data-toggle="modal" href="#ConfirmDelete"><i class="icon_close_alt2"></i></a>';
                     //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
@@ -83,7 +83,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: localStorage['UserID'] };
     $.ajax(
         {
-            url: 'http://localhost:13149/api/ExchangeRate/Delete',
+            url: 'http://61.91.120.148/api/ExchangeRate/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

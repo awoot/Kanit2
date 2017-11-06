@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/WorkFlow/',
+        url: 'http://61.91.120.148/api/WorkFlow/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -58,7 +58,7 @@ $(document).ready(function () {
                 html += '<td class="">' + data.Table[i].FlowDetail + '</td>';
                 html += '<td class="">' + SDate + '</td>';
                 html += '<td class="">' + EDate + '</td>';
-                html += '<td><div class="btn-group">';
+                html += '<td><div class="btn-group widthmax">';
                 html += '<a class="btn btn-success" href="/WorkFlow/EditWorkFlow?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
                 html += '<a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'WorkFlow'" + ',' + data.Table[i].ID + ')" ><i class="icon_close_alt2"></i></a>';
                     //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
@@ -86,7 +86,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: localStorage['WorkFlowID'] };
     $.ajax(
         {
-            url: 'http://localhost:13149/api/WorkFlow/Delete',
+            url: 'http://61.91.120.148/api/WorkFlow/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

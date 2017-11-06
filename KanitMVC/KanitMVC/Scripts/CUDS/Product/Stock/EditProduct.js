@@ -6,7 +6,7 @@ $(document).ready(function () {
 function GetUnit() {
     var dataObject = { typeID: '008' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -39,7 +39,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://localhost:13149/api/Product',
+       url: 'http://61.91.120.148/api/Product',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -79,7 +79,7 @@ function Update(val) {
     };
         $.ajax(
         {
-            url: 'http://localhost:13149/api/Product',
+            url: 'http://61.91.120.148/api/Product',
             type: 'PUT',
             async: false,
             data: dataObject,

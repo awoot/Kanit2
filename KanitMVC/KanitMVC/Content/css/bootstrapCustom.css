@@ -3377,39 +3377,39 @@ input[type="button"].btn-block {
   border-bottom-color: #fff;
 }
 
-.btn-group,
-.btn-group-vertical {
+.btn-group widthmax,
+.btn-group widthmax-vertical {
   position: relative;
   display: inline-block;
   vertical-align: middle;
 }
 
-.btn-group > .btn,
-.btn-group-vertical > .btn {
+.btn-group widthmax > .btn,
+.btn-group widthmax-vertical > .btn {
   position: relative;
   float: left;
 }
 
-.btn-group > .btn:hover,
-.btn-group-vertical > .btn:hover,
-.btn-group > .btn:focus,
-.btn-group-vertical > .btn:focus,
-.btn-group > .btn:active,
-.btn-group-vertical > .btn:active,
-.btn-group > .btn.active,
-.btn-group-vertical > .btn.active {
+.btn-group widthmax > .btn:hover,
+.btn-group widthmax-vertical > .btn:hover,
+.btn-group widthmax > .btn:focus,
+.btn-group widthmax-vertical > .btn:focus,
+.btn-group widthmax > .btn:active,
+.btn-group widthmax-vertical > .btn:active,
+.btn-group widthmax > .btn.active,
+.btn-group widthmax-vertical > .btn.active {
   z-index: 2;
 }
 
-.btn-group > .btn:focus,
-.btn-group-vertical > .btn:focus {
+.btn-group widthmax > .btn:focus,
+.btn-group widthmax-vertical > .btn:focus {
   outline: none;
 }
 
-.btn-group .btn + .btn,
-.btn-group .btn + .btn-group,
-.btn-group .btn-group + .btn,
-.btn-group .btn-group + .btn-group {
+.btn-group widthmax .btn + .btn,
+.btn-group widthmax .btn + .btn-group widthmax,
+.btn-group widthmax .btn-group widthmax + .btn,
+.btn-group widthmax .btn-group widthmax + .btn-group widthmax {
   margin-left: -1px;
 }
 
@@ -3433,61 +3433,61 @@ input[type="button"].btn-block {
   clear: both;
 }
 
-.btn-toolbar .btn-group {
+.btn-toolbar .btn-group widthmax {
   float: left;
 }
 
 .btn-toolbar > .btn + .btn,
-.btn-toolbar > .btn-group + .btn,
-.btn-toolbar > .btn + .btn-group,
-.btn-toolbar > .btn-group + .btn-group {
+.btn-toolbar > .btn-group widthmax + .btn,
+.btn-toolbar > .btn + .btn-group widthmax,
+.btn-toolbar > .btn-group widthmax + .btn-group widthmax {
   margin-left: 5px;
 }
 
-.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+.btn-group widthmax > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
   border-radius: 0;
 }
 
-.btn-group > .btn:first-child {
+.btn-group widthmax > .btn:first-child {
   margin-left: 0;
 }
 
-.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+.btn-group widthmax > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.btn-group > .btn:last-child:not(:first-child),
-.btn-group > .dropdown-toggle:not(:first-child) {
+.btn-group widthmax > .btn:last-child:not(:first-child),
+.btn-group widthmax > .dropdown-toggle:not(:first-child) {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
 
-.btn-group > .btn-group {
+.btn-group widthmax > .btn-group widthmax {
   float: left;
 }
 
-.btn-group > .btn-group:not(:first-child):not(:last-child) > .btn {
+.btn-group widthmax > .btn-group widthmax:not(:first-child):not(:last-child) > .btn {
   border-radius: 0;
 }
 
-.btn-group > .btn-group:first-child > .btn:last-child,
-.btn-group > .btn-group:first-child > .dropdown-toggle {
+.btn-group widthmax > .btn-group widthmax:first-child > .btn:last-child,
+.btn-group widthmax > .btn-group widthmax:first-child > .dropdown-toggle {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.btn-group > .btn-group:last-child > .btn:first-child {
+.btn-group widthmax > .btn-group widthmax:last-child > .btn:first-child {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
 
-.btn-group .dropdown-toggle:active,
-.btn-group.open .dropdown-toggle {
+.btn-group widthmax .dropdown-toggle:active,
+.btn-group widthmax.open .dropdown-toggle {
   outline: 0;
 }
 
-.btn-group-xs > .btn {
+.btn-group widthmax-xs > .btn {
   padding: 5px 10px;
   padding: 1px 5px;
   font-size: 12px;
@@ -3495,31 +3495,31 @@ input[type="button"].btn-block {
   border-radius: 3px;
 }
 
-.btn-group-sm > .btn {
+.btn-group widthmax-sm > .btn {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
 }
 
-.btn-group-lg > .btn {
+.btn-group widthmax-lg > .btn {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
   border-radius: 6px;
 }
 
-.btn-group > .btn + .dropdown-toggle {
+.btn-group widthmax > .btn + .dropdown-toggle {
   padding-right: 8px;
   padding-left: 8px;
 }
 
-.btn-group > .btn-lg + .dropdown-toggle {
+.btn-group widthmax > .btn-lg + .dropdown-toggle {
   padding-right: 12px;
   padding-left: 12px;
 }
 
-.btn-group.open .dropdown-toggle {
+.btn-group widthmax.open .dropdown-toggle {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
           box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
@@ -3537,85 +3537,85 @@ input[type="button"].btn-block {
   border-width: 0 5px 5px;
 }
 
-.btn-group-vertical > .btn,
-.btn-group-vertical > .btn-group {
+.btn-group widthmax-vertical > .btn,
+.btn-group widthmax-vertical > .btn-group widthmax {
   display: block;
   float: none;
   width: 100%;
   max-width: 100%;
 }
 
-.btn-group-vertical > .btn-group:before,
-.btn-group-vertical > .btn-group:after {
+.btn-group widthmax-vertical > .btn-group widthmax:before,
+.btn-group widthmax-vertical > .btn-group widthmax:after {
   display: table;
   content: " ";
 }
 
-.btn-group-vertical > .btn-group:after {
+.btn-group widthmax-vertical > .btn-group widthmax:after {
   clear: both;
 }
 
-.btn-group-vertical > .btn-group:before,
-.btn-group-vertical > .btn-group:after {
+.btn-group widthmax-vertical > .btn-group widthmax:before,
+.btn-group widthmax-vertical > .btn-group widthmax:after {
   display: table;
   content: " ";
 }
 
-.btn-group-vertical > .btn-group:after {
+.btn-group widthmax-vertical > .btn-group widthmax:after {
   clear: both;
 }
 
-.btn-group-vertical > .btn-group > .btn {
+.btn-group widthmax-vertical > .btn-group widthmax > .btn {
   float: none;
 }
 
-.btn-group-vertical > .btn + .btn,
-.btn-group-vertical > .btn + .btn-group,
-.btn-group-vertical > .btn-group + .btn,
-.btn-group-vertical > .btn-group + .btn-group {
+.btn-group widthmax-vertical > .btn + .btn,
+.btn-group widthmax-vertical > .btn + .btn-group widthmax,
+.btn-group widthmax-vertical > .btn-group widthmax + .btn,
+.btn-group widthmax-vertical > .btn-group widthmax + .btn-group widthmax {
   margin-top: -1px;
   margin-left: 0;
 }
 
-.btn-group-vertical > .btn:not(:first-child):not(:last-child) {
+.btn-group widthmax-vertical > .btn:not(:first-child):not(:last-child) {
   border-radius: 0;
 }
 
-.btn-group-vertical > .btn:first-child:not(:last-child) {
+.btn-group widthmax-vertical > .btn:first-child:not(:last-child) {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.btn-group-vertical > .btn:last-child:not(:first-child) {
+.btn-group widthmax-vertical > .btn:last-child:not(:first-child) {
   border-top-right-radius: 0;
   border-bottom-left-radius: 4px;
   border-top-left-radius: 0;
 }
 
-.btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {
+.btn-group widthmax-vertical > .btn-group widthmax:not(:first-child):not(:last-child) > .btn {
   border-radius: 0;
 }
 
-.btn-group-vertical > .btn-group:first-child > .btn:last-child,
-.btn-group-vertical > .btn-group:first-child > .dropdown-toggle {
+.btn-group widthmax-vertical > .btn-group widthmax:first-child > .btn:last-child,
+.btn-group widthmax-vertical > .btn-group widthmax:first-child > .dropdown-toggle {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.btn-group-vertical > .btn-group:last-child > .btn:first-child {
+.btn-group widthmax-vertical > .btn-group widthmax:last-child > .btn:first-child {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
 
-.btn-group-justified {
+.btn-group widthmax-justified {
   display: table;
   width: 100%;
   border-collapse: separate;
   table-layout: fixed;
 }
 
-.btn-group-justified .btn {
+.btn-group widthmax-justified .btn {
   display: table-cell;
   float: none;
   width: 1%;
@@ -5726,7 +5726,7 @@ body.modal-open,
   margin-left: 5px;
 }
 
-.modal-footer .btn-group .btn + .btn {
+.modal-footer .btn-group widthmax .btn + .btn {
   margin-left: -1px;
 }
 

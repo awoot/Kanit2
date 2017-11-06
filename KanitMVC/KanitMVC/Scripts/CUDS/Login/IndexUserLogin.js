@@ -25,8 +25,8 @@ function UserLogin() {
     var dataObject = { userName: $("#txtUserName").val()+'&'+$("#txtPassword").val() };
     $.ajax(
     {
-        //url: 'http://localhost:13149/api/Login/Authenticate/' + userName + '/' + Password + '',
-        url: 'http://localhost:13149/api/Login/',
+        //url: 'http://61.91.120.148/api/Login/Authenticate/' + userName + '/' + Password + '',
+        url: 'http://61.91.120.148/api/Login/',
         type: 'GET',
         async: false,
         data: dataObject,
@@ -73,7 +73,7 @@ function FirstPage() {
     {
         $.ajax(
     {
-        url: 'http://localhost:13149/api/CheckAuthorization',
+        url: 'http://61.91.120.148/api/CheckAuthorization',
         type: 'GET',
         async: false,
         data: dataObject,

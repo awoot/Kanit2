@@ -1,9 +1,9 @@
 $(document).ready(function () {
     CheckAuthorization();
-    //$('.imgadd').attr("style", "margin-left: 68%; margin-top: -2px;");
-    //------------------------------------ Standard ------------------------------------
-    //Sorting
-    //$('#tableData').paging({ limit: 5 });
+    ////$('.imgadd').attr("style", "margin-left: 68%; margin-top: -2px;");
+    ////------------------------------------ Standard ------------------------------------
+    ////Sorting
+    ////$('#tableData').paging({ limit: 5 });
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/Company/',
+        url: 'http://61.91.120.148/api/Company/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -58,7 +58,7 @@ $(document).ready(function () {
                 html += '<td class="">' + data.Table[i].CustSegmentName + '</td>';
                 html += '<td class="">' + data.Table[i].PaymentTypeName + '</td>';
                 html += '<td class="">' + data.Table[i].CreditTermName + '</td>';
-                html += '<td><div class="btn-group">';
+                html += '<td><div class="btn-group widthmax">';
                 html += '<a class="btn btn-success" href="/Company/EditCompany?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
                 html += '<a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Company'" + ',' + data.Table[i].ID + ')" ><i class="icon_close_alt2"></i></a>';
                     //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
@@ -87,7 +87,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: 2 };
     $.ajax(
         {
-            url: 'http://localhost:13149/api/Company/Delete',
+            url: 'http://61.91.120.148/api/Company/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

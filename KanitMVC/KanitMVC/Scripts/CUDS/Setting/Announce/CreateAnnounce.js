@@ -10,7 +10,7 @@ $(document).ready(function () {
     });
     var dataObject = { typeID: '019' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -92,7 +92,7 @@ function CreateData() {
     var dataObject = { AnnounceTypeID: $("#cmbAnnounceType").find(":selected").val(), Description: $("#txtDescription").val(), WarningDate: warningDate, CreateBy: 1, EditBy: 1 };
     $.ajax(
     {
-        url: 'http://localhost:13149/api/Announce',
+        url: 'http://61.91.120.148/api/Announce',
         type: 'POST',
         data: dataObject,
         datatype: 'json',

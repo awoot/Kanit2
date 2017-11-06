@@ -102,7 +102,7 @@ function GetColval()
 {
     var dataObject = { typeID: '012' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -123,7 +123,7 @@ function GetColval()
 function GetEquationval() {
     var dataObject = { typeID: '013' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -183,7 +183,7 @@ function BrowseUser(ResultStep) {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/User/',
+        url: 'http://61.91.120.148/api/User/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -257,7 +257,7 @@ function BrowseUser(ResultStep) {
 function AddRowWorkFlowDetail() {
     var dataObject = { typeID: '012' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -278,7 +278,7 @@ function AddRowWorkFlowDetail() {
 
     var dataObject = { typeID: '013' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -363,7 +363,7 @@ function CreateData() {
     var dataObject = { FlowName: $("#txtFlowName").val(), FlowDetail: $("#txtFlowDetail").val(), Remark: $("#txtRemark").val(), StartDate: SDate, EndDate: EDate, CreateBy: 1, EditBy: 1 };
     $.ajax(
     {
-        url: 'http://localhost:13149/api/WorkFlow',
+        url: 'http://61.91.120.148/api/WorkFlow',
         type: 'POST',
         data: dataObject,
         async: false,
@@ -397,7 +397,7 @@ function CreateData() {
             if ($(this).find(".txtCondval1").val() != '') {
                 $.ajax(
                 {
-                    url: 'http://localhost:13149/api/WorkFlowDetail',
+                    url: 'http://61.91.120.148/api/WorkFlowDetail',
                     type: 'POST',
                     async: false,
                     data: dataObject,

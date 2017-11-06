@@ -10,11 +10,11 @@ function CheckAuthorization() {
     var IsUser = 0;
     var dataObject = { ID: localStorage['UserID'] };
     console.log(dataObject);
-    //alert(localStorage['UserID']);
-    if (localStorage['UserID'] != undefined) {
+    ////alert(localStorage['UserID']);
+    //if (localStorage['UserID'] != undefined) {
         $.ajax(
         {
-            url: 'http://localhost:13149/api/CheckAuthorization',
+            url: 'http://61.91.120.148/api/CheckAuthorization',
             type: 'GET',
             async: false,
             data: dataObject,
@@ -298,10 +298,10 @@ function CheckAuthorization() {
                 alert(msg)
             }
         });
-    }
-    else {
-        location = "../Login/IndexLogin";
-    }
+    //}
+    //else {
+    //    location = "../Login/IndexLogin";
+    //}
    
 
 
