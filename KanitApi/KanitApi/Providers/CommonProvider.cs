@@ -120,12 +120,11 @@ namespace KanitApi.Providers
             foreach (var data in content)
             {
                 subject = subject.Replace("[" + data.Key + "]", data.Value);
-
-                for (var i = 0; i < contentData.Count; i++)
-                {
-                    var item = contentData[i];
-                    item = item.Replace("[" + data.Key + "]", data.Value);
-                }
+                contentData[0] = contentData[0].Replace("[" + data.Key + "]", data.Value);
+                contentData[1] = contentData[1].Replace("[" + data.Key + "]", data.Value);
+                contentData[2] = contentData[2].Replace("[" + data.Key + "]", data.Value);
+                contentData[3] = contentData[3].Replace("[" + data.Key + "]", data.Value);
+                contentData[4] = contentData[4].Replace("[" + data.Key + "]", data.Value);
             }
 
             body = body.Replace("[ContentData]", contentData[0]);

@@ -75,7 +75,6 @@ namespace KanitApi.Providers
         {
             if (reader == null || reader == DBNull.Value) return new Guid();
             else return new Guid(reader.ToString());
-            //return new Guid(reader.ToString());
         }
 
         public static bool ForceStringToBoolean(this object reader)
