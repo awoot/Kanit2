@@ -6,7 +6,7 @@ $(document).ready(function () {
 function GetCurrency() {
     var dataObject = { typeID: '011' };
     $.ajax({
-        url: 'http://localhost:13149/api/MasterService/',
+        url: 'http://61.91.120.148/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -39,7 +39,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://localhost:13149/api/ExchangeRate',
+       url: 'http://61.91.120.148/api/ExchangeRate',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -67,7 +67,7 @@ function Update(val) {
     var dataObject = { ID: val, Currency: $("#cmbCurrency").find(":selected").val(), Rate: rate, EditBy: 2 };
         $.ajax(
         {
-            url: 'http://localhost:13149/api/ExchangeRate',
+            url: 'http://61.91.120.148/api/ExchangeRate',
             type: 'PUT',
             async: false,
             data: dataObject,

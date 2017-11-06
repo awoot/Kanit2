@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/SecurityProfile/',
+        url: 'http://61.91.120.148/api/SecurityProfile/',
         type: 'GET',
         datatype: 'json',
         async: false,
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 html += '<td class="">' + data.Table[i].RowNum + '</td>';
                 html += '<td class="">' + data.Table[i].Profile + '</td>';
                 html += '<td class="">' + data.Table[i].FirstPage + '</td>';
-                html += '<td><div class="btn-group">';
+                html += '<td><div class="btn-group widthmax">';
                 html += '<a class="btn btn-success" href="/SecurityProfile/EditSecurityProfile?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
                 html += '<a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'SecurityProfile'" + ',' + data.Table[i].ID + ')" ><i class="icon_close_alt2"></i></a>';
                     //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
@@ -82,7 +82,7 @@ function RowDelete(id) {
     var dataObject = { ID: id};
     $.ajax(
         {
-            url: 'http://localhost:13149/api/SecurityProfile/Delete',
+            url: 'http://61.91.120.148/api/SecurityProfile/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

@@ -4,7 +4,7 @@ $(document).ready(function () {
 function GetFirstPage() {
     var dataObject = { Group: '1' };
     $.ajax({
-        url: 'http://localhost:13149/api/MenuMaster/GetMenuAll',
+        url: 'http://61.91.120.148/api/MenuMaster/GetMenuAll',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -27,7 +27,7 @@ function GetFirstPageDetail() {
     //alert(val);
     var dataObject = { ID: parseInt(val) };
     $.ajax({
-        url: 'http://localhost:13149/api/MenuMaster/',
+        url: 'http://61.91.120.148/api/MenuMaster/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -62,7 +62,7 @@ function GetData(val) {
     var dataObject = { ID: val }
     $.ajax(
    {
-       url: 'http://localhost:13149/api/SecurityProfile',
+       url: 'http://61.91.120.148/api/SecurityProfile',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -150,7 +150,7 @@ function Update(val) {
     console.log(dataObject);
     $.ajax(
     {
-        url: 'http://localhost:13149/api/SecurityProfile',
+        url: 'http://61.91.120.148/api/SecurityProfile',
         type: 'PUT',
         async: false,
         data: dataObject,
@@ -167,7 +167,7 @@ function Update(val) {
     var dataObject = { ID: val };
     $.ajax(
     {
-        url: 'http://localhost:13149/api/SecurityProfileDetail',
+        url: 'http://61.91.120.148/api/SecurityProfileDetail',
         type: 'DELETE',
         async: false,
         data: dataObject,
@@ -196,7 +196,7 @@ function Update(val) {
             dataObject.EditBy = localStorage['UserID'];
             $.ajax(
             {
-                url: 'http://localhost:13149/api/SecurityProfileDetail',
+                url: 'http://61.91.120.148/api/SecurityProfileDetail',
                 type: 'POST',
                 async: false,
                 data: dataObject,

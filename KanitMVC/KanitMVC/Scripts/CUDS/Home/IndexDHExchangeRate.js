@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://localhost:13149/api/ExchangeRate/',
+        url: 'http://61.91.120.148/api/ExchangeRate/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {

@@ -11,16 +11,17 @@
     <title>Login Page 2 | Creative - Bootstrap 3 Responsive Admin Template</title>
 
     <!-- Bootstrap CSS -->
-    <link href="Content/css/bootstrap.min.css" rel="stylesheet">
+    @Styles.Render("~/Content/css/bootstrap.min.css")
     <!-- bootstrap theme -->
-    <link href="Content/css/bootstrap-theme.css" rel="stylesheet">
+    @Styles.Render("~/Content/css/bootstrap-theme.css")
     <!--external css-->
     <!-- font icon -->
-    <link href="Content/css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="Content/css/font-awesome.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css/elegant-icons-style.css")
+    @Styles.Render("~/Content/css/font-awesome.css")
     <!-- Custom styles -->
-    <link href="Content/css/style.css" rel="stylesheet">
-    <link href="Content/css/style-responsive.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/style-responsive.css")
+    @*====================================================================================================================================*@
     @Scripts.Render("~/Scripts/js/jquery.js")
     @Scripts.Render("~/Scripts/js/jquery-ui-1.10.4.min.js")
     @Scripts.Render("~/Scripts/js/jquery-1.8.3.min.js")

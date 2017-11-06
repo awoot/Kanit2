@@ -4,7 +4,16 @@
 <script src="@Url.Content("~/Scripts/CUDS/Home/IndexDHExchangeRate.js")" type="text/javascript"></script>
 <script type='text/javascript'>
 
-	$(document).ready(function() {
+    $(document).ready(function () {
+        $(window).load(function () {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                window.location.href = "http://61.91.120.148/Kanit_Sap/Home/Index";
+            }
+            else { window.location.href = "http://61.91.120.148/Kanit_Sap/Home/Index"; }
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+            $('#stuck_container').tmStickUp({});
+        });
 
 		var date = new Date();
 		var d = date.getDate();
@@ -79,10 +88,26 @@
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
         <a href="IndexQuotation1.aspx">
             <div class="info-box blue-bg">
-                <div class="count mgn-top0 mgn-bottom10 mgn-left5 floatleft mgn-right30">12</div>
+                @*<div class="count mgn-top0 mgn-bottom10 mgn-left5 floatleft mgn-right30">12</div>
                 <div class="title pad-top3">Create Quotation</div>
                 <i class="fa fa-file-excel-o lineheight20 mgn-right6pr fontsize45 padright30"></i>
-                <div class="title fontsize15 mgr-top15 fontsize20 coloraquo">32,000,000</div>
+                <div class="title fontsize15 mgr-top15 fontsize20 coloraquo">32,000,000</div>*@
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 count mgn-top0">12</div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 title mgr-top5">Create Quotation</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+                    <i class="fa fa-file-excel-o lineheight50 fontsize45 padright50 height0 mobilepad-left80 mobilemgr-left22 mask"></i>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 title fontsize20 coloraquo">32,000,000</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12"></div>
+                        <div class="col-lg-8 col-md-3 col-sm-12 col-xs-12 mobilepadleft5"></div>
+                    </div>
+                </div>
             </div>
         </a><!--/.info-box-->
     </div><!--/.col-->
@@ -94,39 +119,55 @@
                 <div class="count">4</div>
                 <div class="title">Waiting Approve</div>*@
 
-                @*<div class="count mgn-top0 mgn-bottom10 mgn-left5 floatleft mgn-right35">4</div>
-                <div class="title pad-top3">Waiting Approve</div>
-                <i class="fa fa-check lineheight20 mgn-right6pr fontsize45 padright30"></i>
-                <div class="title fontsize15 mgn-top22 fontsize20 colordarkcyan">20,000,000</div>*@
-
-                <div class="count mgn-top0 mgn-bottom10 mgn-left10 floatleft mgn-right37">4</div>
-                <div class="title pad-top3 mgn-left10">Waiting Approve</div>
-                <i class="fa fa-cubes lineheight20 mgn-right6pr fontsize45 padright30"></i>
-                @*<div class="title fontsize15 mgr-top9 fontsize20 colorburlywood">10,000,000</div>*@
-                <div class="title fontsize20 win colordarkcyan">20,000,000</div>
-                <div class="title fontsize15 winpersent colorwhite86 mgn-left10 mgr-top3">62.5%</div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 count mgn-top0 mobilepadleft10">4</div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 title mgr-top5">Waiting Approve</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+                        <i class="fa fa-cubes lineheight50 fontsize45 padright50 height0 mobilepad-left80 mobilemgr-left22 mask"></i>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 title fontsize20 colordarkcyan">20,000,000</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12"></div>
+                        <div class="col-lg-8 col-md-3 col-sm-12 col-xs-12 mobilepadleft5">62.5%</div>
+                    </div>
+                </div>
             </div>
         </a><!--/.info-box-->
     </div><!--/.col-->
 
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
         <a href="IndexQuotation3.aspx">
-            <div class="info-box dark-bg">
+            <div class="info-box black-bg">
                 @*<i class="fa fa-cubes"></i>
                 <div class="count">5</div>
                 <div class="title">Win</div>*@
 
-                @*<div class="count mgn-top0 mgn-bottom10 mgn-left5 floatleft mgn-right35">5</div>
-                <div class="title pad-top3">Win</div>
-                <i class="fa fa-cubes lineheight20 mgn-right6pr fontsize45 padright30"></i>
-                <div class="title fontsize15 mgn-top22 fontsize20 colorburlywood">10,000,000</div>*@
-
-                <div class="count mgn-top0 mgn-bottom10 mgn-left10 floatleft mgn-right37">5</div>
+                @*<div class="count mgn-top0 mgn-bottom10 mgn-left10 floatleft mgn-right37">5</div>
                 <div class="title pad-top3 mgn-left10">Win</div>
                 <i class="fa fa-cubes lineheight20 mgn-right6pr fontsize45 padright30"></i>
-                @*<div class="title fontsize15 mgr-top9 fontsize20 colorburlywood">10,000,000</div>*@
                 <div class="title fontsize20 win colorburlywood">10,000,000</div>
-                <div class="title fontsize15 winpersent colorwhite86 mgn-left10 mgr-top3">31.25%</div>
+                <div class="title fontsize15 winpersent colorwhite86 mgn-left10 mgr-top3">31.25%</div>*@
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 count mgn-top0 mobilepadleft10">5</div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 title mgr-top5">Win</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+                        <i class="fa fa-cubes lineheight50 fontsize45 padright50 height0 mobilepad-left80 mobilemgr-left22 mask"></i>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 title fontsize20 colorburlywood">10,000,000</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12"></div>
+                        <div class="col-lg-8 col-md-3 col-sm-12 col-xs-12 mobilepadleft5">31.25%</div>
+                    </div>
+                </div>
             </div>
         </a><!--/.info-box-->
     </div><!--/.col-->
@@ -138,11 +179,22 @@
                 <div class="count">3</div>
                 <div class="title">Loss</div>*@
 
-                <div class="count mgn-top0 mgn-bottom10 mgn-left10 floatleft mgn-right37">3</div>
-                <div class="title pad-top3 mgn-left10">Loss</div>
-                <i class="fa fa-cubes lineheight20 mgn-right10pr fontsize45 padright30"></i>
-                <div class="title fontsize15 mgr-top9 fontsize20 colorblack">2,000,000</div>
-                <div class="title fontsize15 mgr-top3 fontsize17 colorwhite86 mgn-left10">6.25%</div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 count mgn-top0 mobilepadleft10">3</div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 title mgr-top5">Loss</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+                        <i class="fa fa-cubes lineheight50 fontsize45 padright50 height0 mobilepad-left80 mobilemgr-left22 mask"></i>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 title fontsize20 colorblack">2,000,000</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12"></div>
+                        <div class="col-lg-8 col-md-3 col-sm-12 col-xs-12 mobilepadleft5">6.25%</div>
+                    </div>
+                </div>
             </div>
         </a><!--/.info-box-->
     </div><!--/.col-->
@@ -151,7 +203,7 @@
 
 <div class="row">
     <div class="col-lg-12 col-md-12">
-        <div class="col-lg-8 col-md-12">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2><i class="fa fa-desktop red"></i><strong>Monitoring</strong></h2>
@@ -161,135 +213,133 @@
                         <a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12">
-                    <div class="col-xs-6 col-sm-6">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label mgr-top7">From Date</label>
-                            <div class="col-sm-8">
-                                <div class="input-group date mgr-top10" id="datetimepicker1">
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">From Date</div>
+                            <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+                                <div class="input-group date" id="datetimepicker1">
                                     <input type="text" class="form-control" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label mgr-top7">To Date</label>
-                            <div class="col-sm-8">
-                                <div class="input-group date mgr-top10" id="datetimepicker2">
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">To Date</div>
+                            <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+                                <div class="input-group date" id="datetimepicker2">
                                     <input type="text" class="form-control" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <table class="table bootstrap-datatable countries">
-                        <thead>
-                            <tr>
-                                <th style="width: 36px">No.</th>
-                                <th class="sm-input" style="width: 71px">Code</th>
-                                <th class="sm-input" style="width: 152px">User</th>
-                                <th class="width90" style="width: 132px">Position</th>
-                                <th class="sm-input" style="width: 116px">Waiting Approve</th>
-                                <th style="width: 100px">Approved</th>
-                                <th>Progess</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="width: 36px">1</td>
-                                <td class="sm-input" style="width: 71px">Em001</td>
-                                <td class="sm-input" style="width: 152px">นายสมรักษ์ คำสิงห์</td>
-                                <td class="width90" style="width: 132px">Sale</td>
-                                <td class="sm-input" style="width: 116px">12</td>
-                                <td style="width: 100px">4</td>
-                                <td>
-                                    <div class="progress thin">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
+                    <div class="table-responsive">
+                        <table class="table bootstrap-datatable countries">
+                            <thead>
+                                <tr>
+                                    <th style="width: 36px">No.</th>
+                                    <th class="sm-input" style="width: 71px">Code</th>
+                                    <th class="sm-input" style="width: 152px">User</th>
+                                    <th class="width90" style="width: 132px">Position</th>
+                                    <th class="sm-input" style="width: 116px">Waiting Approve</th>
+                                    <th style="width: 100px">Approved</th>
+                                    <th>Progess</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width: 36px">1</td>
+                                    <td class="sm-input" style="width: 71px">Em001</td>
+                                    <td class="sm-input" style="width: 152px">นายสมรักษ์ คำสิงห์</td>
+                                    <td class="width90" style="width: 132px">Sale</td>
+                                    <td class="sm-input" style="width: 116px">12</td>
+                                    <td style="width: 100px">4</td>
+                                    <td>
+                                        <div class="progress thin">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
+                                            </div>
+                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
+                                            </div>
                                         </div>
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
+                                        <span class="sr-only">73%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 36px">2</td>
+                                    <td class="sm-input" style="width: 71px">Em002</td>
+                                    <td class="sm-input" style="width: 152px">นางสาวเพชรา เยาวราช</td>
+                                    <td class="width90" style="width: 132px">Sale</td>
+                                    <td class="sm-input" style="width: 116px">20</td>
+                                    <td style="width: 100px">2</td>
+                                    <td>
+                                        <div class="progress thin">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
+                                            </div>
+                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span class="sr-only">73%</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 36px">2</td>
-                                <td class="sm-input" style="width: 71px">Em002</td>
-                                <td class="sm-input" style="width: 152px">นางสาวเพชรา เยาวราช</td>
-                                <td class="width90" style="width: 132px">Sale</td>
-                                <td class="sm-input" style="width: 116px">20</td>
-                                <td style="width: 100px">2</td>
-                                <td>
-                                    <div class="progress thin">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
+                                        <span class="sr-only">73%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 36px">3</td>
+                                    <td class="sm-input" style="width: 71px">Em003</td>
+                                    <td class="sm-input" style="width: 152px">นายอาวุธ รุ่งรัตนาอุบล</td>
+                                    <td class="width90" style="width: 132px">Section Mgr.</td>
+                                    <td class="sm-input" style="width: 116px">3</td>
+                                    <td style="width: 100px">3</td>
+                                    <td>
+                                        <div class="progress thin">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                                            </div>
+                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100" style="width: 43%">
+                                            </div>
                                         </div>
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
+                                        <span class="sr-only">57%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 36px">4</td>
+                                    <td class="sm-input" style="width: 71px">Em004</td>
+                                    <td class="sm-input" style="width: 152px">นางสาวสมใจ สุขี</td>
+                                    <td class="width90" style="width: 132px">Division Mgr.</td>
+                                    <td class="sm-input" style="width: 116px">10</td>
+                                    <td style="width: 100px">1</td>
+                                    <td>
+                                        <div class="progress thin">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100" style="width: 93%">
+                                            </div>
+                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="7" aria-valuemin="0" aria-valuemax="100" style="width: 7%">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span class="sr-only">73%</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 36px">3</td>
-                                <td class="sm-input" style="width: 71px">Em003</td>
-                                <td class="sm-input" style="width: 152px">นายอาวุธ รุ่งรัตนาอุบล</td>
-                                <td class="width90" style="width: 132px">Section Mgr.</td>
-                                <td class="sm-input" style="width: 116px">3</td>
-                                <td style="width: 100px">3</td>
-                                <td>
-                                    <div class="progress thin">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                                        <span class="sr-only">93%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 36px">5</td>
+                                    <td class="sm-input" style="width: 71px">Em005</td>
+                                    <td class="sm-input" style="width: 152px">พิภัทรา คำนุช</td>
+                                    <td class="width90" style="width: 132px">Director</td>
+                                    <td class="sm-input" style="width: 116px">2</td>
+                                    <td style="width: 100px">7</td>
+                                    <td>
+                                        <div class="progress thin">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                            </div>
+                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                            </div>
                                         </div>
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100" style="width: 43%">
-                                        </div>
-                                    </div>
-                                    <span class="sr-only">57%</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 36px">4</td>
-                                <td class="sm-input" style="width: 71px">Em004</td>
-                                <td class="sm-input" style="width: 152px">นางสาวสมใจ สุขี</td>
-                                <td class="width90" style="width: 132px">Division Mgr.</td>
-                                <td class="sm-input" style="width: 116px">10</td>
-                                <td style="width: 100px">1</td>
-                                <td>
-                                    <div class="progress thin">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100" style="width: 93%">
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="7" aria-valuemin="0" aria-valuemax="100" style="width: 7%">
-                                        </div>
-                                    </div>
-                                    <span class="sr-only">93%</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 36px">5</td>
-                                <td class="sm-input" style="width: 71px">Em005</td>
-                                <td class="sm-input" style="width: 152px">พิภัทรา คำนุช</td>
-                                <td class="width90" style="width: 132px">Director</td>
-                                <td class="sm-input" style="width: 116px">2</td>
-                                <td style="width: 100px">7</td>
-                                <td>
-                                    <div class="progress thin">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                        </div>
-                                    </div>
-                                    <span class="sr-only">20%</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <span class="sr-only">20%</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
