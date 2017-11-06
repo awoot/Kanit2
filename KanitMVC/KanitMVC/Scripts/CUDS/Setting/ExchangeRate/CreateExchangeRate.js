@@ -10,7 +10,7 @@ $(document).ready(function () {
     });
     var dataObject = { typeID: '011' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -90,7 +90,7 @@ function CreateData() {
     var dataObject = { Currency: $("#cmbCurrency").find(":selected").val(), Rate: $("#txtRate").val(), CreateBy: 1, EditBy: 1 };
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/ExchangeRate',
+        url: 'http://localhost:13149/api/ExchangeRate',
         type: 'POST',
         data: dataObject,
         datatype: 'json',

@@ -20,13 +20,11 @@ $(document).ready(function () {
 function UserLogin() {
     //var userName = $("#txtUserName").val()
     //var Password = $("#txtPassword").val()
-    //alert(userName);
-    //alert(Password);
     var dataObject = { userName: $("#txtUserName").val()+'&'+$("#txtPassword").val() };
     $.ajax(
     {
-        //url: 'http://61.91.120.148/api/Login/Authenticate/' + userName + '/' + Password + '',
-        url: 'http://61.91.120.148/api/Login/',
+        //url: 'http://localhost:13149/api/Login/Authenticate/' + userName + '/' + Password + '',
+        url: 'http://localhost:13149/api/Login/',
         type: 'GET',
         async: false,
         data: dataObject,
@@ -73,7 +71,7 @@ function FirstPage() {
     {
         $.ajax(
     {
-        url: 'http://61.91.120.148/api/CheckAuthorization',
+        url: 'http://localhost:13149/api/CheckAuthorization',
         type: 'GET',
         async: false,
         data: dataObject,

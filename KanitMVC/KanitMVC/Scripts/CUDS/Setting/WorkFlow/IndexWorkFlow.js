@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/WorkFlow/',
+        url: 'http://localhost:13149/api/WorkFlow/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -86,7 +86,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: localStorage['WorkFlowID'] };
     $.ajax(
         {
-            url: 'http://61.91.120.148/api/WorkFlow/Delete',
+            url: 'http://localhost:13149/api/WorkFlow/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

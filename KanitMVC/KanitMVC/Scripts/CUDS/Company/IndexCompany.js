@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Company/',
+        url: 'http://localhost:13149/api/Company/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -87,7 +87,7 @@ function RowDelete(id) {
     var dataObject = { ID: id, EditBy: 2 };
     $.ajax(
         {
-            url: 'http://61.91.120.148/api/Company/Delete',
+            url: 'http://localhost:13149/api/Company/Delete',
             type: 'DELETE',
             data: dataObject,
             datatype: 'json',

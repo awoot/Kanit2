@@ -2,7 +2,7 @@ $(document).ready(function () {
     CheckAuthorization();
     var dataObject = { typeID: '015' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -21,7 +21,7 @@ $(document).ready(function () {
     });
     var dataObject = { typeID: '016' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     var dataObject = { typeID: '017' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -59,7 +59,7 @@ $(document).ready(function () {
         }
     });
     $.ajax({
-        url: 'http://61.91.120.148/api/SecurityProfile/',
+        url: 'http://localhost:13149/api/SecurityProfile/',
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -139,7 +139,7 @@ function CreateData() {
     var dataObject = { UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Quotation: $("#cmbQuotation").find(":selected").val(), SecurityID: $("#cmbSecurityProfile").find(":selected").val(), CreateBy: 1, EditBy: 1 };
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/User',
+        url: 'http://localhost:13149/api/User',
         type: 'POST',
         data: dataObject,
         async: false,

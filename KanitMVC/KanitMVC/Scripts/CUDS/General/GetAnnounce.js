@@ -3,7 +3,7 @@
     //alert("Test GetWarning");
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Announce/',
+        url: 'http://localhost:13149/api/Announce/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {

@@ -31,7 +31,7 @@ function SetRowIndex() {
 function GetColval() {
     var dataObject = { typeID: '012' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -52,7 +52,7 @@ function GetColval() {
 function GetEquationval() {
     var dataObject = { typeID: '013' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -112,7 +112,7 @@ function BrowseUser(ResultStep) {
 
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/User/',
+        url: 'http://localhost:13149/api/User/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
@@ -186,7 +186,7 @@ function BrowseUser(ResultStep) {
 function AddRowWorkFlowDetail() {
     var dataObject = { typeID: '012' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         //async: false,
@@ -207,7 +207,7 @@ function AddRowWorkFlowDetail() {
 
     var dataObject = { typeID: '013' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -329,7 +329,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://61.91.120.148/api/WorkFlow',
+       url: 'http://localhost:13149/api/WorkFlow',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -415,7 +415,7 @@ function Update(val) {
     var dataObject = { ID: WorkFlowID, FlowName: $("#txtFlowName").val(), FlowDetail: $("#txtFlowDetail").val(), Remark: $("#txtRemark").val(), StartDate: SDate, EndDate: EDate, EditBy: 1 };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/WorkFlow',
+            url: 'http://localhost:13149/api/WorkFlow',
             type: 'PUT',
             async: false,
             data: dataObject,
@@ -433,7 +433,7 @@ function Update(val) {
         var dataObject = { ID: WorkFlowID };
         $.ajax(
                 {
-                    url: 'http://61.91.120.148/api/WorkFlowDetail',
+                    url: 'http://localhost:13149/api/WorkFlowDetail',
                     type: 'DELETE',
                     async: false,
                     data: dataObject,
@@ -462,7 +462,7 @@ function Update(val) {
             if ($(this).find(".txtCondval1").val() != '') {
                 $.ajax(
                 {
-                    url: 'http://61.91.120.148/api/WorkFlowDetail',
+                    url: 'http://localhost:13149/api/WorkFlowDetail',
                     type: 'POST',
                     async: false,
                     data: dataObject,

@@ -6,7 +6,7 @@ $(document).ready(function () {
 function GetDepartment() {
     var dataObject = { typeID: '015' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -28,7 +28,7 @@ function GetDepartment() {
 function GetPosition() {
     var dataObject = { typeID: '016' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -50,7 +50,7 @@ function GetPosition() {
 function GetQuotation() {
     var dataObject = { typeID: '017' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -71,7 +71,7 @@ function GetQuotation() {
 }
 function GetSecurityProfile() {
     $.ajax({
-        url: 'http://61.91.120.148/api/SecurityProfile/',
+        url: 'http://localhost:13149/api/SecurityProfile/',
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -103,7 +103,7 @@ function GetData(val) {
     var dataObject = { ID: val}
     $.ajax(
    {
-       url: 'http://61.91.120.148/api/User',
+       url: 'http://localhost:13149/api/User',
        type: 'GET',
        async: false,
        data: dataObject,
@@ -138,7 +138,7 @@ function Update(val) {
     var dataObject = { ID: val, UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Quotation: $("#cmbQuotation").find(":selected").val(), SecurityID: SecurityID, EditBy: 2 };
         $.ajax(
         {
-            url: 'http://61.91.120.148/api/User',
+            url: 'http://localhost:13149/api/User',
             type: 'PUT',
             async: false,
             data: dataObject,

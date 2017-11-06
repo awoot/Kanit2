@@ -10,7 +10,7 @@ $(document).ready(function () {
     //});
     var dataObject = { typeID: '008' };
     $.ajax({
-        url: 'http://61.91.120.148/api/MasterService/',
+        url: 'http://localhost:13149/api/MasterService/',
         type: 'GET',
         dataType: 'json',
         data: dataObject,
@@ -95,7 +95,7 @@ function CreateData() {
     };
     $.ajax(
     {
-        url: 'http://61.91.120.148/api/Product',
+        url: 'http://localhost:13149/api/Product',
         type: 'POST',
         data: dataObject,
         datatype: 'json',
