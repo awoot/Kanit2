@@ -88,7 +88,7 @@ namespace KanitApi.DAL.Login
 
             if (string.IsNullOrEmpty(token))
             {
-                throw new Exception("can GenResetPasswordToken");
+                throw new Exception("can not find email");
             }
 
             return token;

@@ -14,7 +14,7 @@ namespace KanitApi.Providers
 {
     public class CommonProvider
     {
-        private static CommonProvider  _instance;
+        private static CommonProvider _instance;
 
         public static CommonProvider Instance
         {
@@ -47,22 +47,26 @@ namespace KanitApi.Providers
 
                 using (var read = comm.ExecuteReader())
                 {
-                    result = new UserObjectData
+                    while (read.Read())
                     {
-                        ID = read["Title"].ForceToInt32(),
-                        UserName = read["Subject"].ForceToString(),
-                        FirstName = read["Template"].ForceToString(),
-                        LastName = read["ContentData"].ForceToString(),
-                        Department = read["ContentData2"].ForceToString(),
-                        Position = read["ContentData3"].ForceToString(),
-                        Company = read["ContentData4"].ForceToString(),
-                        Email = read["ContentData5"].ForceToString(),
-                        SecurityID = read["ContentData5"].ForceToString(),
-                        CreateDate = read["ContentData5"].ForceToDate(),
-                        CreateBy = read["ContentData5"].ForceToInt32(),
-                        EditDate = read["ContentData5"].ForceToDateNull(),
-                        EditBy = read["ContentData5"].ForceToInt32(),
-                    };
+                        result = new UserObjectData
+                        {
+                            ID = read["ID"].ForceToInt32(),
+                            UserName = read["UserName"].ForceToString(),
+                            FirstName = read["FirstName"].ForceToString(),
+                            LastName = read["LastName"].ForceToString(),
+                            Department = read["Department"].ForceToString(),
+                            Position = read["Position"].ForceToString(),
+                            Company = read["Company"].ForceToString(),
+                            Email = read["Email"].ForceToString(),
+                            SecurityID = read["SecurityID"].ForceToString(),
+                            CreateDate = read["CreateDate"].ForceToDate(),
+                            CreateBy = read["CreateBy"].ForceToInt32(),
+                            EditDate = read["EditDate"].ForceToDateNull(),
+                            EditBy = read["EditBy"].ForceToInt32(),
+                        };
+                    }
+
                 }
             }
 
@@ -84,17 +88,20 @@ namespace KanitApi.Providers
 
                 using (var read = comm.ExecuteReader())
                 {
-                    result = new EmailTemplateObjectData
+                    while (read.Read())
                     {
-                        Title = read["Title"].ForceToString(),
-                        Subject = read["Subject"].ForceToString(),
-                        Template = read["Template"].ForceToString(),
-                        ContentData = read["ContentData"].ForceToString(),
-                        ContentData2 = read["ContentData2"].ForceToString(),
-                        ContentData3 = read["ContentData3"].ForceToString(),
-                        ContentData4 = read["ContentData4"].ForceToString(),
-                        ContentData5 = read["ContentData5"].ForceToString()
-                    };
+                        result = new EmailTemplateObjectData
+                        {
+                            Title = read["Title"].ForceToString(),
+                            Subject = read["Subject"].ForceToString(),
+                            Template = read["Template"].ForceToString(),
+                            ContentData = read["ContentData"].ForceToString(),
+                            ContentData2 = read["ContentData2"].ForceToString(),
+                            ContentData3 = read["ContentData3"].ForceToString(),
+                            ContentData4 = read["ContentData4"].ForceToString(),
+                            ContentData5 = read["ContentData5"].ForceToString()
+                        };
+                    }
                 }
             }
 
@@ -139,7 +146,7 @@ namespace KanitApi.Providers
         public void SendEmail(string from, string to, string cc, string bcc, string subject, string body)
         {
             // Command line argument must the the SMTP host.
-            SmtpClient client = new SmtpClient();
+            var client = new SmtpClient();
             client.Port = 587;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;

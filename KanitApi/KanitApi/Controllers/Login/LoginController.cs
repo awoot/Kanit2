@@ -34,5 +34,11 @@ namespace KanitApi.Controllers.Login
             var response = Logindb.Authenticate(str[0], str[1]);
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
+
+        [HttpGet]
+        public void SendEmailResetPassword(string email, string tmp)
+        {
+            Logindb.SendEmailResetPassword(email);
+        }
     }
 }
