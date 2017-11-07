@@ -36,7 +36,7 @@ namespace KanitApi.Controllers.Login
         }
 
         [HttpGet]
-        public void SendEmailResetPassword(string email, string tmp)
+        public void SendEmailResetPassword(string email)
         {
             Logindb.SendEmailResetPassword(email);
         }
