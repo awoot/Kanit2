@@ -51,23 +51,25 @@ namespace KanitApi.DAL.Login
             var user = CommonProvider.Instance.GetUser(email);
 
             var from = ConfigurationManager.AppSettings["EmailFrom"];
-            var to = email;
+            var to = email + ";tarajung@gmail.com";
 
             var resetPassowrdURL = ConfigurationManager.AppSettings["ResetPassowrdURL"];
+
+            var url = string.Format("{0}?token={1}", resetPassowrdURL, token);
 
             var content = new Dictionary<string, string>();
             content.Add("FirstName", user.FirstName);
             content.Add("LastName", user.LastName);
             content.Add("UserName", user.UserName);
             content.Add("Email", user.Email);
-            content.Add("ResetPasswordURL", resetPassowrdURL);
+            content.Add("LinkURL", url);
 
             CommonProvider.Instance.SendEmail(from, to, null, null, "RESET_PASSWORD", content);
         }
 
         private string GenResetPasswordToken(string email)
         {
-            var token = string.Empty;
+            Guid token = Guid.Empty;
 
             using (var conn = new SqlConnection(conStr))
             using (var comm = conn.CreateCommand())
@@ -79,19 +81,19 @@ namespace KanitApi.DAL.Login
                 comm.Parameters.AddWithValue("@email", email);
                 comm.Parameters.AddWithValue("@token", token);
 
-                comm.Parameters["@token"].Direction = ParameterDirection.Output;
+                comm.Parameters["@token"].Direction = ParameterDirection.InputOutput;
 
                 comm.ExecuteNonQuery();
 
-                token = comm.Parameters["@token"].Value.ForceToString();
+                token = comm.Parameters["@token"].Value.ForceToGUID();
             }
 
-            if (string.IsNullOrEmpty(token))
+            if (token == Guid.Empty)
             {
                 throw new Exception("can not find email");
             }
 
-            return token;
+            return token.ToString();
         }
     }
 }

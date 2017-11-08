@@ -10,6 +10,7 @@ using System.Data;
 using System.Json;
 using Newtonsoft.Json;
 using System.Web.Http.Cors;
+using KanitApi.Models.General;
 
 namespace KanitApi.Controllers.Login
 {
@@ -39,6 +40,12 @@ namespace KanitApi.Controllers.Login
         public void SendEmailResetPassword(string email)
         {
             Logindb.SendEmailResetPassword(email);
+        }
+
+        [HttpPost]
+        public void ResetPassword(ResetPasswordModels data)
+        {
+            
         }
     }
 }

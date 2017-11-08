@@ -18,5 +18,10 @@ namespace KanitMVC.Controllers
         {
             return View();
         }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
     }
 }

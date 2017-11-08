@@ -151,9 +151,7 @@ namespace KanitApi.Providers
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
             client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("user@gmail.com", "password");
+            client.Credentials = new System.Net.NetworkCredential("awoot.r@gmail.com", "weng4525016");
 
             var mm = new MailMessage();
             mm.From = new MailAddress(from);
@@ -188,6 +186,8 @@ namespace KanitApi.Providers
                 }
             }
 
+            mm.Subject = subject;
+            mm.Body = body;
             mm.BodyEncoding = UTF8Encoding.UTF8;
             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
             mm.IsBodyHtml = true;
