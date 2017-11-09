@@ -63,7 +63,7 @@ function GetData(val) {
                 var warningDate = new Date(data.Table[i].WarningDate);
                 html += '<tr>';
                 html += '<td class="">' + data.Table[i].RowNum + '</td>';
-                html += '<td class="">' + data.Table[i].Docver + '</td>';
+                html += '<td class="">' + data.Table[i].Docver + '</td>';       
                 html += '<td class="">' + data.Table[i].QuotationNo + '</td>';
                 html += '<td class="">' + data.Table[i].CompanyName + '</td>';
                 html += '<td class="">' + quotDate.getDate() + '/' + (quotDate.getMonth() + 1) + '/' + quotDate.getFullYear() + '</td>';

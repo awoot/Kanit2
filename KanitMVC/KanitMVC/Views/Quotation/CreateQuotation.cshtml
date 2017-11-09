@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "CreateQuotation";
+    ViewBag.Title = "Create Quotation";
 }
 
 @*<h2>CreateQuotation</h2>*@
@@ -13,7 +13,7 @@
         <h3 class="page-header">
             <i class="fa fa-file-text-o"></i> Quotation / new
         </h3>
-        <div class="col-xs-9 col-sm-10 col-lg-11">
+        <div class="col-xs-9 col-sm-10 col-lg-9">
             <div class="row m-bot15">
                 @*<a href="#" id="btnSave" class="btn btn-primary">Save</a>*@
                 @*<a href="IndexUser.aspx" id="btnDiscard" class="btn btn-danger">Discard</a>*@
@@ -21,9 +21,12 @@
                 <button type="button" id="btnSave" class="btn btn-warning" onclick="Isvalidate('Create', 'Quotation', 0)">Save Draft</button>
                 @*<button type="button" id="btnSave" class="btn btn-primary" onclick="CreateData()">Save</button>*@
                 <button type="button" id="btnDiscard" class="btn btn-danger" onclick="Redirect()">Discard</button>
-                <button type="button" id="btnRevise" class="btn btn-default" disabled>Revise<p id="verNo" class="revise"></p></button>
+                
                 <input type="hidden" id="hidDocver" />
             </div>
+        </div>
+        <div class="col-xs-3 col-sm-2 col-lg-3">
+            <button type="button" id="btnRevise" class="btn btn-default" disabled>Revise<p id="verNo" class="revise"></p></button>
         </div>
     </div>
 </div>
