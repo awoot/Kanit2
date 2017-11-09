@@ -95,5 +95,26 @@ namespace KanitApi.DAL.Login
 
             return token.ToString();
         }
+
+        public void ChangePassword(string token, string password)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspChangePassword";
+                comm.Parameters.AddWithValue("@token", token);
+                comm.Parameters.AddWithValue("@password", password);
+
+                var isComplete = comm.ExecuteScalar().ForceToInt32() > 0;
+
+                if(!isComplete)
+                {
+                    throw new Exception("ไม่สามารถเปลียนรหัสผ่านได้");
+                }
+            }
+        }
     }
 }

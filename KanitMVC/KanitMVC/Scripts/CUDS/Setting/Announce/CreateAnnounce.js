@@ -8,6 +8,10 @@ $(document).ready(function () {
         defaultDate: new Date(),
         format: 'DD/MM/YYYY'
     });
+    $('#dtWarningDateTo').datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY'
+    });
     var dataObject = { typeID: '019' };
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -34,9 +38,9 @@ $(document).on('click', '#close-preview', function () {
         function () {
             $('.image-preview').popover('show');
         },
-         function () {
-             $('.image-preview').popover('hide');
-         }
+        function () {
+            $('.image-preview').popover('hide');
+        }
     );
 });
 $(function () {
@@ -89,14 +93,39 @@ function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
     //alert($("#cmbAnnounceType").find(":selected").val());
     var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
-    var dataObject = { AnnounceTypeID: $("#cmbAnnounceType").find(":selected").val(), Description: $("#txtDescription").val(), WarningDate: warningDate, CreateBy: 1, EditBy: 1 };
-    $.ajax(
-    {
+    var warningDateTo = ChangeformatDate($("#txtWarningDateTo").val(), 1);
+
+    var dataObject = {
+        AnnounceTypeID: $("#cmbAnnounceType").find(":selected").val(),
+        Description: $("#txtDescription").val(),
+        WarningDate: warningDate,
+        WarningDateTo: warningDateTo,
+        Description: $("#txtDescription").val(),
+        CreateBy: 1,
+        EditBy: 1
+    };
+
+    var errMsg = "";
+    if (dataObject.Description == "") {
+        errMsg += "* Description\n";
+    }
+    if (dataObject.WarningDate == null) {
+        errMsg += "* Description\n";
+    }
+    if (dataObject.WarningDateTo == null) {
+        errMsg += "* Description\n";
+    }
+
+    if (errMsg != "") {
+        alert("require\n" + errMsg);
+        return;
+    }
+
+    $.ajax({
         url: 'http://localhost:13149/api/Announce',
         type: 'POST',
         data: dataObject,
         datatype: 'json',
-
         success: function (data) {
             //alert('Created Successfully');
             window.location.href = "../Announce/IndexAnnounce";
@@ -106,7 +135,7 @@ function CreateData() {
 }
 
 function convertFloat(str) {
-    
+
     $(str).val($(str).val().replace(',', '')).formatNumber({ format: "#,###.00", locale: "us" });
 }
 function Redirect() {

@@ -1,11 +1,10 @@
-﻿function GetWarning()
-{
+﻿function GetWarning() {
     //alert("Test GetWarning");
-    $.ajax(
-    {
+    $.ajax({
         url: 'http://localhost:13149/api/Announce/',
         type: 'GET',
         datatype: 'json',
+        data: { i: 0 },
         success: function (data) {
             data = JSON.parse(data);
 

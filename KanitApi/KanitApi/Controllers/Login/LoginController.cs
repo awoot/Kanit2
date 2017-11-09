@@ -45,7 +45,7 @@ namespace KanitApi.Controllers.Login
         [HttpPost]
         public void ResetPassword(ResetPasswordModels data)
         {
-            
+            Logindb.ChangePassword(data.Token, data.Password);
         }
     }
 }

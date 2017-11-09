@@ -2,6 +2,15 @@ $(document).ready(function () {
     CheckAuthorization();
     //GetExpenseGroup();
     //GetCurrency();
+
+    $('#dtWarningDate').datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY'
+    });
+    $('#dtWarningDateTo').datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY'
+    });
 });
 function GetAnnounceType() {
     var dataObject = { typeID: '019' };
@@ -35,54 +44,66 @@ function ControlEnable(Isview) {
         document.getElementById("cmbExpenseGroup").disabled = true;
     }
 }
-function GetData(val) { 
-    var dataObject = { ID: val}
+function GetData(val) {
+    var dataObject = { ID: val }
     $.ajax(
-   {
-       url: 'http://localhost:13149/api/Announce',
-       type: 'GET',
-       async: false,
-       data: dataObject,
-       datatype: 'json',
-       success: function (data) {
-           data = JSON.parse(data);
-           GetAnnounceType();
-           //alert("First "+$("#cmbAnnounceType").val());
-           //var rate = AddComma(parseFloat(data.Table[0].Rate).toFixed(2));
-           var warningDate = ChangeformatDate(data.Table[0].WarningDate, 0);
-           //alert(data.Table[0].ExpenseGroup);
-           $("#cmbAnnounceType").val(data.Table[0].AnnounceTypeID);
-           $("#txtDescription").val(data.Table[0].Description);
-           $("#txtWarningDate").val(warningDate);
-           //alert("Last " + $("#cmbAnnounceType").val());
-       },
-       error: function (msg) {
-           alert(msg);
-       }
+        {
+            url: 'http://localhost:13149/api/Announce',
+            type: 'GET',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                GetAnnounceType();
+                //alert("First "+$("#cmbAnnounceType").val());
+                //var rate = AddComma(parseFloat(data.Table[0].Rate).toFixed(2));
+                var warningDate = ChangeformatDate(data.Table[0].WarningDate, 0);
+                //alert(data.Table[0].ExpenseGroup);
+                $("#cmbAnnounceType").val(data.Table[0].AnnounceTypeID);
+                $("#txtDescription").val(data.Table[0].Description);
+                $("#txtWarningDate").val(warningDate);
+                //alert("Last " + $("#cmbAnnounceType").val());
+            },
+            error: function (msg) {
+                alert(msg);
+            }
 
-   });
+        });
 }
 function Update(val) {
     //var rate = $("#txtRate").val().replace(',', '');
     var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
-    var dataObject = { ID: val, Currency: $("#cmbAnnounceType").find(":selected").val(), Description: $("#txtDescription").val(), WarningDate: warningDate, EditBy: 2 };
-        $.ajax(
-        {
-            url: 'http://localhost:13149/api/Announce',
-            type: 'PUT',
-            async: false,
-            data: dataObject,
-            datatype: 'json',
+    var warningDateTo = ChangeformatDate($("#txtWarningDateTo").val(), 1);
+    //var dataObject = { ID: val, Currency: $("#cmbAnnounceType").find(":selected").val(), Description: $("#txtDescription").val(), WarningDate: warningDate, EditBy: 2 };
 
-            success: function (data) {
-                //alert('Update is completed');
-                Redirect();
-            }
-            ,
-            error: function (msg) {
-                alert(msg);
-            }
-        });
+    var dataObject = {
+        ID: val,
+        AnnounceTypeID: $("#cmbAnnounceType").find(":selected").val(),
+        Description: $("#txtDescription").val(),
+        WarningDate: warningDate,
+        WarningDateTo: warningDateTo,
+        Description: $("#txtDescription").val(),
+        CreateBy: 1,
+        EditBy: 1
+    };
+
+    $.ajax({
+        url: 'http://localhost:13149/api/Announce',
+        type: 'PUT',
+        async: false,
+        data: dataObject,
+        datatype: 'json',
+
+        success: function (data) {
+            //alert('Update is completed');
+            Redirect();
+        }
+        ,
+        error: function (msg) {
+            alert(msg);
+        }
+    });
 }
 function Redirect() {
     window.location.href = "../Announce/IndexAnnounce";

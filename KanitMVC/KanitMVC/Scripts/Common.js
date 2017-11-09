@@ -30,3 +30,11 @@ function getURLParameters(paramName) {
         return "No Parameters Found";
     }
 }
+
+function showLoading() {
+    kendo.ui.progress($("body"), true);
+}
+
+function hideLoading() {
+    kendo.ui.progress($("body"), false);
+}

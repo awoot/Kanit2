@@ -23,6 +23,7 @@ namespace KanitApi.DAL.Setting.Announce
                     cmd.Parameters.AddWithValue("@AnnounceTypeID", AnnounceModel.AnnounceTypeID);
                     cmd.Parameters.AddWithValue("@Description", AnnounceModel.Description);
                     cmd.Parameters.AddWithValue("@WarningDate", AnnounceModel.WarningDate);
+                    cmd.Parameters.AddWithValue("@WarningDateTo", AnnounceModel.WarningDateTo);
                     cmd.Parameters.AddWithValue("@CreateBy", AnnounceModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", AnnounceModel.EditBy);
                     conObj.Open();
@@ -51,6 +52,7 @@ namespace KanitApi.DAL.Setting.Announce
                     cmd.Parameters.AddWithValue("@AnnounceTypeID", AnnounceModel.AnnounceTypeID);
                     cmd.Parameters.AddWithValue("@Description", AnnounceModel.Description);
                     cmd.Parameters.AddWithValue("@WarningDate", AnnounceModel.WarningDate);
+                    cmd.Parameters.AddWithValue("@WarningDateTo", AnnounceModel.WarningDateTo);
                     cmd.Parameters.AddWithValue("@EditBy", AnnounceModel.EditBy);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();
@@ -148,5 +150,31 @@ namespace KanitApi.DAL.Setting.Announce
             }
         }
 
+        public DataSet Notification()
+        {
+            DataSet ds = null;
+            using (SqlConnection conObj = new SqlConnection(conStr))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("uspGetAnnounceNotification", conObj);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    conObj.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = cmd;
+                    ds = new DataSet();
+                    da.Fill(ds);
+                    return ds;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conObj.Close();
+                }
+            }
+        }
     }
 }

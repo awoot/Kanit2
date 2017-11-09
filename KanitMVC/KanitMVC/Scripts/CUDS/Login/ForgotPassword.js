@@ -13,23 +13,27 @@ $(document).ready(function () {
                 email: this.get("email")
             };
 
+            showLoading();
+
             $.ajax({
                 url: COMMON.WebAPIHostURL + '/api/Login/SendEmailResetPassword',
                 type: 'GET',
                 data: dataObject,
                 datatype: 'json',
                 success: function (data) {
-                    alert("please check email");
+                    hideLoading();
+                    alert("ระบบทำการส่ง email เพื่อใช้เปลียนรหัสผ่าน กรุณาตรวจสอบ email");
+                    window.location.href = COMMON.WebHostURL + "/Login";
                 },
                 error: function (msg) {
+                    hideLoading();
                     var err = JSON.parse(msg.responseText);
-
                     alert(err.ExceptionMessage);
                 }
             });            
         },
         onCancel: function () {
-            document.location.href = COMMON.HostURL;
+            document.location.href = COMMON.WebHostURL;
         }
     });
 

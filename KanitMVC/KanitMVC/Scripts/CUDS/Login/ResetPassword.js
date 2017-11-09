@@ -22,10 +22,11 @@ $(document).ready(function () {
             }
 
             var dataObject = {
-                NewPassword: newPassword,
-                VerifyPassword: verifyPassword,
+                Password: newPassword,
                 Token: getURLParameters("token")
             };
+
+            showLoading();
 
             $.ajax({
                 url: COMMON.WebAPIHostURL + "/api/Login/ResetPassword",
@@ -33,17 +34,19 @@ $(document).ready(function () {
                 data: dataObject,
                 datatype: 'json',
                 success: function (data) {
+                    hideLoading();
+                    alert("เปลียนรหัสผ่านเรียบร้อย ระบบจะทำการเปลียนไปหน้า Login อัตโนมัติ");
                     window.location.href = COMMON.WebHostURL + "/Login";
                 },
                 error: function (msg) {
+                    hideLoading();
                     var err = JSON.parse(msg.responseText);
-
                     alert(err.ExceptionMessage);
                 }
             });
         },
         onCancel: function () {
-            document.location.href = COMMON.HostURL;
+            document.location.href = COMMON.WebHostURL;
         }
     });
 

@@ -11,6 +11,7 @@ namespace KanitApi.Models.Setting.Announce
         public int AnnounceTypeID { get; set; }
         public string Description { get; set; }
         public DateTime WarningDate { get; set; }
+        public DateTime WarningDateTo { get; set; }
         public int CreateBy { get; set; }
         public int EditBy { get; set; }
     }
