@@ -49,7 +49,6 @@ function GetData(val) {
 
     //------------------------------------ Custom ------------------------------------
     var dataObject = { isLastVersion: val };
-    alert(val);
     $.ajax(
     {
         url: 'http://localhost:13149/api/Quotation/',
