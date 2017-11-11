@@ -53,5 +53,6 @@ namespace KanitApi.Controllers.Product.Stock
             var response = Productdb.DeleteData(ProductModel);
             return response;
         }
+        
     }
 }

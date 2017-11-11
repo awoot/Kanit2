@@ -1,3 +1,5 @@
+var vm = {};
+
 $(document).ready(function () {
     CheckAuthorization();
     $("#resultCompany").on("click", "tr", function (e) {
@@ -18,6 +20,69 @@ $(document).ready(function () {
     })
     //GetExpenseGroup();
     //GetCurrency();
+
+
+    var dataSource = {
+        Detail: [],
+        onAddDetail: function () {
+            var detail = this.get("Detail");
+
+            var tmp = {
+                No: detail.length + 1,
+                Product: null,
+                Description: "",
+                onSelectProduct: function (e) {
+                    var product = e.dataItem;
+                    var item = this;
+
+                    vm.onSelectProduct(item, product);
+                },
+                onDelete: function (e) {
+                    vm.onDeleteDetail(this);
+                }
+            };
+
+            detail.push(tmp);
+
+            this.set("Detail", []);
+            this.set("Detail", detail);
+        },
+        onSelectProduct: function (item, product) {
+            var detail = vm.get("Detail");
+
+            for (var i = 0; i < detail.length; i++) {
+                if (detail[i].uid == item.uid) {
+
+                    vm.set("Detail[" + i + "].Description", product.ProductDetail);
+
+
+                    break;
+                }
+            }
+        },
+        onDeleteDetail: function (item) {
+            var detail = vm.get("Detail");
+
+            var temp = [];
+
+            var runNo = 1;
+
+            for (var i = 0; i < detail.length; i++) {
+                if (detail[i].uid == item.uid) continue;
+
+                detail[i].No = runNo++;
+
+                temp.push(detail[i]);
+            }
+
+            vm.set("Detail", []);
+            vm.set("Detail", temp);
+        }
+    };
+
+    vm = kendo.observable(dataSource);
+
+    kendo.bind($("#divProductDetail"), vm);
 });
 function BrowseCompany() {
     $('th').click(function () {
@@ -57,37 +122,37 @@ function BrowseCompany() {
     //------------------------------------ Custom ------------------------------------
 
     $.ajax(
-    {
-        url: 'http://localhost:13149/api/Company/',
-        type: 'GET',
-        datatype: 'json',
-        success: function (data) {
-            data = JSON.parse(data);
-            var html = '<tbody>';
-            for (var i = 0; i < data.Table.length; i++) {
-                html += '<tr>';
-                html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
-                html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CompanyNameTH + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CompanyTypeName + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CustSegmentName + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CreditTermName + '</td>';
-                html += '</tr>';
-            }
-            html += '</tbody>';
-            document.getElementById("resultCompany").innerHTML = html;
+        {
+            url: 'http://localhost:13149/api/Company/',
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                var html = '<tbody>';
+                for (var i = 0; i < data.Table.length; i++) {
+                    html += '<tr>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
+                    html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CompanyNameTH + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CompanyTypeName + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CustSegmentName + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CreditTermName + '</td>';
+                    html += '</tr>';
+                }
+                html += '</tbody>';
+                document.getElementById("resultCompany").innerHTML = html;
 
-            //$('#tblCompany').paging({
-            //    limit: 30,
-            //    rowDisplayStyle: 'block',
-            //    activePage: 0,
-            //    rows: []
-            //});
-        },
-        error: function (msg) {
-            alert(msg)
-        }
-    });
+                //$('#tblCompany').paging({
+                //    limit: 30,
+                //    rowDisplayStyle: 'block',
+                //    activePage: 0,
+                //    rows: []
+                //});
+            },
+            error: function (msg) {
+                alert(msg)
+            }
+        });
 }
 function GetUnit() {
     var dataObject = { typeID: '008' };
@@ -133,8 +198,7 @@ function GetCurrency() {
         }
     });
 }
-function GetRate()
-{
+function GetRate() {
     var CurrencyID = $('#cmbCurrency:last').find(":selected").val();
     var dataObject = { ID: parseInt(CurrencyID) };
     $.ajax({
@@ -180,8 +244,7 @@ function CalAmount() {
 
 //    });
 //}
-function GetVat()
-{
+function GetVat() {
     var dataObject = { typeID: '018' };
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -241,33 +304,33 @@ function BrowseProduct() {
     //------------------------------------ Custom ------------------------------------
 
     $.ajax(
-    {
-        url: 'http://localhost:13149/api/Product/',
-        type: 'GET',
-        datatype: 'json',
-        success: function (data) {
-            data = JSON.parse(data);
-            var html = '<tbody>';
-            for (var i = 0; i < data.Table.length; i++) {
-                var date = new Date(data.Table[i].UpdateDate);
-                var sellingPrice = AddComma(parseFloat(data.Table[i].SellingPrice).toFixed(2));
-                html += '<tr>';
-                html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
-                html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].ProductCode + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].UnitName + '</td>';
-                html += '<td data-dismiss="modal">' + sellingPrice + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].Remain + '</td>';
-                html += '</tr>';
-            }
-            html += '</tbody>';
-            document.getElementById("resultProduct").innerHTML = html;
+        {
+            url: 'http://localhost:13149/api/Product/',
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                var html = '<tbody>';
+                for (var i = 0; i < data.Table.length; i++) {
+                    var date = new Date(data.Table[i].UpdateDate);
+                    var sellingPrice = AddComma(parseFloat(data.Table[i].SellingPrice).toFixed(2));
+                    html += '<tr>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
+                    html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].ProductCode + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].UnitName + '</td>';
+                    html += '<td data-dismiss="modal">' + sellingPrice + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].Remain + '</td>';
+                    html += '</tr>';
+                }
+                html += '</tbody>';
+                document.getElementById("resultProduct").innerHTML = html;
 
-        },
-        error: function (msg) {
-            alert(msg)
-        }
-    });
+            },
+            error: function (msg) {
+                alert(msg)
+            }
+        });
 }
 
 function GetIncoTerm() {
@@ -372,37 +435,37 @@ function BrowseQuotation() {
     //------------------------------------ Custom ------------------------------------
 
     $.ajax(
-    {
-        url: 'http://localhost:13149/api/Quotation/',
-        type: 'GET',
-        datatype: 'json',
-        success: function (data) {
-            data = JSON.parse(data);
-            var html = '<tbody>';
-            for (var i = 0; i < data.Table.length; i++) {
-                html += '<tr>';
-                html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
-                html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].QuotationNameTH + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].QuotationTypeName + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CustSegmentName + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CreditTermName + '</td>';
-                html += '</tr>';
-            }
-            html += '</tbody>';
-            document.getElementById("resultQuotation").innerHTML = html;
+        {
+            url: 'http://localhost:13149/api/Quotation/',
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                var html = '<tbody>';
+                for (var i = 0; i < data.Table.length; i++) {
+                    html += '<tr>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
+                    html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].QuotationNameTH + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].QuotationTypeName + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CustSegmentName + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CreditTermName + '</td>';
+                    html += '</tr>';
+                }
+                html += '</tbody>';
+                document.getElementById("resultQuotation").innerHTML = html;
 
-            //$('#tblQuotation').paging({
-            //    limit: 30,
-            //    rowDisplayStyle: 'block',
-            //    activePage: 0,
-            //    rows: []
-            //});
-        },
-        error: function (msg) {
-            alert(msg)
-        }
-    });
+                //$('#tblQuotation').paging({
+                //    limit: 30,
+                //    rowDisplayStyle: 'block',
+                //    activePage: 0,
+                //    rows: []
+                //});
+            },
+            error: function (msg) {
+                alert(msg)
+            }
+        });
 }
 
 function GetDocversion() {
@@ -424,120 +487,120 @@ function ControlEnable(Isview) {
         document.getElementById("cmbExpenseGroup").disabled = true;
     }
 }
-function GetData(val) { 
-    var dataObject = { ID: val}
+function GetData(val) {
+    var dataObject = { ID: val }
     $.ajax(
-   {
-       url: 'http://localhost:13149/api/Quotation',
-       type: 'GET',
-       async: false,
-       data: dataObject,
-       datatype: 'json',
-       success: function (data) {
-           data = JSON.parse(data);
-           GetIncoTerm();
-           GetState();
-           GetSeller();
-           GetVat();
-           var quotationDate = ChangeformatDate(data.Table[0].QuotationDate, 0);
-           var warningDate = ChangeformatDate(data.Table[0].WarningDate, 0);
-            $("#txtQuotationNo").val(data.Table[0].QuotationNo);
-            $("#txtCustomerName").val(data.Table[0].CompanyName);
-            $("#hidCompID").val(data.Table[0].CompID);
-            $("#txtYourRef").val(data.Table[0].Ref);
-            $("#txtQuotationDate").val(quotationDate);
-            $("#txtValidity").val(data.Table[0].Validity);
-            $("#txtDelivery").val(data.Table[0].DeliveryTime);
-            $("#txtPaymentTerm").val(data.Table[0].PaymentTerm);
-            $("#txtWarningDate").val(warningDate);
-            $("#cmbIncoTerm").val(data.Table[0].IncoTerm);
-            $("#txtIcoTermDetail").val(data.Table[0].IncoDetail);
-            $("#txtDiscount").val(data.Table[0].Discount);
-            $("#cmbSeller").val(data.Table[0].Seller);
-            $("#cmbState").val(data.Table[0].State);
-           //FileData: '';
-           //CostSheet: '';
-            $("#txtReason").val(data.Table[0].Reason);
-            $("#txtRemark").val(data.Table[0].Remark);
-            //alert(data.Table[0].Vat);
-            $("#cmbVat").val(data.Table[0].Vat);
-            //alert("Docver "+data.Table[0].Docver);
-            $("#hidDocver").val(data.Table[0].Docver);
-            document.getElementById("verNo").innerHTML = "("+ data.Table[0].Docver +")";
-           // =================================================================================== Description
-            if (data.Table1.length > 0) {
-                $('th').click(function () {
-                    var table = $(this).parents('table').eq(0)
-                    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-                    this.asc = !this.asc
-                    if (!this.asc) { rows = rows.reverse() }
-                    for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
-                })
-                function comparer(index) {
-                    return function (a, b) {
-                        var valA = getCellValue(a, index), valB = getCellValue(b, index)
-                        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        {
+            url: 'http://localhost:13149/api/Quotation',
+            type: 'GET',
+            async: false,
+            data: dataObject,
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                GetIncoTerm();
+                GetState();
+                GetSeller();
+                GetVat();
+                var quotationDate = ChangeformatDate(data.Table[0].QuotationDate, 0);
+                var warningDate = ChangeformatDate(data.Table[0].WarningDate, 0);
+                $("#txtQuotationNo").val(data.Table[0].QuotationNo);
+                $("#txtCustomerName").val(data.Table[0].CompanyName);
+                $("#hidCompID").val(data.Table[0].CompID);
+                $("#txtYourRef").val(data.Table[0].Ref);
+                $("#txtQuotationDate").val(quotationDate);
+                $("#txtValidity").val(data.Table[0].Validity);
+                $("#txtDelivery").val(data.Table[0].DeliveryTime);
+                $("#txtPaymentTerm").val(data.Table[0].PaymentTerm);
+                $("#txtWarningDate").val(warningDate);
+                $("#cmbIncoTerm").val(data.Table[0].IncoTerm);
+                $("#txtIcoTermDetail").val(data.Table[0].IncoDetail);
+                $("#txtDiscount").val(data.Table[0].Discount);
+                $("#cmbSeller").val(data.Table[0].Seller);
+                $("#cmbState").val(data.Table[0].State);
+                //FileData: '';
+                //CostSheet: '';
+                $("#txtReason").val(data.Table[0].Reason);
+                $("#txtRemark").val(data.Table[0].Remark);
+                //alert(data.Table[0].Vat);
+                $("#cmbVat").val(data.Table[0].Vat);
+                //alert("Docver "+data.Table[0].Docver);
+                $("#hidDocver").val(data.Table[0].Docver);
+                document.getElementById("verNo").innerHTML = "(" + data.Table[0].Docver + ")";
+                // =================================================================================== Description
+                if (data.Table1.length > 0) {
+                    $('th').click(function () {
+                        var table = $(this).parents('table').eq(0)
+                        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+                        this.asc = !this.asc
+                        if (!this.asc) { rows = rows.reverse() }
+                        for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+                    })
+                    function comparer(index) {
+                        return function (a, b) {
+                            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+                        }
                     }
-                }
-                function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
+                    function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
 
-                //filter
-                $("#txtSearchAddress").keyup(function () {
-                    $("#resultDescription").find("tr").hide();
-                    var data = this.value.split(" ");
-                    var jo = $("#resultDescription").find("tr");
-                    $.each(data, function (i, v) {
-                        //jo = jo.filter("*:contains('" + v + "')");
-                        jo = jo.filter(function () {
-                            return $(this).text().toLowerCase().indexOf(v.toLowerCase()) > -1;
+                    //filter
+                    $("#txtSearchAddress").keyup(function () {
+                        $("#resultDescription").find("tr").hide();
+                        var data = this.value.split(" ");
+                        var jo = $("#resultDescription").find("tr");
+                        $.each(data, function (i, v) {
+                            //jo = jo.filter("*:contains('" + v + "')");
+                            jo = jo.filter(function () {
+                                return $(this).text().toLowerCase().indexOf(v.toLowerCase()) > -1;
+                            });
                         });
-                    });
-                    jo.show();
+                        jo.show();
 
-                }).focus(function () {
-                    this.value = "";
-                    $(this).css({ "color": "black" });
-                    $(this).unbind('focus');
-                }).css({ "color": "#C0C0C0" });
+                    }).focus(function () {
+                        this.value = "";
+                        $(this).css({ "color": "black" });
+                        $(this).unbind('focus');
+                    }).css({ "color": "#C0C0C0" });
 
-                var html = '<tbody>';
-                for (var i = 0; i < data.Table1.length; i++) {
-                    var amount = AddComma(parseFloat(data.Table1[i].Amount).toFixed(2));
-                    html += '<tr class="RowCal">';
-                    html += '<td class="">' + data.Table1[i].RowNum + '</td>';
-                    html += '<td class="">' + data.Table1[i].LineNum + '</td>';
-                    html += '<td class="">' + data.Table1[i].Description + '</td>';
-                    html += '<td class="">' + data.Table1[i].Quantity + '</td>';
-                    html += '<td class="">' + data.Table1[i].UnitName + '</td>';
-                    html += '<td class="">' + data.Table1[i].UnitPrice + '</td>';
-                    html += '<td class="">' + data.Table1[i].CurrencyName + '</td>';
-                    html += '<td class="width50"><input class="txtDetailAmount form-control width100 text-right" type="text" id="txtDetailAmount" value="' + amount + '"></td>';
-                    html += '<td><div class="btn-group widthmax">';
-                    html += '<a class="btn btn-success" href="#ModalDescription" data-toggle="modal" onclick="GetDataDescription(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
-                    html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation Description'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
-                    html += '</div></td>';
-                    html += '</tr>';
+                    var html = '<tbody>';
+                    for (var i = 0; i < data.Table1.length; i++) {
+                        var amount = AddComma(parseFloat(data.Table1[i].Amount).toFixed(2));
+                        html += '<tr class="RowCal">';
+                        html += '<td class="">' + data.Table1[i].RowNum + '</td>';
+                        html += '<td class="">' + data.Table1[i].LineNum + '</td>';
+                        html += '<td class="">' + data.Table1[i].Description + '</td>';
+                        html += '<td class="">' + data.Table1[i].Quantity + '</td>';
+                        html += '<td class="">' + data.Table1[i].UnitName + '</td>';
+                        html += '<td class="">' + data.Table1[i].UnitPrice + '</td>';
+                        html += '<td class="">' + data.Table1[i].CurrencyName + '</td>';
+                        html += '<td class="width50"><input class="txtDetailAmount form-control width100 text-right" type="text" id="txtDetailAmount" value="' + amount + '"></td>';
+                        html += '<td><div class="btn-group widthmax">';
+                        html += '<a class="btn btn-success" href="#ModalDescription" data-toggle="modal" onclick="GetDataDescription(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
+                        html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation Description'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
+                        html += '</div></td>';
+                        html += '</tr>';
+                    }
+                    html += '</tbody>';
+                    document.getElementById("resultDescription").innerHTML = html;
                 }
-                html += '</tbody>';
-                document.getElementById("resultDescription").innerHTML = html;
-            }
-            if (data.Table3.length > 0) {
-                var SubTotal = AddComma(parseFloat(data.Table3[0].SubTotal).toFixed(2));
-                var Total = AddComma(parseFloat(data.Table3[0].Total).toFixed(2));
-                var Vat = AddComma(parseFloat(data.Table3[0].Vat).toFixed(2));
-                var NetTotal = AddComma(parseFloat(data.Table3[0].NetTotal).toFixed(2));
-                $("#txtSubTotal").val(SubTotal);
-                $("#txtTotal").val(Total);
-                $("#txtVal").val(Vat);
-                $("#txtNetTotal").val(NetTotal);
+                if (data.Table3.length > 0) {
+                    var SubTotal = AddComma(parseFloat(data.Table3[0].SubTotal).toFixed(2));
+                    var Total = AddComma(parseFloat(data.Table3[0].Total).toFixed(2));
+                    var Vat = AddComma(parseFloat(data.Table3[0].Vat).toFixed(2));
+                    var NetTotal = AddComma(parseFloat(data.Table3[0].NetTotal).toFixed(2));
+                    $("#txtSubTotal").val(SubTotal);
+                    $("#txtTotal").val(Total);
+                    $("#txtVal").val(Vat);
+                    $("#txtNetTotal").val(NetTotal);
+                }
+
+            },
+            error: function (msg) {
+                alert(msg);
             }
 
-       },
-       error: function (msg) {
-           alert(msg);
-       }
-
-   });
+        });
 }
 function GetDataDescription(QuoDetailID) {
     //alert("GetDataAddress");
@@ -547,38 +610,38 @@ function GetDataDescription(QuoDetailID) {
     if (quoDetailID > 0) {
         var dataObject = { ID: quoDetailID }
         $.ajax(
-       {
-           url: 'http://localhost:13149/api/QuotationDetail',
-           type: 'GET',
-           async: false,
-           data: dataObject,
-           datatype: 'json',
-           success: function (data) {
-               data = JSON.parse(data);
-               GetUnit();
-               GetCurrency();
+            {
+                url: 'http://localhost:13149/api/QuotationDetail',
+                type: 'GET',
+                async: false,
+                data: dataObject,
+                datatype: 'json',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    GetUnit();
+                    GetCurrency();
 
-               $("#hidQuoDetailID").val(data.Table[0].ID);
-               $("#hidProductID").val(data.Table[0].ProductID);
-               $("#txtDescription").val(data.Table[0].Description);
-               $("#txtQuantity").val(data.Table[0].Quantity);
-               $("#cmbUnit").val(data.Table[0].Unit);
-               $("#txtUnitPrice").val(data.Table[0].UnitPrice);
-               $("#cmbCurrency").val(data.Table[0].Currency);
-               $("#txtRate").val(data.Table[0].Rate);
-               //$("#txtAmount").val(data.Table[0].Amount);
-               $('#txtProductCodepopup').val(data.Table[0].ProductCode);
-               CalAmount();
-           },
-           error: function (msg) {
-               alert(msg);
-           }
+                    $("#hidQuoDetailID").val(data.Table[0].ID);
+                    $("#hidProductID").val(data.Table[0].ProductID);
+                    $("#txtDescription").val(data.Table[0].Description);
+                    $("#txtQuantity").val(data.Table[0].Quantity);
+                    $("#cmbUnit").val(data.Table[0].Unit);
+                    $("#txtUnitPrice").val(data.Table[0].UnitPrice);
+                    $("#cmbCurrency").val(data.Table[0].Currency);
+                    $("#txtRate").val(data.Table[0].Rate);
+                    //$("#txtAmount").val(data.Table[0].Amount);
+                    $('#txtProductCodepopup').val(data.Table[0].ProductCode);
+                    CalAmount();
+                },
+                error: function (msg) {
+                    alert(msg);
+                }
 
-       });
+            });
     }
     else {
         //alert("New Address");
-        
+
         $('#cmbUnit').find("option").remove();
         GetUnit();
         GetCurrency();
@@ -624,7 +687,7 @@ function Update(val) {
         Docver: $("#hidDocver").val(),
         CreateBy: 1, EditBy: 1
     };
-        $.ajax(
+    $.ajax(
         {
             url: 'http://localhost:13149/api/Quotation',
             type: 'PUT',
@@ -641,7 +704,7 @@ function Update(val) {
                 alert(msg);
             }
         });
-        window.location.href = "../Quotation/IndexQuotation";
+    window.location.href = "../Quotation/IndexQuotation";
 }
 function SaveQuotationDetail(val) {
     var ID = $("#hidQuoDetailID").val();
@@ -657,22 +720,22 @@ function SaveQuotationDetail(val) {
             Amount: $("#txtAmount").val(), EditBy: 2
         };
         $.ajax(
-        {
-            url: 'http://localhost:13149/api/QuotationDetail',
-            type: 'PUT',
-            async: false,
-            data: dataObject,
-            datatype: 'json',
+            {
+                url: 'http://localhost:13149/api/QuotationDetail',
+                type: 'PUT',
+                async: false,
+                data: dataObject,
+                datatype: 'json',
 
-            success: function (data) {
-                //alert('Update is completed');
-                //Redirect();
-            }
-            ,
-            error: function (msg) {
-                alert(msg);
-            }
-        });
+                success: function (data) {
+                    //alert('Update is completed');
+                    //Redirect();
+                }
+                ,
+                error: function (msg) {
+                    alert(msg);
+                }
+            });
         //alert(QuoteID);
         window.location.href = "../Quotation/EditQuotation?id=" + $("#hidQuoteID").val();
     }
@@ -686,16 +749,16 @@ function SaveQuotationDetail(val) {
             Amount: $("#txtAmount").val(), CreateBy: 1, EditBy: 1
         };
         $.ajax(
-        {
-            url: 'http://localhost:13149/api/QuotationDetail',
-            type: 'POST',
-            data: dataObject,
-            datatype: 'json',
-            async: false,
-            success: function (data) {
-            },
-            error: function (msg) { alert(msg); }
-        });
+            {
+                url: 'http://localhost:13149/api/QuotationDetail',
+                type: 'POST',
+                data: dataObject,
+                datatype: 'json',
+                async: false,
+                success: function (data) {
+                },
+                error: function (msg) { alert(msg); }
+            });
         window.location.href = "../Quotation/EditQuotation?id=" + $("#hidQuoteID").val();
     }
 

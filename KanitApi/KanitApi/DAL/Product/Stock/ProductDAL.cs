@@ -157,5 +157,26 @@ namespace KanitApi.DAL.Product.Stock
                 }
             }
         }
+        
+        public DataSet Search(string keyword)
+        {
+            DataSet ds = new DataSet();
+
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspGetProductByKeyword";
+
+                comm.Parameters.AddWithValue("@keyword", keyword);
+
+                adp.Fill(ds);
+            }
+
+            return ds;
+        }
     }
 }

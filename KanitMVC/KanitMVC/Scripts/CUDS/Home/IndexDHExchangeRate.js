@@ -86,7 +86,7 @@ $(document).ready(function () {
 
 
     $.ajax({
-        url: 'http://localhost:13149/api/Dashboard/',
+        url: 'http://localhost:13149/api/Common/InfoDashboard',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
