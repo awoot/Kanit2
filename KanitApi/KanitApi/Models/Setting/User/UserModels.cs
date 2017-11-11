@@ -22,5 +22,7 @@ namespace KanitApi.Models.Setting.User
         public int SecurityID { get; set; }
         public int CreateBy { get; set; }
         public int EditBy { get; set; }
+
+        public int Section { get; set; }
     }
 }

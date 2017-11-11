@@ -69,6 +69,26 @@ function GetQuotation() {
         }
     });
 }
+function GetSection() {
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        data: { typeID: '021' },
+        async: false,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbSection').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbSection').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
 function GetSecurityProfile() {
     $.ajax({
         url: 'http://localhost:13149/api/SecurityProfile/',
@@ -78,7 +98,7 @@ function GetSecurityProfile() {
         async: false,
         success: function (data) {
             data = JSON.parse(data);
-        $('#cmbSecurityProfile').find("option").remove();
+            $('#cmbSecurityProfile').find("option").remove();
             $.each(data.Table, function (i) {
                 $('#cmbSecurityProfile').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Profile));
             });
@@ -89,6 +109,7 @@ function GetSecurityProfile() {
         }
     });
 }
+
 function ControlEnable(Isview) {
     //var Isview = val;
     if (Isview) {
@@ -99,44 +120,58 @@ function ControlEnable(Isview) {
         document.getElementById("cmbExpenseGroup").disabled = true;
     }
 }
-function GetData(val) { 
-    var dataObject = { ID: val}
-    $.ajax(
-   {
-       url: 'http://localhost:13149/api/User',
-       type: 'GET',
-       async: false,
-       data: dataObject,
-       datatype: 'json',
-       success: function (data) {
-           data = JSON.parse(data);
-           GetDepartment();
-           GetPosition();
-           GetQuotation();
-           GetSecurityProfile()
-           //alert("First "+$("#cmbCurrency").val());
-           //alert(data.Table[0].ExpenseGroup);
-           $("#cmbDepartment").val(data.Table[0].Department);
-           $("#cmbPosition").val(data.Table[0].Position);
-           $("#cmbQuotation").val(data.Table[0].Quotation);
-           $("#cmbSecurityProfile").val(data.Table[0].SecurityID);
-           $("#txtUserName").val(data.Table[0].UserName);
-           $("#txtFirstName").val(data.Table[0].FirstName);
-           $("#txtLastName").val(data.Table[0].LastName);
-           $("#txtEmail").val(data.Table[0].Email);
-           $("#txtPassword").val(data.Table[0].Password);
-           //alert("Last " + $("#cmbCurrency").val());
-       },
-       error: function (msg) {
-           alert(msg);
-       }
+function GetData(val) {
+    var dataObject = { ID: val }
+    $.ajax({
+        url: 'http://localhost:13149/api/User',
+        type: 'GET',
+        async: false,
+        data: dataObject,
+        datatype: 'json',
+        success: function (data) {
+            data = JSON.parse(data);
+            GetDepartment();
+            GetPosition();
+            GetQuotation();
+            GetSection();
+            GetSecurityProfile()
+            //alert("First "+$("#cmbCurrency").val());
+            //alert(data.Table[0].ExpenseGroup);
+            $("#cmbDepartment").val(data.Table[0].Department);
+            $("#cmbPosition").val(data.Table[0].Position);
+            $("#cmbQuotation").val(data.Table[0].Quotation);
+            $("#cmbSection").val(data.Table[0].Section);
+            $("#cmbSecurityProfile").val(data.Table[0].SecurityID);
+            $("#txtUserName").val(data.Table[0].UserName);
+            $("#txtFirstName").val(data.Table[0].FirstName);
+            $("#txtLastName").val(data.Table[0].LastName);
+            $("#txtEmail").val(data.Table[0].Email);
+            $("#txtPassword").val(data.Table[0].Password);
+            //alert("Last " + $("#cmbCurrency").val());
+        },
+        error: function (msg) {
+            alert(msg);
+        }
 
-   });
+    });
 }
 function Update(val) {
     var SecurityID = parseInt($("#cmbSecurityProfile").find(":selected").val());
-    var dataObject = { ID: val, UserName: $("#txtUserName").val(), Password: $("#txtPassword").val(), FirstName: $("#txtFirstName").val(), LastName: $("#txtLastName").val(), Email: $("#txtEmail").val(), Department: $("#cmbDepartment").find(":selected").val(), Position: $("#cmbPosition").find(":selected").val(), Quotation: $("#cmbQuotation").find(":selected").val(), SecurityID: SecurityID, EditBy: 2 };
-        $.ajax(
+    var dataObject = {
+        ID: val,
+        UserName: $("#txtUserName").val(),
+        Password: $("#txtPassword").val(),
+        FirstName: $("#txtFirstName").val(),
+        LastName: $("#txtLastName").val(),
+        Email: $("#txtEmail").val(),
+        Department: $("#cmbDepartment").find(":selected").val(),
+        Position: $("#cmbPosition").find(":selected").val(),
+        Quotation: $("#cmbQuotation").find(":selected").val(),
+        Section: $("#cmbSection").find(":selected").val(),
+        SecurityID: SecurityID,
+        EditBy: 2
+    };
+    $.ajax(
         {
             url: 'http://localhost:13149/api/User',
             type: 'PUT',

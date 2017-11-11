@@ -194,5 +194,24 @@ namespace KanitApi.Providers
 
             client.Send(mm);
         }
+
+        public DataSet GetInfoDashboard()
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspGetInfoDashBoard";
+
+                var ds = new DataSet();
+
+                adp.Fill(ds);
+
+                return ds;
+            }
+        }
     }
 }

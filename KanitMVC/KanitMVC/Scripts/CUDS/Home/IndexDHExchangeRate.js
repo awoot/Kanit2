@@ -40,33 +40,66 @@ $(document).ready(function () {
 
     //------------------------------------ Custom ------------------------------------
 
-    $.ajax(
-    {
+    $.ajax({
         url: 'http://localhost:13149/api/ExchangeRate/',
         type: 'GET',
         datatype: 'json',
         success: function (data) {
             data = JSON.parse(data);
-            var html = '<tbody>';
+            //var html = '<tbody>';
+            //for (var i = 0; i < data.Table.length; i++) {
+            //    var date = new Date(data.Table[i].UpdateDate);
+            //    html += '<tr>';
+            //    html += '<td class="">' + data.Table[i].CurrencyName + '</td>';
+            //    html += '<td class="">' + AddComma(parseFloat(data.Table[i].Rate).toFixed(2)) + '</td>';
+            //    html += '</tr>';
+            //}
+            //html += '</tbody>';
+            //document.getElementById("resultDHExchangeRate").innerHTML = html;
+
+            var items = [];
+
             for (var i = 0; i < data.Table.length; i++) {
-                var date = new Date(data.Table[i].UpdateDate);
-                html += '<tr>';
-                html += '<td class="">' + data.Table[i].CurrencyName + '</td>';
-                html += '<td class="">' + AddComma(parseFloat(data.Table[i].Rate).toFixed(2)) + '</td>';
-                html += '</tr>';
+                if (data.Table[i].IsHistory) continue;
+
+                data.Table[i].UpdateDate = new Date(data.Table[i].UpdateDate);
+                items.push(data.Table[i]);
             }
-            html += '</tbody>';
-            document.getElementById("resultDHExchangeRate").innerHTML = html;
-            
+
+            vm = kendo.observable({
+                dataSource: items
+            });
+
             //$('#tblExchangeRate').paging({
             //    limit: 30,
             //    rowDisplayStyle: 'block',
             //    activePage: 0,
             //    rows: []
             //});
+
+            kendo.bind($("#tblDHExchangeRate"), vm);
         },
         error: function (msg) {
             alert(msg)
         }
     });
+
+
+    $.ajax({
+        url: 'http://localhost:13149/api/Dashboard/',
+        type: 'GET',
+        datatype: 'json',
+        success: function (data) {
+            data = JSON.parse(data);
+
+            var vmInfoDashboard = kendo.observable(data);
+
+            kendo.bind($("#divInfoDashBoard"), vmInfoDashboard);
+        },
+        error: function (msg) {
+            alert(msg)
+        }
+    });
+
+
 });

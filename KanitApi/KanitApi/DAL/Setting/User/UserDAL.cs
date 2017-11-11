@@ -31,6 +31,7 @@ namespace KanitApi.DAL.Setting.User
                     cmd.Parameters.AddWithValue("@SecurityID", UserModel.SecurityID);
                     cmd.Parameters.AddWithValue("@CreateBy", UserModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", UserModel.EditBy);
+                    cmd.Parameters.AddWithValue("@Section", UserModel.Section);
                     conObj.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -64,6 +65,7 @@ namespace KanitApi.DAL.Setting.User
                     cmd.Parameters.AddWithValue("@Email", UserModel.Email);
                     cmd.Parameters.AddWithValue("@SecurityID", UserModel.SecurityID);
                     cmd.Parameters.AddWithValue("@EditBy", UserModel.EditBy);
+                    cmd.Parameters.AddWithValue("@Section", UserModel.Section);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();
                     return result;

@@ -3,6 +3,14 @@
     ViewBag.Title = "IndexExchangeRate";
 }
 
+@Styles.Render("~/Content/kendo/styles/kendo.common-bootstrap.min.css")
+@Styles.Render("~/Content/kendo/styles/kendo.bootstrap.min.css")
+
+
+@Scripts.Render("~/Scripts/kendo/js/kendo.ui.core.min.js")
+
+@Scripts.Render("~/Scripts/Common.js")
+
 @*<h2>IndexExchangeRate</h2>*@
 <script src="@Url.Content("~/Scripts/CUDS/Setting/ExchangeRate/IndexExchangeRate.js")" type="text/javascript"></script>
 <div class="modal fade" id="ShowDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
@@ -22,7 +30,7 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Exchange Rate</div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                        <label class="checkboxstyle"><input type="checkbox" class="mgr5" value="">History</label>
+                        <label class="checkboxstyle"><input id="chkHistory" type="checkbox" class="mgr5" value="">History</label>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 padding7">
                         <input id="txtSearchExchangeRate" class="form-control" placeholder="Search" type="text">
@@ -40,20 +48,7 @@
                             <th><i class="icon_cogs"></i> Action</th>
                         </tr>
                     </thead>
-                    <tbody id="resultExchangeRate">
-                        @*<tr>
-                            <td>1</td>
-                            <td>Euro</td>
-                            <td>32.5</td>
-                            <td>7/8/2017</td>
-                            <td>
-                                <div class="btn-group widthmax">
-                                    <a class="btn btn-success" href="EditExchangeRate.aspx"><i class="icon_pencil-edit_alt"></i></a>
-                                    <a class="btn btn-danger" data-toggle="modal" href="#ConfirmDelete"><i class="icon_close_alt2"></i></a>
-                                </div>
-                            </td>
-                        </tr>*@
-                    </tbody>
+                    <tbody data-bind="source: dataSource" data-template="templateExchangeRate"></tbody>
                 </table>
             </div>
             <div class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -77,4 +72,25 @@
             </div>
         </section>
     </div>
-</div>  
+</div>
+
+<script id="templateExchangeRate" type="text/template">
+    # if(IsDisplay) { #
+    <tr>
+        <td><span data-bind="text: RowNum" /></td>
+        <td><span data-bind="text: CurrencyName" /></td>
+        <td><span data-format="n2" data-bind="text: Rate" /></td>
+        <td><span data-format="dd/MM/yyyy hh:mm" data-bind="text: UpdateDate" /></td>
+        <td>
+            # if(IsHistory == 0) { #
+            <div>
+                <a class="btn btn-success" href="/ExchangeRate/EditExchangeRate?id=#: ID #"><i class="icon_pencil-edit_alt"></i></a>
+                <a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog('Delete','ExchangeRate','#:ID #')"><i class="icon_close_alt2"></i></a>
+            </div>
+            # } #
+        </td>
+    </tr>
+    # } else { #
+    <tr data-temp="true"></tr>
+    # } #
+</script>

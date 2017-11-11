@@ -135,6 +135,7 @@ namespace KanitApi.DAL.Setting.ExchangeRate
                     da.SelectCommand = cmd;
                     ds = new DataSet();
                     da.Fill(ds);
+
                     return ds;
                 }
                 catch (Exception ex)

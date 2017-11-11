@@ -68,12 +68,12 @@ $(document).ready(function () {
             html += '</tbody>';
             document.getElementById("resultUser").innerHTML = html;
             
-            $('#tblUser').paging({
-                limit: 30,
-                rowDisplayStyle: 'block',
-                activePage: 0,
-                rows: []
-            });
+            //$('#tblUser').paging({
+            //    limit: 30,
+            //    rowDisplayStyle: 'block',
+            //    activePage: 0,
+            //    rows: []
+            //});
         },
         error: function (msg) {
             alert(msg)
