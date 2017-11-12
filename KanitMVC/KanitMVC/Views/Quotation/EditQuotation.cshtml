@@ -203,6 +203,18 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-xs-6 col-sm-12">
+                            <div class="col-xs-6 col-sm-5 padleft0">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Currency</label>
+                                    <div class="col-sm-7">
+                                        <select id="cmbCurrency" class="form-control m-bot15"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-lg-12">
                             <section class="panel">
                                 <!--<div class="col-lg-6"></div>-->
@@ -220,40 +232,60 @@
                                         <table style="width: 100%" id="tblCompany" class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 50px;">No.</th>
-                                                    <th style="width: 150px;">Line No.</th>
+                                                    <th style="width: 40px;">No.</th>
+                                                    <th style="width: 80px;">Line No.</th>
+                                                    <th style="width: 130px;">Product</th>
                                                     <th style="">Description</th>
-                                                    <th style="width: 80px;">Quantity</th>
-                                                    <th style="width: 80px;">Unit</th>
-                                                    <th style="width: 80px;" class="text-center">Unit Price</th>
-                                                    <th style="width: 80px;" class="text-center">Currency</th>
-                                                    <th style="width: 80px;" class="text-center">Amount</th>
+                                                    <th style="width: 90px;">Quantity</th>
+                                                    <th style="width: 60px;">Unit</th>
+                                                    <th style="width: 100px;" class="text-center">Unit Price</th>
+                                                    <th style="width: 100px;" class="text-center">Amount</th>
                                                     <th style="width: 80px;"><i class="icon_cogs"></i> Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody data-template="productDetailTemplate" data-bind="source: Detail"></tbody>
-                                            <tfoot>
+                                            <tbody>
                                                 <tr>
                                                     <td colspan="7">Sub Total</td>
-                                                    <td colspan="2" class="width50"><input class="form-control width100 text-right" type="text" id="txtSubTotal" value="0"></td>
+                                                    <td colspan="2" class="width50">
+                                                        <label class="width100 text-right" data-format="n2" data-bind="text: SubTotal" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="7">Discount</td>
-                                                    <td colspan="2" class="width50"><input class="form-control width100 text-right" type="text" id="txtDiscount" value="0"></td>
+                                                    <td colspan="2" class="width100">
+                                                        <input data-role="numerictextbox"
+                                                               data-format="n0"
+                                                               data-decimals="0"
+                                                               data-spinners="false"
+                                                               class="kanitNumeric"
+                                                               style="width: 100px;"
+                                                               data-bind="value: Discount, events: {change: onChangeDiscount}" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="7">Total</td>
-                                                    <td colspan="2" class="width50"><input class="form-control width100 text-right" type="text" id="txtTotal" value="0"></td>
+                                                    <td colspan="2" class="width100">
+                                                        <label class="width100 text-right" data-format="n2" data-bind="text: Total" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="7"><div class="floatleft mgn-right5">Vat(%)</div><select id="cmbVat" class="form-control width60"></select></td>
-                                                    <td colspan="2" class="width50"><input class="form-control width100 text-right" type="text" id="txtVal" value="0"></td>
+                                                    <td colspan="7">
+                                                        <div class="floatleft mgn-right5">Vat(%)</div>
+                                                        <select id="cmbVat" class="form-control width60"
+                                                                data-bind="value: Vat, events: {change: onChangeVat}"></select>
+                                                    </td>
+                                                    <td colspan="2" class="width100">
+                                                        <label class="width100 text-right" data-format="n2" type="text" data-bind="text: VatValue" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="7" class="fontbold">Net Total</td>
-                                                    <td colspan="2" class="width50"><input class="form-control width100 text-right" type="text" id="txtNetTotal" value="0"></td>
+                                                    <td colspan="2" class="width100">
+                                                        <label class="width100 text-right" data-format="n2" data-bind="text: NetTotal" />
+                                                    </td>
                                                 </tr>
-                                            </tfoot>
+                                            </tbody>
                                             <tbody id="resultDescription">
                                                 @*<tr>
                                                         <td>1</td>
@@ -554,30 +586,63 @@
 
 <script id="productDetailTemplate" type="text/template">
     <tr>
-        <td data-bind="text: No"></td>
         <td>
-            <input data-role="selectproduct" style="width: 150px;" data-bind="value: Product, events: {select: onSelectProduct}" />
+            <label data-bind="text: No"></label>
+        </td>
+        <td>
+            <input class="form-control m-bot15"
+                   data-bind="value: LineNo"
+                   style="width: 80px;" />
+        </td>
+        <td>
+            <input data-role="selectproduct"
+                   data-bind="value: Product, events: {change: onChangeProduct}"
+                   style="width: 130px;" />
         </td>
         <td>
             <textarea style="height: 80px;" class="form-control m-bot15" data-bind="value: Description"></textarea>
         </td>
         <td>
-            <input class="form-control m-bot15" data-bind="value: Quantity" style="width: 60px;" />
+            <input data-role="numerictextbox"
+                   data-format="n0"
+                   data-decimals="0"
+                   data-spinners="false"
+                   class="kanitNumeric"
+                   data-bind="value: Quantity, events: {change: onUpdateAmount}"
+                   style="width: 90px;" />
         </td>
         <td>
-            <input class="form-control m-bot15" data-bind="value: Unit" style="width: 60px;" />
+            <label data-bind="text: Product.UnitName"></label>
         </td>
         <td>
-            <input class="form-control m-bot15" data-bind="value: UnitPrice" style="width: 60px;" />
+            <label data-bind="text: UnitPrice"
+                   style="width: 100px; display: none"></label>
+
+            <input data-role="numerictextbox"
+                   data-spinners="false"
+                   data-format="n2"
+                   class="kanitNumeric"
+                   data-bind="value: _UnitPrice, events: {change: onChangeUnitPrice}"
+                   style="width: 80px;" />
         </td>
         <td>
-            <input class="form-control m-bot15" data-bind="value: Currency" style="width: 60px;" />
-        </td>
-        <td>
-            <input class="form-control m-bot15" data-bind="value: Amount" style="width: 60px;" />
+            <label data-format="n2"
+                   data-bind="text: Amount"
+                   style="width: 100px; text-align: right"></label>
         </td>
         <td>
             <a class="btn btn-danger" href="\#" data-toggle="modal" data-bind="events: {click: onDelete}"><i class="icon_close_alt2"></i></a>
         </td>
     </tr>
 </script>
+
+<style>
+    .kanitNumeric .k-numeric-wrap {
+        padding-right: 5px;
+    }
+
+    .kanitNumeric .k-input {
+        text-align: right;
+        padding-right: 5px;
+    }
+</style>

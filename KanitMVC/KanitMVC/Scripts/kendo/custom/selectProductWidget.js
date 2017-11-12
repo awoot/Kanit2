@@ -50,7 +50,7 @@
         },
         options: {
             name: "SelectProduct",
-            delay: 500,
+            delay: 300,
             minLength: 3,
             dataTextField: "ProductCode",
 

@@ -1,5 +1,8 @@
 var vm = {};
 
+var dataSourceUnit = [];
+var dataSourceExchangeRage = [];
+
 $(document).ready(function () {
     CheckAuthorization();
     $("#resultCompany").on("click", "tr", function (e) {
@@ -21,40 +24,126 @@ $(document).ready(function () {
     //GetExpenseGroup();
     //GetCurrency();
 
+    //
+    $('#cmbCurrency').on("change", function (e) {
+        var detail = vm.get("Detail");
+        for (var i = 0; i < detail.length; i++) {
+            detail[i].trigger("change", { field: "UnitPrice" });
+            detail[i].trigger("change", { field: "Amount" });
+            detail[i].trigger("change", { field: "_UnitPrice" });
+        }
+
+    });
+
+    //Get Unit
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        data: { typeID: '008' },
+        success: function (data) {
+            data = JSON.parse(data);
+
+            dataSourceUnit = data.Table;
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+
+    //Get ExchangeRate
+    $.ajax({
+        url: 'http://localhost:13149/api/ExchangeRate/',
+        type: 'GET',
+        datatype: 'json',
+        success: function (data) {
+            data = JSON.parse(data);
+            var items = [];
+
+            for (var i = 0; i < data.Table.length; i++) {
+                if (data.Table[i].IsHistory) continue;
+
+                data.Table[i].UpdateDate = new Date(data.Table[i].UpdateDate);
+                items.push(data.Table[i]);
+            }
+
+            dataSourceExchangeRage = items;
+        },
+        error: function (msg) {
+            alert(msg)
+        }
+    });
 
     var dataSource = {
         Detail: [],
+        Summary: [],
         onAddDetail: function () {
             var detail = this.get("Detail");
 
             var tmp = {
                 No: detail.length + 1,
+                LineNo: "",
                 Product: null,
                 Description: "",
-                onSelectProduct: function (e) {
-                    var product = e.dataItem;
+                Quantity: null,
+                UnitPrice: null,
+                Unit: null,
+                DataSourceUnit: dataSourceUnit,
+                onChangeProduct: function (e) {
                     var item = this;
 
-                    vm.onSelectProduct(item, product);
+                    vm.onSelectProduct(item);
+
+                    this.trigger("change", { field: "UnitPrice" });
+                    this.trigger("change", { field: "Amount" });
+                    this.trigger("change", { field: "_UnitPrice" });
+                },
+                onChangeUnitPrice: function (e) {
+                    this.trigger("change", { field: "Amount" });
                 },
                 onDelete: function (e) {
                     vm.onDeleteDetail(this);
+                },
+                Amount: function () {
+                    var amont = this.Quantity * this._UnitPrice;
+                    this._Amount = amont.toFixed(2)*1.0;
+
+                    if (isNaN(this._Amount)) this._Amount = 0;
+
+                    vm.trigger("change", { field: "SubTotal" });
+                    vm.trigger("change", { field: "Total" });
+                    vm.trigger("change", { field: "VatValue" });
+                    vm.trigger("change", { field: "NetTotal" });
+
+                    return this._Amount;
+                },
+                UnitPrice: function (e) {
+                    if (this.Product == null) return;
+                    var fromRate = this.Product.Currency;
+                    var toRate = $("#cmbCurrency").val();
+
+                    var price = ExchangeRate(fromRate, toRate, this.Product.StandardCost);
+
+                    this._UnitPrice = (price).toFixed(2) * 1.0;
+
+                    return this._UnitPrice;
+                },
+                onUpdateAmount: function () {
+                    this.trigger("change", { field: "Amount" });
                 }
             };
 
             detail.push(tmp);
-
-            this.set("Detail", []);
-            this.set("Detail", detail);
         },
-        onSelectProduct: function (item, product) {
+        onSelectProduct: function (item) {
+            if (item.Product == null) return;
+
             var detail = vm.get("Detail");
 
             for (var i = 0; i < detail.length; i++) {
                 if (detail[i].uid == item.uid) {
-
-                    vm.set("Detail[" + i + "].Description", product.ProductDetail);
-
+                    vm.set("Detail[" + i + "].Description", item.Product.ProductDetail);
 
                     break;
                 }
@@ -77,6 +166,44 @@ $(document).ready(function () {
 
             vm.set("Detail", []);
             vm.set("Detail", temp);
+        },
+        Discount: 0,
+        Vat: 0,
+        VatValue: function () {
+            this._VatValue = this._SubTotal * (this.Vat / 100);
+            return this._VatValue;
+        },
+        SubTotal: function () {
+            var detail = vm.get("Detail");
+
+            var sum = 0;
+
+            for (var i = 0; i < detail.length; i++) {
+                sum += detail[i]._Amount;
+            }
+
+            this._SubTotal = sum;
+
+            return this._SubTotal;
+        },
+        Total: function () {
+            this._Total = this._SubTotal - this.Discount;
+
+            return this._Total;
+        },
+        NetTotal: function () {
+            this._NetTotal = this._Total + this._VatValue;
+            return this._NetTotal;
+        },
+        onChangeVat: function () {
+            this.trigger("change", { field: "Total" });
+            this.trigger("change", { field: "VatValue" });
+            this.trigger("change", { field: "NetTotal" });
+        },
+        onChangeDiscount: function () {
+            this.trigger("change", { field: "Total" });
+            this.trigger("change", { field: "VatValue" });
+            this.trigger("change", { field: "NetTotal" });
         }
     };
 
@@ -84,6 +211,25 @@ $(document).ready(function () {
 
     kendo.bind($("#divProductDetail"), vm);
 });
+
+function ExchangeRate(from, to, value) {
+    var fromRate = {};
+    var toRate = {};
+
+    for (var i = 0; i < dataSourceExchangeRage.length; i++) {
+        if (from == dataSourceExchangeRage[i].Currency) {
+            fromRate = dataSourceExchangeRage[i];
+        }
+        if (to == dataSourceExchangeRage[i].Currency) {
+            toRate = dataSourceExchangeRage[i];
+        }
+    }
+
+    var baseValue = value * fromRate.Rate;
+
+    return baseValue / toRate.Rate;
+}
+
 function BrowseCompany() {
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
@@ -175,29 +321,29 @@ function GetUnit() {
         }
     });
 }
-function GetCurrency() {
-    //var dataObject = { typeID: '011' };
-    $.ajax({
-        url: 'http://localhost:13149/api/ExchangeRate/',
-        type: 'GET',
-        dataType: 'json',
-        async: false,
-        //data: dataObject,
-        success: function (data) {
-            data = JSON.parse(data);
-            //alert('test');
-            $('#cmbCurrency').find("option").remove();
-            $.each(data.Table, function (i) {
-                $('#cmbCurrency').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].CurrencyName));
-            });
-            $('#cmbCurrency').find('option:first-child').attr('selected', true);
-            GetRate();
-        },
-        failure: function () {
-            alert('Error');
-        }
-    });
-}
+//function GetCurrency() {
+//    //var dataObject = { typeID: '011' };
+//    $.ajax({
+//        url: 'http://localhost:13149/api/ExchangeRate/',
+//        type: 'GET',
+//        dataType: 'json',
+//        async: false,
+//        //data: dataObject,
+//        success: function (data) {
+//            data = JSON.parse(data);
+//            //alert('test');
+//            $('#cmbCurrency').find("option").remove();
+//            $.each(data.Table, function (i) {
+//                $('#cmbCurrency').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].CurrencyName));
+//            });
+//            $('#cmbCurrency').find('option:first-child').attr('selected', true);
+//            GetRate();
+//        },
+//        failure: function () {
+//            alert('Error');
+//        }
+//    });
+//}
 function GetRate() {
     var CurrencyID = $('#cmbCurrency:last').find(":selected").val();
     var dataObject = { ID: parseInt(CurrencyID) };
@@ -257,7 +403,8 @@ function GetVat() {
             //alert('test');
             $('#cmbVat').find("option").remove();
             $.each(data.Table, function (i) {
-                $('#cmbVat').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                //$('#cmbVat').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+                $('#cmbVat').append($('<option></option>').val(data.Table[i].Detail).html(data.Table[i].Detail));
             });
             $('#cmbVat').find('option:first-child').attr('selected', true);
         },
@@ -354,6 +501,30 @@ function GetIncoTerm() {
         }
     });
 }
+
+
+function GetCurrency() {
+    var dataObject = { typeID: '011' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbCurrency').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbCurrency').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+
 function GetState() {
     var dataObject = { typeID: '009' };
     $.ajax({
@@ -498,6 +669,7 @@ function GetData(val) {
             datatype: 'json',
             success: function (data) {
                 data = JSON.parse(data);
+                GetCurrency();
                 GetIncoTerm();
                 GetState();
                 GetSeller();
