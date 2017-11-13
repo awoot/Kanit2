@@ -194,5 +194,34 @@ function ConfirmDialog(val, topic, id) {
         //html += '</div></div></div>';
         //document.getElementById("ShowDialog").innerHTML = html;
     }
-
+    else if (val == "SaveDraftQuotation") {
+        $('#ShowDialog').modal('show');
+        var html = '<div class="modal-dialog modal-dialog-info">';
+        html += '<div class="modal-content">';
+        html += '<div class="modal-header modal-header-info">';
+        html += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        html += '<h4 class="modal-title">' + topic + '</h4>';
+        html += '</div>';
+        html += '<div class="modal-body modal-body-info">Do you want to save draft?</div>';
+        html += '<div class="modal-footer">';
+        html += '<button type="button" class="btn btn-danger" onclick="SaveDraftQuotation(' + id + ')">Confirm</button>';
+        html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        html += '</div></div></div>';
+        document.getElementById("ShowDialog").innerHTML = html;
+    }
+    else if (val == "SubmitQuotation") {
+        $('#ShowDialog').modal('show');
+        var html = '<div class="modal-dialog modal-dialog-info">';
+        html += '<div class="modal-content">';
+        html += '<div class="modal-header modal-header-info">';
+        html += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        html += '<h4 class="modal-title">' + topic + '</h4>';
+        html += '</div>';
+        html += '<div class="modal-body modal-body-info">Do you want to send to approve?</div>';
+        html += '<div class="modal-footer">';
+        html += '<button type="button" class="btn btn-danger" onclick="SubmitQuotation(' + id + ')">Confirm</button>';
+        html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        html += '</div></div></div>';
+        document.getElementById("ShowDialog").innerHTML = html;
+    }
 }

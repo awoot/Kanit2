@@ -29,5 +29,6 @@ namespace KanitApi.Models.Product.Stock
         public int CreateBy { get; set; }
 
         public int EditBy { get; set; }
+
     }
 }

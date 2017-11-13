@@ -83,8 +83,36 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@Vat", QuotationModel.Vat);
                     cmd.Parameters.AddWithValue("@Docver", QuotationModel.Docver);
                     cmd.Parameters.AddWithValue("@EditBy", QuotationModel.EditBy);
+                    cmd.Parameters.AddWithValue("@Currency", QuotationModel.Currency);
+
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();
+
+                    if (QuotationModel.Detail != null)
+                    {
+                        cmd.CommandText = "uspClearQuotationDetail";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@quoteID", QuotationModel.ID);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = "uspUpdateQuotationDetail";
+                        foreach (var detail in QuotationModel.Detail)
+                        {
+                            cmd.Parameters.Clear();
+
+                            cmd.Parameters.AddWithValue("@quoteID", QuotationModel.ID);
+                            cmd.Parameters.AddWithValue("@productID", detail.ProductID);
+                            cmd.Parameters.AddWithValue("@lineNum", detail.LineNum);
+                            cmd.Parameters.AddWithValue("@description", detail.Description);
+                            cmd.Parameters.AddWithValue("@quantity", detail.Quantity);
+                            cmd.Parameters.AddWithValue("@unit", detail.Unit);
+                            cmd.Parameters.AddWithValue("@unitPrice", detail.UnitPrice);
+                            cmd.Parameters.AddWithValue("@currency", QuotationModel.Currency);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
                     return result;
                 }
                 catch (Exception ex)

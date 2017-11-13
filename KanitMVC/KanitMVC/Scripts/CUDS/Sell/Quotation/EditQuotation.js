@@ -3,7 +3,7 @@ var vm = {};
 var dataSourceUnit = [];
 var dataSourceExchangeRage = [];
 
-$(document).ready(function () {
+function form_onInit(id) {
     CheckAuthorization();
     $("#resultCompany").on("click", "tr", function (e) {
         $("#txtCustomerName").val($(this).find("td:eq(2)").text());
@@ -16,6 +16,7 @@ $(document).ready(function () {
         $("#hidCompID").val($(this).find("td:eq(1)").text());
         //alert($("#hidCompID").val());
     })
+
     $("#resultProduct").on("click", "tr", function (e) {
         $("#txtProductCodepopup").val($(this).find("td:eq(2)").text());
         $("#hidProductID").val($(this).find("td:eq(1)").text());
@@ -56,6 +57,7 @@ $(document).ready(function () {
     $.ajax({
         url: 'http://localhost:13149/api/ExchangeRate/',
         type: 'GET',
+        async: false,
         datatype: 'json',
         success: function (data) {
             data = JSON.parse(data);
@@ -75,20 +77,34 @@ $(document).ready(function () {
         }
     });
 
+    GetData(id);
+}
+
+$(document).ready(function () {
+
+});
+
+function bindProductDetail(quotation, items) {
+
+    var xxx = 0;
+
+    var isBindComplete = false;
+
     var dataSource = {
         Detail: [],
         Summary: [],
-        onAddDetail: function () {
-            var detail = this.get("Detail");
+        onAddDetail: function (e, data) {
+            var detail = vm.get("Detail");
 
             var tmp = {
                 No: detail.length + 1,
                 LineNo: "",
                 Product: null,
                 Description: "",
-                Quantity: null,
-                UnitPrice: null,
-                Unit: null,
+                Quantity: 0,
+                _UnitPrice: 0,
+                Discount: 0,
+                Unit: "",
                 DataSourceUnit: dataSourceUnit,
                 onChangeProduct: function (e) {
                     var item = this;
@@ -107,7 +123,7 @@ $(document).ready(function () {
                 },
                 Amount: function () {
                     var amont = this.Quantity * this._UnitPrice;
-                    this._Amount = amont.toFixed(2)*1.0;
+                    this._Amount = amont.toFixed(2) * 1.0;
 
                     if (isNaN(this._Amount)) this._Amount = 0;
 
@@ -119,11 +135,14 @@ $(document).ready(function () {
                     return this._Amount;
                 },
                 UnitPrice: function (e) {
-                    if (this.Product == null) return;
-                    var fromRate = this.Product.Currency;
-                    var toRate = $("#cmbCurrency").val();
+                    if (!isBindComplete) return this._UnitPrice;
 
-                    var price = ExchangeRate(fromRate, toRate, this.Product.StandardCost);
+                    if (this.Product == null) return;
+
+                    var fromRate = this.Product.Currency * 1;
+                    var toRate = $("#cmbCurrency").val() * 1;
+
+                    price = ExchangeRate(fromRate, toRate, this.Product.StandardCost)
 
                     this._UnitPrice = (price).toFixed(2) * 1.0;
 
@@ -133,6 +152,23 @@ $(document).ready(function () {
                     this.trigger("change", { field: "Amount" });
                 }
             };
+
+            if (typeof (data) != "undefined") {
+                tmp.Product = {
+                    ID: data.ProductID,
+                    ProductCode: data.ProductCode,
+                    Unit: data.Unit,
+                    StandardCost: data.UnitPrice,
+                    UnitName: data.UnitName,
+                    Currency: data.Currency
+                };
+
+                tmp.Description = data.Description;
+
+                tmp.LineNo = data.LineNum;
+                tmp._UnitPrice = data.UnitPrice;
+                tmp.Quantity = data.Quantity;
+            }
 
             detail.push(tmp);
         },
@@ -144,7 +180,6 @@ $(document).ready(function () {
             for (var i = 0; i < detail.length; i++) {
                 if (detail[i].uid == item.uid) {
                     vm.set("Detail[" + i + "].Description", item.Product.ProductDetail);
-
                     break;
                 }
             }
@@ -167,10 +202,11 @@ $(document).ready(function () {
             vm.set("Detail", []);
             vm.set("Detail", temp);
         },
-        Discount: 0,
-        Vat: 0,
+        Discount: quotation.Discount,
+        Vat: quotation.Vat,
         VatValue: function () {
-            this._VatValue = this._SubTotal * (this.Vat / 100);
+            var _vat = $("#cmbVat").find(":selected").text();
+            this._VatValue = this._Total * (_vat / 100);
             return this._VatValue;
         },
         SubTotal: function () {
@@ -209,8 +245,15 @@ $(document).ready(function () {
 
     vm = kendo.observable(dataSource);
 
+    for (var j = 0; j < items.length; j++) {
+        dataSource.onAddDetail(null, items[j]);
+    }
+
+
     kendo.bind($("#divProductDetail"), vm);
-});
+
+    isBindComplete = true;
+}
 
 function ExchangeRate(from, to, value) {
     var fromRate = {};
@@ -404,7 +447,7 @@ function GetVat() {
             $('#cmbVat').find("option").remove();
             $.each(data.Table, function (i) {
                 //$('#cmbVat').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
-                $('#cmbVat').append($('<option></option>').val(data.Table[i].Detail).html(data.Table[i].Detail));
+                $('#cmbVat').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
             });
             $('#cmbVat').find('option:first-child').attr('selected', true);
         },
@@ -690,6 +733,7 @@ function GetData(val) {
                 $("#txtDiscount").val(data.Table[0].Discount);
                 $("#cmbSeller").val(data.Table[0].Seller);
                 $("#cmbState").val(data.Table[0].State);
+                $("#cmbCurrency").val(data.Table[0].Currency);
                 //FileData: '';
                 //CostSheet: '';
                 $("#txtReason").val(data.Table[0].Reason);
@@ -735,26 +779,28 @@ function GetData(val) {
                         $(this).unbind('focus');
                     }).css({ "color": "#C0C0C0" });
 
-                    var html = '<tbody>';
-                    for (var i = 0; i < data.Table1.length; i++) {
-                        var amount = AddComma(parseFloat(data.Table1[i].Amount).toFixed(2));
-                        html += '<tr class="RowCal">';
-                        html += '<td class="">' + data.Table1[i].RowNum + '</td>';
-                        html += '<td class="">' + data.Table1[i].LineNum + '</td>';
-                        html += '<td class="">' + data.Table1[i].Description + '</td>';
-                        html += '<td class="">' + data.Table1[i].Quantity + '</td>';
-                        html += '<td class="">' + data.Table1[i].UnitName + '</td>';
-                        html += '<td class="">' + data.Table1[i].UnitPrice + '</td>';
-                        html += '<td class="">' + data.Table1[i].CurrencyName + '</td>';
-                        html += '<td class="width50"><input class="txtDetailAmount form-control width100 text-right" type="text" id="txtDetailAmount" value="' + amount + '"></td>';
-                        html += '<td><div class="btn-group widthmax">';
-                        html += '<a class="btn btn-success" href="#ModalDescription" data-toggle="modal" onclick="GetDataDescription(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
-                        html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation Description'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
-                        html += '</div></td>';
-                        html += '</tr>';
-                    }
-                    html += '</tbody>';
-                    document.getElementById("resultDescription").innerHTML = html;
+                    bindProductDetail(data.Table[0], data.Table1);
+
+                    //var html = '<tbody>';
+                    //for (var i = 0; i < data.Table1.length; i++) {
+                    //    var amount = AddComma(parseFloat(data.Table1[i].Amount).toFixed(2));
+                    //    html += '<tr class="RowCal">';
+                    //    html += '<td class="">' + data.Table1[i].RowNum + '</td>';
+                    //    html += '<td class="">' + data.Table1[i].LineNum + '</td>';
+                    //    html += '<td class="">' + data.Table1[i].Description + '</td>';
+                    //    html += '<td class="">' + data.Table1[i].Quantity + '</td>';
+                    //    html += '<td class="">' + data.Table1[i].UnitName + '</td>';
+                    //    html += '<td class="">' + data.Table1[i].UnitPrice + '</td>';
+                    //    html += '<td class="">' + data.Table1[i].CurrencyName + '</td>';
+                    //    html += '<td class="width50"><input class="txtDetailAmount form-control width100 text-right" type="text" id="txtDetailAmount" value="' + amount + '"></td>';
+                    //    html += '<td><div class="btn-group widthmax">';
+                    //    html += '<a class="btn btn-success" href="#ModalDescription" data-toggle="modal" onclick="GetDataDescription(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
+                    //    html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation Description'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
+                    //    html += '</div></td>';
+                    //    html += '</tr>';
+                    //}
+                    //html += '</tbody>';
+                    //document.getElementById("resultDescription").innerHTML = html;
                 }
                 if (data.Table3.length > 0) {
                     var SubTotal = AddComma(parseFloat(data.Table3[0].SubTotal).toFixed(2));
@@ -941,4 +987,123 @@ function Redirect() {
 function convertFloat(str) {
 
     $(str).val($(str).val().replace(',', '')).formatNumber({ format: "#,###.00", locale: "us" });
+}
+
+
+function SubmitQuotation(val) {
+
+    var discount = $("#txtDiscount").val().replace(',', '');
+    var quotationDate = ChangeformatDate($("#txtQuotationDate").val(), 1);
+    var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
+    $("#hidQuotID").val(val);
+    var dataObject = {
+        ID: val,
+        QuotationNo: $("#txtQuotationNo").val(),
+        CompID: $("#hidCompID").val(),
+        Ref: $("#txtYourRef").val(),
+        QuotationDate: quotationDate,
+        Validity: $("#txtValidity").val(),
+        DeliveryTime: $("#txtDelivery").val(),
+        PaymentTerm: $("#txtPaymentTerm").val(),
+        WarningDate: warningDate,
+        IncoTerm: $("#cmbIncoTerm").find(":selected").val(),
+        IncoDetail: $("#txtIcoTermDetail").val(),
+        Discount: $("#txtDiscount").val(),
+        Seller: $("#cmbSeller").find(":selected").val(),
+        State: $("#cmbState").find(":selected").val(),
+        //FileData: localStorage['FileData1'],
+        //CostSheet: AttachPath,
+        FileData: '',
+        CostSheet: '',
+        Reason: $("#txtReason").val(),
+        Remark: $("#txtRemark").val(),
+        Vat: $("#cmbVat").find(":selected").val(),
+        Docver: $("#hidDocver").val(),
+        CreateBy: 1, EditBy: 1
+    };
+    //$.ajax(
+    //    {
+    //        url: 'http://localhost:13149/api/Quotation',
+    //        type: 'PUT',
+    //        async: false,
+    //        data: dataObject,
+    //        datatype: 'json',
+
+    //        success: function (data) {
+    //            //alert('Update is completed');
+    //            Redirect();
+    //        }
+    //        ,
+    //        error: function (msg) {
+    //            alert(msg);
+    //        }
+    //    });
+    //window.location.href = "../Quotation/IndexQuotation";
+}
+
+
+function SaveDraftQuotation(val) {
+    var quotationDate = ChangeformatDate($("#txtQuotationDate").val(), 1);
+    var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
+
+    $("#hidQuotID").val(val);
+    var dataObject = {
+        ID: val,
+        QuotationNo: $("#txtQuotationNo").val(),
+        CompID: $("#hidCompID").val(),
+        Ref: $("#txtYourRef").val(),
+        QuotationDate: quotationDate,
+        Validity: $("#txtValidity").val(),
+        DeliveryTime: $("#txtDelivery").val(),
+        PaymentTerm: $("#txtPaymentTerm").val(),
+        WarningDate: warningDate,
+        IncoTerm: $("#cmbIncoTerm").find(":selected").val(),
+        IncoDetail: $("#txtIcoTermDetail").val(),
+        Seller: $("#cmbSeller").find(":selected").val(),
+        State: $("#cmbState").find(":selected").val(),
+        Currency: $("#cmbCurrency").find(":selected").val(),
+        FileData: '',
+        CostSheet: '',
+        Reason: $("#txtReason").val(),
+        Remark: $("#txtRemark").val(),
+        Docver: $("#hidDocver").val(),
+        CreateBy: 1,
+        EditBy: 1,
+        Vat: vm.Vat,
+        Discount: vm.Discount,
+        Detail: [],
+        Action: "SaveDraft"
+    };
+
+    for (var i = 0; i < vm.Detail.length; i++) {
+        var tmp = vm.Detail[i];
+
+        var item = {};
+
+        item.ProductID = tmp.Product.ID;
+        item.LineNum = tmp.LineNo;
+        item.Description = tmp.Description;
+        item.Quantity = tmp.Quantity;
+        item.Unit = tmp.Product.Unit;
+        item.UnitPrice = tmp._UnitPrice;
+        item.Currency = tmp.Product.Currency;
+
+        dataObject.Detail.push(item);
+    }
+
+    $.ajax({
+        url: 'http://localhost:13149/api/Quotation',
+        type: 'PUT',
+        async: false,
+        data: dataObject,
+        datatype: 'json',
+        success: function (data) {
+            alert('Save Draft is completed');
+            Redirect();
+        }
+        ,
+        error: function (msg) {
+            alert(msg);
+        }
+    });
 }

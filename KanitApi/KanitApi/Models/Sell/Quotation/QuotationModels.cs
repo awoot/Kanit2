@@ -32,6 +32,7 @@ namespace KanitApi.Models.Sell.Quotation
         public int CreateBy { get; set; }
         public int EditBy { get; set; }
 
-
+        public int Currency { get; set; }
+        public List<QuotationDetailModels> Detail { get; set; }
     }
 }
