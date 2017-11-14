@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 using System.Web.Http.Cors;
 using KanitApi.Providers;
 using KanitApi.DAL.Product.Stock;
+using System.Web;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace KanitApi.Controllers
 {
@@ -40,6 +43,49 @@ namespace KanitApi.Controllers
             }
 
             return JsonConvert.SerializeObject(response, Formatting.Indented);
+        }
+
+        [HttpPost]
+        public string UploadFile()
+        {
+            HttpResponseMessage result = null;
+
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count > 0)
+            {
+                var docfiles = new List<string>();
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+
+                    using (var doc = SpreadsheetDocument.Open(postedFile.InputStream, false))
+                    {
+                        WorkbookPart workbookPart = doc.WorkbookPart;
+                        SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
+                        SharedStringTable sst = sstpart.SharedStringTable;
+
+                        WorksheetPart worksheetPart = workbookPart.WorksheetParts.First();
+                        Worksheet sheet = worksheetPart.Worksheet;
+
+                        var cells = sheet.Descendants<Cell>();
+                        var rows = sheet.Descendants<Row>();
+
+                    }
+
+                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
+                    postedFile.SaveAs(filePath);
+
+                    docfiles.Add(filePath);
+                }
+                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
+            }
+            else
+            {
+                result = Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return "";
+            //return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
     }
 }
