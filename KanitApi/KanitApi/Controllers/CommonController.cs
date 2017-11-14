@@ -15,6 +15,7 @@ using KanitApi.DAL.Product.Stock;
 using System.Web;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.IO;
 
 namespace KanitApi.Controllers
 {
@@ -56,6 +57,8 @@ namespace KanitApi.Controllers
                 var docfiles = new List<string>();
                 foreach (string file in httpRequest.Files)
                 {
+                    var quoteID = httpRequest.Form["quoteID"];
+
                     var postedFile = httpRequest.Files[file];
 
                     using (var doc = SpreadsheetDocument.Open(postedFile.InputStream, false))
@@ -70,18 +73,45 @@ namespace KanitApi.Controllers
                         var cells = sheet.Descendants<Cell>();
                         var rows = sheet.Descendants<Row>();
 
+                        decimal costPrice = 0;
+                        decimal sellingPrice = 0;
+
+                        foreach (Row row in rows.Skip(1))
+                        {
+                            costPrice += row.Elements<Cell>().ElementAt(9).CellValue.Text.ForceToDecimal();
+                            sellingPrice += row.Elements<Cell>().ElementAt(10).CellValue.Text.ForceToDecimal();
+
+                            foreach (Cell c in row.Elements<Cell>())
+                            {
+                                if ((c.DataType != null) && (c.DataType == CellValues.SharedString))
+                                {
+                                    int ssid = int.Parse(c.CellValue.Text);
+                                    string str = sst.ChildElements[ssid].InnerText;
+                                    Console.WriteLine("Shared string {0}: {1}", ssid, str);
+                                }
+                                else if (c.CellValue != null)
+                                {
+                                    Console.WriteLine("Cell contents: {0}", c.CellValue.Text);
+                                }
+                            }
+                        }
+                    }
+                    var filename = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('\\') + 1);
+
+                    var dirPart = HttpContext.Current.Server.MapPath("~/Upload/CostSheet/" + quoteID);
+
+                    var filePath = dirPart + "/" + filename;
+
+                    if (!Directory.Exists(dirPart))
+                    {
+                        Directory.CreateDirectory(dirPart);
                     }
 
-                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
                     postedFile.SaveAs(filePath);
 
-                    docfiles.Add(filePath);
+                    //docfiles.Add(filePath);
                 }
-                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-            }
-            else
-            {
-                result = Request.CreateResponse(HttpStatusCode.BadRequest);
+
             }
 
             return "";

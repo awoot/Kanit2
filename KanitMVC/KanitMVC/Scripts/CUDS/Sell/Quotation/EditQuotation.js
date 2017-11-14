@@ -3,7 +3,12 @@ var vm = {};
 var dataSourceUnit = [];
 var dataSourceExchangeRage = [];
 
+var quoteID = null;
+
+
 function form_onInit(id) {
+    quoteID = id;
+
     CheckAuthorization();
     $("#resultCompany").on("click", "tr", function (e) {
         $("#txtCustomerName").val($(this).find("td:eq(2)").text());
@@ -89,6 +94,8 @@ $(document).ready(function () {
         if (files.length > 0) {
             data.append("UploadedImage", files[0]);
         }
+
+        data.append("quoteID", quoteID);
         // Make Ajax request with the contentType = false, and procesDate = false 
         var ajaxRequest = $.ajax({
             type: "POST",
