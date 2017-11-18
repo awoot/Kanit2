@@ -27,7 +27,9 @@ namespace KanitApi.DAL.Setting.User
                     cmd.Parameters.AddWithValue("@Department", UserModel.Department);
                     cmd.Parameters.AddWithValue("@Position", UserModel.Position);
                     cmd.Parameters.AddWithValue("@Company", UserModel.Company);
+                    cmd.Parameters.AddWithValue("@StartDate", UserModel.StartDate);
                     cmd.Parameters.AddWithValue("@Email", UserModel.Email);
+                    cmd.Parameters.AddWithValue("@Team", UserModel.Team);
                     cmd.Parameters.AddWithValue("@SecurityID", UserModel.SecurityID);
                     cmd.Parameters.AddWithValue("@CreateBy", UserModel.CreateBy);
                     cmd.Parameters.AddWithValue("@EditBy", UserModel.EditBy);
@@ -62,10 +64,12 @@ namespace KanitApi.DAL.Setting.User
                     cmd.Parameters.AddWithValue("@Department", UserModel.Department);
                     cmd.Parameters.AddWithValue("@Position", UserModel.Position);
                     cmd.Parameters.AddWithValue("@Company", UserModel.Company);
+                    cmd.Parameters.AddWithValue("@Team", UserModel.Team);
                     cmd.Parameters.AddWithValue("@Email", UserModel.Email);
                     cmd.Parameters.AddWithValue("@SecurityID", UserModel.SecurityID);
                     cmd.Parameters.AddWithValue("@EditBy", UserModel.EditBy);
                     cmd.Parameters.AddWithValue("@Section", UserModel.Section);
+                    cmd.Parameters.AddWithValue("@StartDate", UserModel.StartDate);
                     conObj.Open();
                     result = cmd.ExecuteNonQuery();
                     return result;

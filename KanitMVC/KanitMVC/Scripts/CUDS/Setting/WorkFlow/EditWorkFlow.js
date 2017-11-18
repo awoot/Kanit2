@@ -348,6 +348,7 @@ function GetData(val) {
            $("#txtStartDate").val(SDate);
            $("#txtEndDate").val(EDate);
 
+
            //alert(data.Table1.length);
            if (data.Table1.length > 0) {
                //alert("Test")

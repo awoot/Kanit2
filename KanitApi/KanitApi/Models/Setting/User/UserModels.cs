@@ -18,6 +18,10 @@ namespace KanitApi.Models.Setting.User
         public int Department { get; set; }
         public int Position { get; set; }
         public int Company { get; set; }
+        public int Team { get; set; }
+
+        public DateTime StartDate { get; set; }
+
         public string Email { get; set; }
         public int SecurityID { get; set; }
         public int CreateBy { get; set; }

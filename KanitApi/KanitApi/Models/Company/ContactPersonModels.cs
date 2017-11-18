@@ -34,5 +34,7 @@ namespace KanitApi.Models.Company
         public int CreateBy { get; set; }
 
         public int EditBy { get; set; }
+
+        public List<ContactPersonAddressModels> Address { get; set; }
     }
 }

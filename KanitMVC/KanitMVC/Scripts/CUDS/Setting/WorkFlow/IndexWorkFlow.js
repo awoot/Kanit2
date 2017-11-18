@@ -70,12 +70,12 @@ $(document).ready(function () {
             html += '</tbody>';
             document.getElementById("resultWorkFlow").innerHTML = html;
             
-            $('#tblWorkFlow').paging({
-                limit: 30,
-                rowDisplayStyle: 'block',
-                activePage: 0,
-                rows: []
-            });
+            //$('#tblWorkFlow').paging({
+            //    limit: 30,
+            //    rowDisplayStyle: 'block',
+            //    activePage: 0,
+            //    rows: []
+            //});
         },
         error: function (msg) {
             alert(msg)

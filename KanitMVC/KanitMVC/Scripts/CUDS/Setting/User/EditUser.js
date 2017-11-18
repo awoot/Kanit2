@@ -2,6 +2,11 @@ $(document).ready(function () {
     //GetExpenseGroup();
     //GetCurrency();
     CheckAuthorization();
+
+    $('#dtStartDate').datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY'
+    });
 });
 function GetDepartment() {
     var dataObject = { typeID: '015' };
@@ -69,6 +74,27 @@ function GetQuotation() {
         }
     });
 }
+function GetTeam() {
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        data: { typeID: '023' },
+        async: false,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbTeam').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbTeam').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+
 function GetSection() {
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -88,6 +114,8 @@ function GetSection() {
             alert('Error');
         }
     });
+
+
 }
 function GetSecurityProfile() {
     $.ajax({
@@ -134,13 +162,21 @@ function GetData(val) {
             GetPosition();
             GetQuotation();
             GetSection();
+            GetTeam();
             GetSecurityProfile()
             //alert("First "+$("#cmbCurrency").val());
             //alert(data.Table[0].ExpenseGroup);
+
+
+
+            var startDate = ChangeformatDate(data.Table[0].StartDate, 0);
+            $("#txtStartDate").val(startDate);
+
             $("#cmbDepartment").val(data.Table[0].Department);
             $("#cmbPosition").val(data.Table[0].Position);
-            $("#cmbQuotation").val(data.Table[0].Quotation);
+            $("#cmbQuotation").val(data.Table[0].Company);
             $("#cmbSection").val(data.Table[0].Section);
+            $("#cmbTeam").val(data.Table[0].Team);
             $("#cmbSecurityProfile").val(data.Table[0].SecurityID);
             $("#txtUserName").val(data.Table[0].UserName);
             $("#txtFirstName").val(data.Table[0].FirstName);
@@ -156,7 +192,12 @@ function GetData(val) {
     });
 }
 function Update(val) {
+    
     var SecurityID = parseInt($("#cmbSecurityProfile").find(":selected").val());
+
+
+    var startDate = ChangeformatDate($("#txtStartDate").val(), 1);
+
     var dataObject = {
         ID: val,
         UserName: $("#txtUserName").val(),
@@ -164,10 +205,12 @@ function Update(val) {
         FirstName: $("#txtFirstName").val(),
         LastName: $("#txtLastName").val(),
         Email: $("#txtEmail").val(),
+        StartDate: startDate,
         Department: $("#cmbDepartment").find(":selected").val(),
         Position: $("#cmbPosition").find(":selected").val(),
-        Quotation: $("#cmbQuotation").find(":selected").val(),
+        Company: $("#cmbQuotation").find(":selected").val(),
         Section: $("#cmbSection").find(":selected").val(),
+        Team: $("#cmbTeam").find(":selected").val(),
         SecurityID: SecurityID,
         EditBy: 2
     };

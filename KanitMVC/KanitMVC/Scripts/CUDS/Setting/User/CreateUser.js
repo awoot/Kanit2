@@ -1,5 +1,11 @@
 $(document).ready(function () {
     CheckAuthorization();
+
+    $('#dtStartDate').datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY'
+    });
+
     var dataObject = { typeID: '015' };
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -95,6 +101,26 @@ $(document).ready(function () {
             alert('Error');
         }
     });
+
+    var dataObject = { typeID: '023' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        dataType: 'json',
+        data: dataObject,
+        async: false,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbTeam').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbTeam').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
 });
 $(document).on('click', '#close-preview', function () {
     $('.image-preview').popover('hide');
@@ -156,18 +182,23 @@ $(function () {
 function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
     //alert($("#cmbCurrency").find(":selected").val());
+
+    var startDate = ChangeformatDate($("#txtStartDate").val(), 1);
+    
     var dataObject = {
         UserName: $("#txtUserName").val(),
         Password: $("#txtPassword").val(),
         FirstName: $("#txtFirstName").val(),
         LastName: $("#txtLastName").val(),
         Email: $("#txtEmail").val(),
+        StartDate: startDate,
         Department: $("#cmbDepartment").find(":selected").val(),
         Position: $("#cmbPosition").find(":selected").val(),
-        Quotation: $("#cmbQuotation").find(":selected").val(),
+        Company: $("#cmbQuotation").find(":selected").val(),
         SecurityID: $("#cmbSecurityProfile").find(":selected").val(),
         CreateBy: 1, EditBy: 1,
-        Section: $("#cmbSection").find(":selected").val()
+        Section: $("#cmbSection").find(":selected").val(),
+        Team: $("#cmbTeam").find(":selected").val()
     };
     $.ajax(
     {
