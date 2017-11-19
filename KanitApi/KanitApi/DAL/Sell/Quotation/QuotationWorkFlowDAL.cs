@@ -6,6 +6,9 @@ using System.Configuration;
 using KanitApi.Models.Sell.Quotation;
 using System;
 
+using KanitApi.Providers;
+using System.Collections.Generic;
+
 namespace KanitApi.DAL.Sell.Quotation
 {
     public class QuotationWorkFlowDAL
@@ -134,5 +137,208 @@ namespace KanitApi.DAL.Sell.Quotation
         //    }
         //}
 
+        public void Action(QuotationWorkFlowActionModels param)
+        {
+
+            switch (param.Action)
+            {
+                case "Approve":
+                    {
+                        using (var conn = new SqlConnection(conStr))
+                        using (var comm = conn.CreateCommand())
+                        {
+                            if (conn.State == ConnectionState.Closed) conn.Open();
+
+                            comm.CommandType = CommandType.StoredProcedure;
+                            comm.CommandText = "uspQuotationWorkFlowAction";
+
+                            comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
+                            comm.Parameters.AddWithValue("@ID", param.QuotationWorkFlowID);
+                            comm.Parameters.AddWithValue("@step", param.Step);
+                            comm.Parameters.AddWithValue("@action", param.Action);
+                            comm.Parameters.AddWithValue("@actionBy", param.ActionBy);
+
+                            comm.ExecuteNonQuery();
+                        }
+
+                        AssignedTask(param.QuotationID, param.Step, param.ActionBy);
+                    }
+                    break;
+                case "Reject":
+                    {
+                        using (var conn = new SqlConnection(conStr))
+                        using (var comm = conn.CreateCommand())
+                        {
+                            if (conn.State == ConnectionState.Closed) conn.Open();
+
+                            comm.CommandType = CommandType.StoredProcedure;
+                            comm.CommandText = "uspQuotationWorkFlowAction";
+
+                            comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
+                            comm.Parameters.AddWithValue("@ID", param.QuotationWorkFlowID);
+                            comm.Parameters.AddWithValue("@step", param.Step);
+                            comm.Parameters.AddWithValue("@action", param.Action);
+                            comm.Parameters.AddWithValue("@actionBy", param.ActionBy);
+
+                            comm.ExecuteNonQuery();
+                        }
+
+                        Reject(param.QuotationID, param.ActionBy);
+                    }
+                    break;
+                case "Recall":
+                    {
+                        //1080 Draft
+                        //1088 Created
+                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1080, 1088);
+
+                        ClearQuotationWorkFlow(param.QuotationID);
+                    }
+                    break;
+                case "SubmitQuote":
+                    {
+                        //1086 Completed
+                        //1088 Created
+                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1088);
+                    }
+                    break;
+                case "Pending":
+                    {
+                        //1086 Completed
+                        //1093 Pending
+                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1093);
+                    }
+                    break;
+                case "Win":
+                    {
+                        //1086 Completed
+                        //1091 Win
+                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1091);
+                    }
+                    break;
+                case "Loss":
+                    {
+                        //1086 Completed
+                        //1092 Loss
+                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1092);
+                    }
+                    break;
+            }
+        }
+
+        public void AssignedTask(int quoteID, int step, int editBy)
+        {
+            var ds = new DataSet();
+
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspGetNextStep";
+
+                comm.Parameters.AddWithValue("@quoteID", quoteID);
+                comm.Parameters.AddWithValue("@step", step);
+
+                adp.Fill(ds);
+            }
+
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                CompleteWorkFlow(quoteID, editBy);
+            }
+            else
+            {
+                var row = ds.Tables[0].Rows[0];
+                var id = row["ID"].ForceToInt32();
+
+                SetAssignedDate(id);
+
+                var email = row["Email"].ForceToString();
+                var fullName = row["FullName"].ForceToString();
+                var quotationNo = row["QuotationNo"].ForceToString();
+
+                var viewQuotationURL = ConfigurationManager.AppSettings["ViewQuotationURL"];
+                var url = string.Format("{0}?id={1}", viewQuotationURL, quoteID);
+                var content = new Dictionary<string, string>();
+
+                var from = ConfigurationManager.AppSettings["EmailFrom"];
+                var to = email + ";tarajung@gmail.com";
+
+                content.Add("ApprovalName", fullName);
+                content.Add("Email", email);
+                content.Add("LinkURL", url);
+                content.Add("QuotationNo", quotationNo);
+
+                CommonProvider.Instance.SendEmail(from, to, null, null, "APPROVE_TASK", content);
+            }
+        }
+
+        public void CompleteWorkFlow(int quoteID, int editBy)
+        {
+            //Completed 1087
+            //Approved 1089
+            UpdateQuotationStatus(quoteID, editBy, 1086, 1089);
+        }
+
+        public void Reject(int quoteID, int editBy)
+        {
+            //Reject 1087
+            //Approved 1089
+            UpdateQuotationStatus(quoteID, editBy, 1087, 1089);
+        }
+
+        public void SetAssignedDate(int quotationWorkFlowID)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspSetAssignedDate";
+
+                comm.Parameters.AddWithValue("@ID", quotationWorkFlowID);
+
+                comm.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateQuotationStatus(int quoteID, int editBy, int state, int status)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspUpdateQuotationState";
+
+                comm.Parameters.AddWithValue("@id", quoteID);
+                comm.Parameters.AddWithValue("@state", state);
+                comm.Parameters.AddWithValue("@status", status);
+                comm.Parameters.AddWithValue("@editBy", editBy);
+
+                comm.ExecuteNonQuery();
+            }
+        }
+
+        public void ClearQuotationWorkFlow(int quoteID)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspClearQuotationWorkFlow";
+
+                comm.Parameters.AddWithValue("@id", quoteID);
+
+                comm.ExecuteNonQuery();
+            }
+        }
     }
 }

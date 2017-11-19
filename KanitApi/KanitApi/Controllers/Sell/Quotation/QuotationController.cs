@@ -66,15 +66,14 @@ namespace KanitApi.Controllers.Sell.Quotation
             var response = Quotationdb.InsertData(QuotationModel);
             return response;
         }
-
-        [EnableCorsAttribute("*", "*", "*")]
+        
         [HttpPut]
         public int Put(QuotationModels QuotationModel)
         {
             var response = Quotationdb.UpdateData(QuotationModel);
             return response;
         }
-
+        
         [HttpDelete]
         public int Delete(QuotationModels QuotationModel)
         {
@@ -89,6 +88,13 @@ namespace KanitApi.Controllers.Sell.Quotation
             //}
             var response = Quotationdb.DeleteData(QuotationModel);
             return response;
+        }
+
+        [HttpGet]
+        public string ViewQuotation(int id)
+        {
+            var response = Quotationdb.GetQuotationByID(id);
+            return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
     }
 }

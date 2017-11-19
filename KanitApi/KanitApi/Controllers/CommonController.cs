@@ -51,13 +51,18 @@ namespace KanitApi.Controllers
         {
             HttpResponseMessage result = null;
 
+            int quoteID = 0;
+            decimal costPrice = 0;
+            decimal sellingPrice = 0;
+            string costSheet = "";
+
             var httpRequest = HttpContext.Current.Request;
             if (httpRequest.Files.Count > 0)
             {
                 var docfiles = new List<string>();
                 foreach (string file in httpRequest.Files)
                 {
-                    var quoteID = httpRequest.Form["quoteID"];
+                    quoteID = httpRequest.Form["quoteID"].ForceToInt32();
 
                     var postedFile = httpRequest.Files[file];
 
@@ -72,9 +77,6 @@ namespace KanitApi.Controllers
 
                         var cells = sheet.Descendants<Cell>();
                         var rows = sheet.Descendants<Row>();
-
-                        decimal costPrice = 0;
-                        decimal sellingPrice = 0;
 
                         foreach (Row row in rows.Skip(1))
                         {
@@ -98,7 +100,9 @@ namespace KanitApi.Controllers
                     }
                     var filename = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('\\') + 1);
 
-                    var dirPart = HttpContext.Current.Server.MapPath("~/Upload/CostSheet/" + quoteID);
+                    costSheet = "~/CostSheet/" + quoteID;
+
+                    var dirPart = HttpContext.Current.Server.MapPath(costSheet);
 
                     var filePath = dirPart + "/" + filename;
 
@@ -109,12 +113,17 @@ namespace KanitApi.Controllers
 
                     postedFile.SaveAs(filePath);
 
+                    costSheet = "http://" + HttpContext.Current.Request.Url.Authority + "/CostSheet/" + quoteID + "/" + filename;
                     //docfiles.Add(filePath);
                 }
 
             }
 
-            return "";
+            CommonProvider.Instance.UpdateCostSheet(quoteID, costSheet, costPrice, sellingPrice);
+
+            var tmp = string.Format("{{\"CostSheet\":\"{0}\", \"Cost1\":\"{1}\", \"SellPrice\":\"{2}\"}}", costSheet, costPrice, sellingPrice);
+
+            return tmp;
             //return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
     }

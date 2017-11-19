@@ -23,8 +23,9 @@ $(document).ready(function () {
     GetState();
     GetSeller();
     GetVat();
+    GetCurrency();
 
-    document.getElementById("verNo").innerHTML = "(1)";
+    //document.getElementById("verNo").innerHTML = "(1)";
     $("#hidDocver").val(1);
 });
 
@@ -35,9 +36,9 @@ $(document).on('click', '#close-preview', function () {
         function () {
             $('.image-preview').popover('show');
         },
-         function () {
-             $('.image-preview').popover('hide');
-         }
+        function () {
+            $('.image-preview').popover('hide');
+        }
     );
 });
 $(function () {
@@ -85,8 +86,7 @@ $(function () {
         reader.readAsDataURL(file);
     });
 });
-function GetIncoTerm()
-{
+function GetIncoTerm() {
     var dataObject = { typeID: '010' };
     $.ajax({
         url: 'http://localhost:13149/api/MasterService/',
@@ -147,8 +147,30 @@ function GetSeller() {
         }
     });
 }
-function BrowseCompany()
-{
+
+function GetCurrency() {
+    var dataObject = { typeID: '011' };
+    $.ajax({
+        url: 'http://localhost:13149/api/MasterService/',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        data: dataObject,
+        success: function (data) {
+            data = JSON.parse(data);
+            //alert('test');
+            $.each(data.Table, function (i) {
+                $('#cmbCurrency').append($('<option></option>').val(data.Table[i].ID).html(data.Table[i].Detail));
+            });
+            $('#cmbCurrency').find('option:first-child').attr('selected', true);
+        },
+        failure: function () {
+            alert('Error');
+        }
+    });
+}
+
+function BrowseCompany() {
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
@@ -186,37 +208,37 @@ function BrowseCompany()
     //------------------------------------ Custom ------------------------------------
 
     $.ajax(
-    {
-        url: 'http://localhost:13149/api/Company/',
-        type: 'GET',
-        datatype: 'json',
-        success: function (data) {
-            data = JSON.parse(data);
-            var html = '<tbody>';
-            for (var i = 0; i < data.Table.length; i++) {
-                html += '<tr>';
-                html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
-                html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CompanyNameTH + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CompanyTypeName + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CustSegmentName + '</td>';
-                html += '<td data-dismiss="modal">' + data.Table[i].CreditTermName + '</td>';
-                html += '</tr>';
+        {
+            url: 'http://localhost:13149/api/Company/',
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+                data = JSON.parse(data);
+                var html = '<tbody>';
+                for (var i = 0; i < data.Table.length; i++) {
+                    html += '<tr>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].RowNum + '</td>';
+                    html += '<td data-dismiss="modal" class="hidecolumn">' + data.Table[i].ID + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CompanyNameTH + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CompanyTypeName + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CustSegmentName + '</td>';
+                    html += '<td data-dismiss="modal">' + data.Table[i].CreditTermName + '</td>';
+                    html += '</tr>';
+                }
+                html += '</tbody>';
+                document.getElementById("resultCompany").innerHTML = html;
+
+                //$('#tblCompany').paging({
+                //    limit: 30,
+                //    rowDisplayStyle: 'block',
+                //    activePage: 0,
+                //    rows: []
+                //});
+            },
+            error: function (msg) {
+                alert(msg)
             }
-            html += '</tbody>';
-            document.getElementById("resultCompany").innerHTML = html;
-            
-            //$('#tblCompany').paging({
-            //    limit: 30,
-            //    rowDisplayStyle: 'block',
-            //    activePage: 0,
-            //    rows: []
-            //});
-        },
-        error: function (msg) {
-            alert(msg)
-        }
-    });
+        });
 }
 function GetVat() {
     var dataObject = { typeID: '018' };
@@ -241,69 +263,70 @@ function GetVat() {
 }
 function CreateData() {
     //var Price = $("#txtPricelist").val().replace(',', '');
-        var readResult;
-        var AttachPath;
-        var FileData;
-        var fileUpload = document.getElementById('FileUpload1');
-        var fileUploadValue = fileUpload.value;
-        if (fileUploadValue != '') {
-            //alert("Test");
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getYear();
-            var tmp1 = y.toString();
-            var tmp2 = tmp1.substring(1, 3);
-            var tmpDate = d + "_" + m + "_" + tmp2 + "_";
-            var file = fileUpload.files[0];
-            var AttachFileName = tmpDate + file.name;
-            //alert(fileUpload[i].name);
-            AttachPath = ("../Attach/Product/" + AttachFileName);
+    var readResult;
+    var AttachPath;
+    var FileData;
+    var fileUpload = document.getElementById('FileUpload1');
+    //var fileUploadValue = fileUpload.value;
+    //if (fileUploadValue != '') {
+    //    //alert("Test");
+    //    var date = new Date();
+    //    var d = date.getDate();
+    //    var m = date.getMonth();
+    //    var y = date.getYear();
+    //    var tmp1 = y.toString();
+    //    var tmp2 = tmp1.substring(1, 3);
+    //    var tmpDate = d + "_" + m + "_" + tmp2 + "_";
+    //    var file = fileUpload.files[0];
+    //    var AttachFileName = tmpDate + file.name;
+    //    //alert(fileUpload[i].name);
+    //    AttachPath = ("../Attach/Product/" + AttachFileName);
 
-            //FileData = getBase64(file);
-            //alert(FileData);
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = function () {
-                readResult = reader.result;
-                var FileSource = readResult.split(",");
-                FileData = FileSource[1];
-                FileData = FileData.toString();
-                localStorage['FileData1'] = FileData;
-                //alert(FileData);
-                //var dataObject = { RefID: ProductID, AttachName: AttachFileName, AttachPath: AttachPath, AttachData: img, CreateBy: localStorage['UserID'], EditBy: localStorage['UserID'] };
-            }
-        }
-        //alert(AttachPath);
-        //alert("FileData1 "+localStorage['FileData1']);
-        var QuotationID;
-        var quotationDate = ChangeformatDate($("#txtQuotationDate").val(), 1);
-        var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
-        var dataObject = {
-            QuotationNo: $("#txtQuotationNo").val(),
-            CompID: $("#hidCompID").val(),
-            Ref: $("#txtYourRef").val(),
-            QuotationDate: quotationDate,
-            Validity: $("#txtValidity").val(),
-            DeliveryTime: $("#txtDelivery").val(),
-            PaymentTerm: $("#txtPaymentTerm").val(),
-            WarningDate: warningDate,
-            IncoTerm: $("#cmbIncoTerm").find(":selected").val(),
-            IncoDetail: $("#txtIcoTermDetail").val(),
-            Discount: $("#txtDiscount").val(),
-            Seller: $("#cmbSeller").find(":selected").val(),
-            State: $("#cmbState").find(":selected").val(),
-            //FileData: localStorage['FileData1'],
-            //CostSheet: AttachPath,
-            FileData: '',
-            CostSheet: '',
-            Reason: $("#txtReason").val(),
-            Remark: $("#txtRemark").val(),
-            Vat: $("#cmbVat").find(":selected").val(),
-            Docver: parseInt($("#hidDocver").val()),
-            CreateBy: 1, EditBy: 1
-        };
-        $.ajax(
+    //    //FileData = getBase64(file);
+    //    //alert(FileData);
+    //    var reader = new FileReader();
+    //    reader.readAsDataURL(file);
+    //    reader.onloadend = function () {
+    //        readResult = reader.result;
+    //        var FileSource = readResult.split(",");
+    //        FileData = FileSource[1];
+    //        FileData = FileData.toString();
+    //        localStorage['FileData1'] = FileData;
+    //        //alert(FileData);
+    //        //var dataObject = { RefID: ProductID, AttachName: AttachFileName, AttachPath: AttachPath, AttachData: img, CreateBy: localStorage['UserID'], EditBy: localStorage['UserID'] };
+    //    }
+    //}
+    //alert(AttachPath);
+    //alert("FileData1 "+localStorage['FileData1']);
+    var QuotationID;
+    var quotationDate = ChangeformatDate($("#txtQuotationDate").val(), 1);
+    var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
+    var dataObject = {
+        QuotationNo: $("#txtQuotationNo").val(),
+        CompID: $("#hidCompID").val(),
+        Ref: $("#txtYourRef").val(),
+        QuotationDate: quotationDate,
+        Validity: $("#txtValidity").val(),
+        DeliveryTime: $("#txtDelivery").val(),
+        PaymentTerm: $("#txtPaymentTerm").val(),
+        WarningDate: warningDate,
+        IncoTerm: $("#cmbIncoTerm").find(":selected").val(),
+        IncoDetail: $("#txtIcoTermDetail").val(),
+        Discount: $("#txtDiscount").val(),
+        Seller: $("#cmbSeller").find(":selected").val(),
+        State: $("#cmbState").find(":selected").val(),
+        Currency: $("#cmbCurrency").find(":selected").val(),
+        //FileData: localStorage['FileData1'],
+        //CostSheet: AttachPath,
+        //FileData: '',
+        //CostSheet: '',
+        Reason: $("#txtReason").val(),
+        Remark: $("#txtRemark").val(),
+        Vat: $("#cmbVat").find(":selected").val(),
+        Docver: parseInt($("#hidDocver").val()),
+        CreateBy: localStorage['UserID']
+    };
+    $.ajax(
         {
             url: 'http://localhost:13149/api/Quotation',
             type: 'POST',
@@ -316,12 +339,12 @@ function CreateData() {
             },
             error: function (msg) { alert(msg); }
         });
-    
+
     window.location.href = "../Quotation/EditQuotation?id=" + QuotationID;
 }
 
 function convertFloat(str) {
-    
+
     $(str).val($(str).val().replace(',', '')).formatNumber({ format: "#,###.00", locale: "us" });
 }
 function Redirect() {

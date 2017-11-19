@@ -213,5 +213,40 @@ namespace KanitApi.Providers
                 return ds;
             }
         }
+
+        public int CurrentUserID
+        {
+            get
+            {
+                var ID = 0;
+                if (HttpContext.Current.Session != null && HttpContext.Current.Session["CurrentUser"] != null)
+                {
+                    var row = HttpContext.Current.Session["CurrentUser"] as DataRow;
+
+                    ID = row["ID"].ForceToInt32();
+                }
+
+                return ID;
+            }
+        }
+
+        public void UpdateCostSheet(int quoteID, string costSheet, decimal cost1, decimal sellPrice)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspUpdateCostSheet";
+                comm.Parameters.AddWithValue("@quoteID", quoteID);
+                comm.Parameters.AddWithValue("@costSheet", costSheet);
+                comm.Parameters.AddWithValue("@cost1", cost1);
+                comm.Parameters.AddWithValue("@sellPrice", sellPrice);
+
+                comm.ExecuteNonQuery();
+            }
+        }
     }
 }

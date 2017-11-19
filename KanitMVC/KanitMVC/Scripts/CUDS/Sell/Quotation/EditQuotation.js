@@ -99,19 +99,24 @@ $(document).ready(function () {
         // Make Ajax request with the contentType = false, and procesDate = false 
         var ajaxRequest = $.ajax({
             type: "POST",
-            url: COMMON.WebAPIHostURL+ "/api/Common/UploadFile",
+            url: COMMON.WebAPIHostURL + "/api/Common/UploadFile",
             contentType: false,
             processData: false,
             data: data
         });
         ajaxRequest.done(function (xhr, textStatus) {
+            var data = JSON.parse(xhr);
+
+            $("#costSheetURL").attr("href", data.CostSheet);
+            $("#txtCost1").text(kendo.toString(parseFloat(data.Cost1), "n"));
+            $("#txtSellPrice").text(kendo.toString(parseFloat(data.SellPrice), "n"));
             // Do other operation 
         });
     });
 
 });
 
-function bindProductDetail(quotation, items) {    
+function bindProductDetail(quotation, items) {
     var isBindComplete = false;
 
     var dataSource = {
@@ -729,7 +734,7 @@ function GetData(val) {
     var dataObject = { ID: val }
     $.ajax(
         {
-            url: 'http://localhost:13149/api/Quotation',
+            url: 'http://localhost:13149/api/Quotation/Get/' + val,
             type: 'GET',
             async: false,
             data: dataObject,
@@ -758,6 +763,13 @@ function GetData(val) {
                 $("#cmbSeller").val(data.Table[0].Seller);
                 $("#cmbState").val(data.Table[0].State);
                 $("#cmbCurrency").val(data.Table[0].Currency);
+
+                $("#costSheetURL").attr("href", data.Table[0].CostSheet);
+                $("#txtCost1").text(kendo.toString(data.Table[0].Cost1, "n"));
+                $("#txtSellPrice").text(kendo.toString(data.Table[0].SellPrice, "n"));
+
+                kendo.toString(data.Cost1, "n")
+
                 //FileData: '';
                 //CostSheet: '';
                 $("#txtReason").val(data.Table[0].Reason);
@@ -768,74 +780,80 @@ function GetData(val) {
                 $("#hidDocver").val(data.Table[0].Docver);
                 document.getElementById("verNo").innerHTML = "(" + data.Table[0].Docver + ")";
                 // =================================================================================== Description
-                if (data.Table1.length > 0) {
-                    $('th').click(function () {
-                        var table = $(this).parents('table').eq(0)
-                        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-                        this.asc = !this.asc
-                        if (!this.asc) { rows = rows.reverse() }
-                        for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
-                    })
-                    function comparer(index) {
-                        return function (a, b) {
-                            var valA = getCellValue(a, index), valB = getCellValue(b, index)
-                            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
-                        }
-                    }
-                    function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
 
-                    //filter
-                    $("#txtSearchAddress").keyup(function () {
-                        $("#resultDescription").find("tr").hide();
-                        var data = this.value.split(" ");
-                        var jo = $("#resultDescription").find("tr");
-                        $.each(data, function (i, v) {
-                            //jo = jo.filter("*:contains('" + v + "')");
-                            jo = jo.filter(function () {
-                                return $(this).text().toLowerCase().indexOf(v.toLowerCase()) > -1;
-                            });
-                        });
-                        jo.show();
 
-                    }).focus(function () {
-                        this.value = "";
-                        $(this).css({ "color": "black" });
-                        $(this).unbind('focus');
-                    }).css({ "color": "#C0C0C0" });
+                bindProductDetail(data.Table[0], data.Table1);
 
-                    bindProductDetail(data.Table[0], data.Table1);
 
-                    //var html = '<tbody>';
-                    //for (var i = 0; i < data.Table1.length; i++) {
-                    //    var amount = AddComma(parseFloat(data.Table1[i].Amount).toFixed(2));
-                    //    html += '<tr class="RowCal">';
-                    //    html += '<td class="">' + data.Table1[i].RowNum + '</td>';
-                    //    html += '<td class="">' + data.Table1[i].LineNum + '</td>';
-                    //    html += '<td class="">' + data.Table1[i].Description + '</td>';
-                    //    html += '<td class="">' + data.Table1[i].Quantity + '</td>';
-                    //    html += '<td class="">' + data.Table1[i].UnitName + '</td>';
-                    //    html += '<td class="">' + data.Table1[i].UnitPrice + '</td>';
-                    //    html += '<td class="">' + data.Table1[i].CurrencyName + '</td>';
-                    //    html += '<td class="width50"><input class="txtDetailAmount form-control width100 text-right" type="text" id="txtDetailAmount" value="' + amount + '"></td>';
-                    //    html += '<td><div class="btn-group widthmax">';
-                    //    html += '<a class="btn btn-success" href="#ModalDescription" data-toggle="modal" onclick="GetDataDescription(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
-                    //    html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation Description'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
-                    //    html += '</div></td>';
-                    //    html += '</tr>';
-                    //}
-                    //html += '</tbody>';
-                    //document.getElementById("resultDescription").innerHTML = html;
-                }
-                if (data.Table3.length > 0) {
-                    var SubTotal = AddComma(parseFloat(data.Table3[0].SubTotal).toFixed(2));
-                    var Total = AddComma(parseFloat(data.Table3[0].Total).toFixed(2));
-                    var Vat = AddComma(parseFloat(data.Table3[0].Vat).toFixed(2));
-                    var NetTotal = AddComma(parseFloat(data.Table3[0].NetTotal).toFixed(2));
-                    $("#txtSubTotal").val(SubTotal);
-                    $("#txtTotal").val(Total);
-                    $("#txtVal").val(Vat);
-                    $("#txtNetTotal").val(NetTotal);
-                }
+
+                //if (data.Table1.length > 0) {
+                //    $('th').click(function () {
+                //        var table = $(this).parents('table').eq(0)
+                //        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+                //        this.asc = !this.asc
+                //        if (!this.asc) { rows = rows.reverse() }
+                //        for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+                //    })
+                //    function comparer(index) {
+                //        return function (a, b) {
+                //            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                //            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+                //        }
+                //    }
+                //    function getCellValue(row, index) { return $(row).children('td').eq(index).html() }
+
+                //    //filter
+                //    $("#txtSearchAddress").keyup(function () {
+                //        $("#resultDescription").find("tr").hide();
+                //        var data = this.value.split(" ");
+                //        var jo = $("#resultDescription").find("tr");
+                //        $.each(data, function (i, v) {
+                //            //jo = jo.filter("*:contains('" + v + "')");
+                //            jo = jo.filter(function () {
+                //                return $(this).text().toLowerCase().indexOf(v.toLowerCase()) > -1;
+                //            });
+                //        });
+                //        jo.show();
+
+                //    }).focus(function () {
+                //        this.value = "";
+                //        $(this).css({ "color": "black" });
+                //        $(this).unbind('focus');
+                //    }).css({ "color": "#C0C0C0" });
+
+                //    bindProductDetail(data.Table[0], data.Table1);
+
+                //    //var html = '<tbody>';
+                //    //for (var i = 0; i < data.Table1.length; i++) {
+                //    //    var amount = AddComma(parseFloat(data.Table1[i].Amount).toFixed(2));
+                //    //    html += '<tr class="RowCal">';
+                //    //    html += '<td class="">' + data.Table1[i].RowNum + '</td>';
+                //    //    html += '<td class="">' + data.Table1[i].LineNum + '</td>';
+                //    //    html += '<td class="">' + data.Table1[i].Description + '</td>';
+                //    //    html += '<td class="">' + data.Table1[i].Quantity + '</td>';
+                //    //    html += '<td class="">' + data.Table1[i].UnitName + '</td>';
+                //    //    html += '<td class="">' + data.Table1[i].UnitPrice + '</td>';
+                //    //    html += '<td class="">' + data.Table1[i].CurrencyName + '</td>';
+                //    //    html += '<td class="width50"><input class="txtDetailAmount form-control width100 text-right" type="text" id="txtDetailAmount" value="' + amount + '"></td>';
+                //    //    html += '<td><div class="btn-group widthmax">';
+                //    //    html += '<a class="btn btn-success" href="#ModalDescription" data-toggle="modal" onclick="GetDataDescription(' + data.Table1[i].ID + ')"><i class="icon_pencil-edit_alt"></i></a>';
+                //    //    html += '<a class="btn btn-danger" data-toggle="modal" href="#" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation Description'" + ',' + data.Table1[i].ID + ')"><i class="icon_close_alt2"></i></a>';
+                //    //    html += '</div></td>';
+                //    //    html += '</tr>';
+                //    //}
+                //    //html += '</tbody>';
+                //    //document.getElementById("resultDescription").innerHTML = html;
+                //}
+                //if (data.Table3.length > 0) {
+                //    var SubTotal = AddComma(parseFloat(data.Table3[0].SubTotal).toFixed(2));
+                //    var Total = AddComma(parseFloat(data.Table3[0].Total).toFixed(2));
+                //    var Vat = AddComma(parseFloat(data.Table3[0].Vat).toFixed(2));
+                //    var NetTotal = AddComma(parseFloat(data.Table3[0].NetTotal).toFixed(2));
+                //    $("#txtSubTotal").val(SubTotal);
+                //    $("#txtTotal").val(Total);
+                //    $("#txtVal").val(Vat);
+                //    $("#txtNetTotal").val(NetTotal);
+                //}
 
             },
             error: function (msg) {
@@ -900,9 +918,10 @@ function GetDataDescription(QuoDetailID) {
     }
 }
 function Update(val) {
-    var discount = $("#txtDiscount").val().replace(',', '');
+
     var quotationDate = ChangeformatDate($("#txtQuotationDate").val(), 1);
     var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
+
     $("#hidQuotID").val(val);
     var dataObject = {
         ID: val,
@@ -916,37 +935,98 @@ function Update(val) {
         WarningDate: warningDate,
         IncoTerm: $("#cmbIncoTerm").find(":selected").val(),
         IncoDetail: $("#txtIcoTermDetail").val(),
-        Discount: $("#txtDiscount").val(),
         Seller: $("#cmbSeller").find(":selected").val(),
         State: $("#cmbState").find(":selected").val(),
-        //FileData: localStorage['FileData1'],
-        //CostSheet: AttachPath,
+        Currency: $("#cmbCurrency").find(":selected").val(),
         FileData: '',
         CostSheet: '',
         Reason: $("#txtReason").val(),
         Remark: $("#txtRemark").val(),
-        Vat: $("#cmbVat").find(":selected").val(),
         Docver: $("#hidDocver").val(),
-        CreateBy: 1, EditBy: 1
+        EditBy: localStorage['UserID'],
+        Vat: vm.Vat,
+        Discount: vm.Discount,
+        Detail: [],
+        Action: "SaveDraft"
     };
-    $.ajax(
-        {
-            url: 'http://localhost:13149/api/Quotation',
-            type: 'PUT',
-            async: false,
-            data: dataObject,
-            datatype: 'json',
 
-            success: function (data) {
-                //alert('Update is completed');
-                Redirect();
-            }
-            ,
-            error: function (msg) {
-                alert(msg);
-            }
-        });
-    window.location.href = "../Quotation/IndexQuotation";
+    for (var i = 0; i < vm.Detail.length; i++) {
+        var tmp = vm.Detail[i];
+
+        var item = {};
+
+        item.ProductID = tmp.Product.ID;
+        item.LineNum = tmp.LineNo;
+        item.Description = tmp.Description;
+        item.Quantity = tmp.Quantity;
+        item.Unit = tmp.Product.Unit;
+        item.UnitPrice = tmp._UnitPrice;
+        item.Currency = tmp.Product.Currency;
+
+        dataObject.Detail.push(item);
+    }
+
+    dataObject.Action = "SendToApprove";
+
+    $.ajax({
+        url: 'http://localhost:13149/api/Quotation',
+        type: 'PUT',
+        async: false,
+        data: dataObject,
+        datatype: 'json',
+        success: function (data) {
+            alert('Send to Approve');
+            Redirect();
+        }
+        ,
+        error: function (msg) {
+            alert(msg);
+        }
+    });
+    //var discount = $("#txtDiscount").val().replace(',', '');
+    //var quotationDate = ChangeformatDate($("#txtQuotationDate").val(), 1);
+    //var warningDate = ChangeformatDate($("#txtWarningDate").val(), 1);
+    //$("#hidQuotID").val(val);
+    //var dataObject = {
+    //    ID: val,
+    //    QuotationNo: $("#txtQuotationNo").val(),
+    //    CompID: $("#hidCompID").val(),
+    //    Ref: $("#txtYourRef").val(),
+    //    QuotationDate: quotationDate,
+    //    Validity: $("#txtValidity").val(),
+    //    DeliveryTime: $("#txtDelivery").val(),
+    //    PaymentTerm: $("#txtPaymentTerm").val(),
+    //    WarningDate: warningDate,
+    //    IncoTerm: $("#cmbIncoTerm").find(":selected").val(),
+    //    IncoDetail: $("#txtIcoTermDetail").val(),
+    //    Discount: $("#txtDiscount").val(),
+    //    Seller: $("#cmbSeller").find(":selected").val(),
+    //    State: $("#cmbState").find(":selected").val(),
+    //    //FileData: localStorage['FileData1'],
+    //    //CostSheet: AttachPath,
+    //    FileData: '',
+    //    CostSheet: '',
+    //    Reason: $("#txtReason").val(),
+    //    Remark: $("#txtRemark").val(),
+    //    Vat: $("#cmbVat").find(":selected").val(),
+    //    Docver: $("#hidDocver").val(),
+    //    CreateBy: 1, EditBy: 1
+    //};
+    //$.ajax({
+    //    url: 'http://localhost:13149/api/Quotation',
+    //    type: 'PUT',
+    //    async: false,
+    //    data: dataObject,
+    //    datatype: 'json',
+    //    success: function (data) {
+    //        //alert('Update is completed');
+    //        Redirect();
+    //    },
+    //    error: function (msg) {
+    //        alert(msg);
+    //    }
+    //});
+    //window.location.href = "../Quotation/IndexQuotation";
 }
 function SaveQuotationDetail(val) {
     var ID = $("#hidQuoDetailID").val();
@@ -1037,13 +1117,13 @@ function SubmitQuotation(val) {
         State: $("#cmbState").find(":selected").val(),
         //FileData: localStorage['FileData1'],
         //CostSheet: AttachPath,
-        FileData: '',
-        CostSheet: '',
+        //FileData: '',
+        //CostSheet: '',
         Reason: $("#txtReason").val(),
         Remark: $("#txtRemark").val(),
         Vat: $("#cmbVat").find(":selected").val(),
         Docver: $("#hidDocver").val(),
-        CreateBy: 1, EditBy: 1
+        EditBy: localStorage['UserID']
     };
     //$.ajax(
     //    {
@@ -1091,8 +1171,7 @@ function SaveDraftQuotation(val) {
         Reason: $("#txtReason").val(),
         Remark: $("#txtRemark").val(),
         Docver: $("#hidDocver").val(),
-        CreateBy: 1,
-        EditBy: 1,
+        EditBy: localStorage['UserID'],
         Vat: vm.Vat,
         Discount: vm.Discount,
         Detail: [],
@@ -1114,6 +1193,8 @@ function SaveDraftQuotation(val) {
 
         dataObject.Detail.push(item);
     }
+
+    dataObject.Action = "SaveDraft";
 
     $.ajax({
         url: 'http://localhost:13149/api/Quotation',

@@ -9,6 +9,7 @@ namespace KanitApi.Models.Sell.Quotation
 {
     public class QuotationModels
     {
+        public string Action { get; set; }
         public int ID { get; set; }
         public string QuotationNo { get; set; }
         public string Ref { get; set; }
@@ -34,5 +35,6 @@ namespace KanitApi.Models.Sell.Quotation
 
         public int Currency { get; set; }
         public List<QuotationDetailModels> Detail { get; set; }
+        
     }
 }

@@ -70,7 +70,13 @@ function GetData(val) {
                 html += '<td class="">' + warningDate.getDate() + '/' + (warningDate.getMonth() + 1) + '/' + warningDate.getFullYear() + '</td>';
                 html += '<td class="">' + data.Table[i].StateName + '</td>';
                 html += '<td><div class="btn-group widthmax">';
-                html += '<a class="btn btn-success" href="/Quotation/EditQuotation?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
+
+                if (data.Table[i].StateName == "Draft") {
+                    html += '<a class="btn btn-success" href="/Quotation/EditQuotation?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
+                } else {
+                    html += '<a class="btn btn-success" href="/Quotation/ViewQuotation?id=' + data.Table[i].ID + '"><i class="icon_pencil-edit_alt"></i></a>';
+                }
+
                 html += '<a class="btn btn-danger" data-toggle="modal" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'Quotation'" + ',' + data.Table[i].ID + ')" ><i class="icon_close_alt2"></i></a>';
                 //html += '<a href="/ExpenseMaster/EditExpenseMaster?id=' + data.Table[i].ID + '" id="edit' + data.Table[i].ID + '" style="margin-right: 3px;">' + '<img src="/Images/edit.png" class="imgExpenseUpdate" /></a>';
                 //html += '<a href="#" id="del' + data.Table[i].ID + '" onclick="ConfirmDialog(' + " 'Delete'" + ',' + "'ExpenseMaster'" + ',' + data.Table[i].ID + ')" style="margin-right: 5px;" >' + '<img src="/Images/delete.png" class="imgExpenseDelete" /></a>';

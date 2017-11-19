@@ -32,6 +32,7 @@ namespace KanitApi.DAL.Sell.Quotation
                     cmd.Parameters.AddWithValue("@Discount", QuotationModel.Discount);
                     cmd.Parameters.AddWithValue("@Seller", QuotationModel.Seller);
                     cmd.Parameters.AddWithValue("@State", QuotationModel.State);
+                    cmd.Parameters.AddWithValue("@Currency", QuotationModel.Currency);
                     cmd.Parameters.AddWithValue("@CostSheet", QuotationModel.CostSheet != null ? QuotationModel.CostSheet : "");
                     cmd.Parameters.AddWithValue("@Reason", QuotationModel.Reason != null ? QuotationModel.Reason : "");
                     cmd.Parameters.AddWithValue("@Remark", QuotationModel.Remark != null ? QuotationModel.Remark : "");
@@ -111,6 +112,23 @@ namespace KanitApi.DAL.Sell.Quotation
 
                             cmd.ExecuteNonQuery();
                         }
+                    }
+
+                    if (QuotationModel.Action == "SaveDraft")
+                    {
+
+                    }
+                    else if (QuotationModel.Action == "SendToApprove")
+                    {
+                        cmd.CommandText = "uspGenQuotationWorkFlow";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@quoteID", QuotationModel.ID);
+                        cmd.Parameters.AddWithValue("@userID", QuotationModel.EditBy);
+
+                        cmd.ExecuteNonQuery();
+
+                        var quotationWorkFlowAction = new QuotationWorkFlowDAL();
+                        quotationWorkFlowAction.AssignedTask(QuotationModel.ID, 1, QuotationModel.EditBy);
                     }
 
                     return result;
@@ -233,6 +251,26 @@ namespace KanitApi.DAL.Sell.Quotation
                     conObj.Close();
                 }
             }
+        }
+
+        public DataSet GetQuotationByID(int id)
+        {
+            DataSet ds = new DataSet();
+
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspGetQuotationByID";
+                comm.Parameters.AddWithValue("@quoteID", id);
+
+                adp.Fill(ds);
+            }
+
+            return ds;
         }
     }
 }

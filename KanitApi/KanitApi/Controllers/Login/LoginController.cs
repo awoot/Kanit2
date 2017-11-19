@@ -11,6 +11,7 @@ using System.Json;
 using Newtonsoft.Json;
 using System.Web.Http.Cors;
 using KanitApi.Models.General;
+using System.Web;
 
 namespace KanitApi.Controllers.Login
 {
@@ -33,6 +34,7 @@ namespace KanitApi.Controllers.Login
         {
             string[] str = userName.Split('&');
             var response = Logindb.Authenticate(str[0], str[1]);
+
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
 

@@ -21,5 +21,10 @@ namespace KanitMVC.Controllers.Sell.Quotation
         {
             return View();
         }
+
+        public ActionResult ViewQuotation()
+        {
+            return View();
+        }
     }
 }
