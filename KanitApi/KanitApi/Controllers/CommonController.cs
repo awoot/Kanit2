@@ -23,9 +23,10 @@ namespace KanitApi.Controllers
     public class CommonController : ApiController
     {
         [HttpGet]
-        public string InfoDashboard()
+        [ActionName("Dashboard")]
+        public string Dashboard(int userID)
         {
-            var response = CommonProvider.Instance.GetInfoDashboard();
+            var response = CommonProvider.Instance.Dashboard(userID);
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
 
@@ -125,6 +126,14 @@ namespace KanitApi.Controllers
 
             return tmp;
             //return JsonConvert.SerializeObject(response, Formatting.Indented);
+        }
+
+        [HttpGet]
+        [ActionName("Monitoring")]
+        public string Monitoring(int userID, DateTime fromDate, DateTime toDate)
+        {
+            var response = CommonProvider.Instance.Monitoring(userID, fromDate, toDate);
+            return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
     }
 }

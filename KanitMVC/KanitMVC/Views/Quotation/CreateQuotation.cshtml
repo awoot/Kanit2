@@ -39,6 +39,158 @@
                 </header>
                 <div class="panel-body">
                     <div class="row">
+                        <div class="col-md-4 col-md-offset-0">
+                            <div class="row">
+                                <div class="col-md-4">Quotation No.</div>
+                                <div class="col-md-8">
+                                    <input id="txtQuotationNo" class="form-control m-bot15" type="text" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Your Reference</div>
+                                <div class="col-md-8">
+                                    <input id="txtYourRef" class="form-control m-bot15" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-md-offset-0">
+                            <div class="row">
+                                <div class="col-md-4">Customer</div>
+                                <div class="col-md-8">
+                                    <div class="input-group m-bot15">
+                                        <input type="text" id="txtCustomerName" class="form-control " />
+                                        <input type="hidden" id="hidCompID" />
+                                        <span class="input-group-addon">
+                                            <a href="#Modalcompany" data-toggle="modal" onclick="BrowseCompany()">
+                                                <span class="fa fa-search iconcolor">
+                                                </span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Quotation Date</div>
+                                <div class="col-md-8">
+                                    <div class="input-group date" id="dtQuotationDate">
+                                        <input id="txtQuotationDate" type="text" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Note</div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control m-bot15" rows="5" id="txtRemark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Validity(Days)</div>
+                                <div class="col-md-8">
+                                    <input id="txtValidity" class="form-control m-bot15" type="text" value="0" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Delivery Time(Weeks)</div>
+                                <div class="col-md-8">
+                                    <input id="txtDelivery" class="form-control m-bot15" type="text" value="0" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Payment Term(Days)</div>
+                                <div class="col-md-8">
+                                    <input id="txtPaymentTerm" class="form-control m-bot15" type="text" value="0" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Seller</div>
+                                <div class="col-md-8">
+                                    <select id="cmbSeller" class="form-control m-bot15"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">State</div>
+                                <div class="col-md-8">
+                                    <label id="lblState" class="form-control m-bot15">Draft</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Status</div>
+                                <div class="col-md-8">
+                                    <label id="lblStatus" class="form-control m-bot15">Created</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Warning Date</div>
+                                <div class="col-md-8">
+                                    <div class="input-group date m-bot15" id="dtWarningDate">
+                                        <input id="txtWarningDate" type="text" class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">Currency</div>
+                                <div class="col-md-8">
+                                    <select id="cmbCurrency" class="form-control m-bot15"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Reason</div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control m-bot15" rows="5" id="txtReason"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">Inco Term</div>
+                                <div class="col-md-8">
+                                    <select id="cmbIncoTerm" class="form-control m-bot15"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <input id="txtIcoTermDetail" class="form-control m-bot15" type="text" />
+                        </div>
+                    </div>
+
+                    <!---------------
+                    <div class="row">
                         <div class="col-xs-6 col-sm-4">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label">Quotation No.</label>
@@ -201,7 +353,7 @@
                             </div>
                         </div>
                     </div>
-
+                    ----------------->
                 </div>
             </section>
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">

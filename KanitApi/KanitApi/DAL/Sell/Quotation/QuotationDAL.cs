@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Configuration;
 using KanitApi.Models.Sell.Quotation;
 using System;
+using KanitApi.Providers;
+
 namespace KanitApi.DAL.Sell.Quotation
 {
     public class QuotationDAL
@@ -116,7 +118,7 @@ namespace KanitApi.DAL.Sell.Quotation
 
                     if (QuotationModel.Action == "SaveDraft")
                     {
-
+                        CommonProvider.Instance.CreateQuotationHistory(QuotationModel.ID, QuotationModel.EditBy, "Save");
                     }
                     else if (QuotationModel.Action == "SendToApprove")
                     {
@@ -126,6 +128,8 @@ namespace KanitApi.DAL.Sell.Quotation
                         cmd.Parameters.AddWithValue("@userID", QuotationModel.EditBy);
 
                         cmd.ExecuteNonQuery();
+                        
+                        CommonProvider.Instance.CreateQuotationHistory(QuotationModel.ID, QuotationModel.EditBy, "Send To Approve");
 
                         var quotationWorkFlowAction = new QuotationWorkFlowDAL();
                         quotationWorkFlowAction.AssignedTask(QuotationModel.ID, 1, QuotationModel.EditBy);
@@ -253,7 +257,7 @@ namespace KanitApi.DAL.Sell.Quotation
             }
         }
 
-        public DataSet GetQuotationByID(int id)
+        public DataSet GetQuotationByID(int id, int currentUserID)
         {
             DataSet ds = new DataSet();
 
@@ -266,6 +270,7 @@ namespace KanitApi.DAL.Sell.Quotation
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.CommandText = "uspGetQuotationByID";
                 comm.Parameters.AddWithValue("@quoteID", id);
+                comm.Parameters.AddWithValue("@currentUserID", currentUserID);
 
                 adp.Fill(ds);
             }

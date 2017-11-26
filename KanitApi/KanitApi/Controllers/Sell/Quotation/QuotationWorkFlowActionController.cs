@@ -24,5 +24,25 @@ namespace KanitApi.Controllers.Sell.Quotation
         {
             QuotationWorkFlow.Action(QuotationWorkFlowAction);
         }
+
+        [HttpGet]
+        [ActionName("Get1")]
+        public void Get(int id)
+        {
+
+        }
+
+        [HttpGet]
+        [ActionName("Get2")]
+        public void Get(int i, int b)
+        {
+
+        }
+
+        [HttpGet]
+        public void Post3()
+        {
+
+        }
     }
 }

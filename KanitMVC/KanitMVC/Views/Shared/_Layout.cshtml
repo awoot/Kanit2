@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+        @Scripts.Render("~/bundles/modernizr")*@
     <!-- Bootstrap CSS -->
     @Styles.Render("~/Content/css/bootstrap.min.css")
     @*<link href="@Url.Content("~/Content/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />*@
@@ -34,7 +34,7 @@
     @Styles.Render("~/Content/css/DatepickerBS/css/bootstrap-datetimepicker.css")
     @*====================================================================================================================================*@
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
     <!-- javascripts -->
     @Scripts.Render("~/Scripts/js/jquery.js")
     @Scripts.Render("~/Scripts/js/jquery-ui-1.10.4.min.js")
@@ -81,9 +81,53 @@
     @Scripts.Render("~/Scripts/js/DatepickerBS/js/moment.min.js")
     @Scripts.Render("~/Scripts/js/DatepickerBS/js/bootstrap-datetimepicker.min.js")
     @Scripts.Render("~/Scripts/CUDS/General/GetAnnounce.js")
-    
+
 
     <script>
+        //ตรวจสอบ User ว่า Login แล้วหรือยัง
+
+        if (typeof (localStorage['UserName']) == "undefined" || localStorage['UserName'] == null) {
+            window.location.href = "../Login";
+        }
+        else {
+            var dataObject = { userName: localStorage['UserName'] + '&' + localStorage['Password'] };
+
+            $.ajax({
+                url: 'http://localhost:13149/api/Login/',
+                type: 'GET',
+                async: false,
+                data: dataObject,
+                datatype: 'json',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data != null && data.Table.length > 0) {
+                        localStorage['UserID'] = data.Table[0].ID;
+                        localStorage['UserName'] = data.Table[0].UserName;
+                        localStorage['Password'] = data.Table[0].Password;
+                        localStorage['FirstName'] = data.Table[0].FirstName;
+                        localStorage['LastName'] = data.Table[0].LastName;
+                        localStorage['FullName'] = data.Table[0].FullName;
+                    }
+                    else {
+                        alert("Username is not found or invalid username or password");
+
+                        localStorage['UserID'] = null;
+                        localStorage['UserName'] = null;
+                        localStorage['Password'] = null;
+                        localStorage['FirstName'] = null;
+                        localStorage['LastName'] = null;
+                        localStorage['FullName'] = null;
+
+                        window.location.href = "../Login";
+                    }
+
+                },
+                error: function (msg) {
+                    alert(msg)
+                }
+            });
+        }
+
         //knob
         $(function () {
             $(".knob").knob({
@@ -165,10 +209,10 @@
                                         @*<div class="percent">90%</div>*@
                                     </div>
                                     @*<div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                                            <span class="sr-only">90% Complete (success)</span>
-                                        </div>
-                                    </div>*@
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
+                                                <span class="sr-only">90% Complete (success)</span>
+                                            </div>
+                                        </div>*@
                                 </a>
                             </li>
                             <li class="external">
@@ -284,7 +328,7 @@
     </section>
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
-    
+        @Scripts.Render("~/bundles/bootstrap")*@
+
 </body>
 </html>

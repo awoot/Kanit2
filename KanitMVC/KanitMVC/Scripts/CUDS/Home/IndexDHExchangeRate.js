@@ -46,16 +46,6 @@ $(document).ready(function () {
         datatype: 'json',
         success: function (data) {
             data = JSON.parse(data);
-            //var html = '<tbody>';
-            //for (var i = 0; i < data.Table.length; i++) {
-            //    var date = new Date(data.Table[i].UpdateDate);
-            //    html += '<tr>';
-            //    html += '<td class="">' + data.Table[i].CurrencyName + '</td>';
-            //    html += '<td class="">' + AddComma(parseFloat(data.Table[i].Rate).toFixed(2)) + '</td>';
-            //    html += '</tr>';
-            //}
-            //html += '</tbody>';
-            //document.getElementById("resultDHExchangeRate").innerHTML = html;
 
             var items = [];
 
@@ -70,13 +60,6 @@ $(document).ready(function () {
                 dataSource: items
             });
 
-            //$('#tblExchangeRate').paging({
-            //    limit: 30,
-            //    rowDisplayStyle: 'block',
-            //    activePage: 0,
-            //    rows: []
-            //});
-
             kendo.bind($("#tblDHExchangeRate"), vm);
         },
         error: function (msg) {
@@ -84,22 +67,113 @@ $(document).ready(function () {
         }
     });
 
-
     $.ajax({
-        url: 'http://localhost:13149/api/Common/InfoDashboard',
+        url: 'http://localhost:13149/api/Common/GetDashboard',
         type: 'GET',
+        data: { userID: localStorage['UserID'] },
         datatype: 'json',
         success: function (data) {
             data = JSON.parse(data);
 
-            var vmInfoDashboard = kendo.observable(data);
+            //------------ DashBoard ---------------------
+            var vmDashboard = kendo.observable(data);
 
-            kendo.bind($("#divInfoDashBoard"), vmInfoDashboard);
+            kendo.bind($("#divDashBoard"), vmDashboard);
+
+            //------------- Carendar ----------------------
+            var events = [];
+
+            for (var i = 0; i < data.Table1.length; i++) {
+
+                var item = data.Table1[i];
+
+                item.FromDate = new Date(item.FromDate);
+                item.ToDate = new Date(item.ToDate);
+
+                var event = {
+                    title: item.Title,
+                    start: item.FromDate,
+                    end: item.ToDate,
+                    color: item.Color,
+                    url: item.URL
+                };
+
+                events.push(event);
+            }
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: false,
+                events: events
+            });
+
+            //-------------  --------------------------
         },
         error: function (msg) {
             alert(msg)
         }
     });
 
+    $.ajax({
+        url: 'http://localhost:13149/api/Common/GetCalendar',
+        type: 'GET',
+        data: { userID: localStorage['UserID'] },
+        datatype: 'json',
+        success: function (data) {
+            data = JSON.parse(data);
 
+
+        },
+        error: function (msg) {
+            alert(msg);
+        }
+    });
+
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+    $('#dtFromDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        defaultDate: firstDay
+    });
+    $('#dtToDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        defaultDate: lastDay
+    });
+
+    updateMonitoring();
 });
+
+function updateMonitoring() {
+
+    var fromDate = ChangeformatDate($("#txtFromDate").val(), 1);
+    var toDate = ChangeformatDate($("#txtToDate").val(), 1);
+
+
+    kendo.unbind($("#divMonitoring"));
+
+    $.ajax({
+        url: 'http://localhost:13149/api/Common/Monitoring',
+        type: 'GET',
+        data: { userID: localStorage['UserID'], fromDate: fromDate, toDate: toDate },
+        datatype: 'json',
+        success: function (data) {
+            data = JSON.parse(data);
+
+            var vm = kendo.observable({
+                Items: data.Table,
+                onSearch: updateMonitoring
+            });
+
+            kendo.bind($("#divMonitoring"), vm);
+        },
+        error: function (msg) {
+            alert(msg);
+        }
+    });
+}

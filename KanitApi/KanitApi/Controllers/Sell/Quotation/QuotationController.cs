@@ -91,9 +91,10 @@ namespace KanitApi.Controllers.Sell.Quotation
         }
 
         [HttpGet]
-        public string ViewQuotation(int id)
+        [ActionName("ViewQuotation")]
+        public string ViewQuotation(int id, int currentUserID)
         {
-            var response = Quotationdb.GetQuotationByID(id);
+            var response = Quotationdb.GetQuotationByID(id, currentUserID);
             return JsonConvert.SerializeObject(response, Formatting.Indented);
         }
     }

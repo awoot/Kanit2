@@ -8,6 +8,7 @@ using System;
 
 using KanitApi.Providers;
 using System.Collections.Generic;
+using KanitApi.Providers.Enum;
 
 namespace KanitApi.DAL.Sell.Quotation
 {
@@ -139,90 +140,158 @@ namespace KanitApi.DAL.Sell.Quotation
 
         public void Action(QuotationWorkFlowActionModels param)
         {
-
             switch (param.Action)
             {
                 case "Approve":
                     {
-                        using (var conn = new SqlConnection(conStr))
-                        using (var comm = conn.CreateCommand())
-                        {
-                            if (conn.State == ConnectionState.Closed) conn.Open();
-
-                            comm.CommandType = CommandType.StoredProcedure;
-                            comm.CommandText = "uspQuotationWorkFlowAction";
-
-                            comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
-                            comm.Parameters.AddWithValue("@ID", param.QuotationWorkFlowID);
-                            comm.Parameters.AddWithValue("@step", param.Step);
-                            comm.Parameters.AddWithValue("@action", param.Action);
-                            comm.Parameters.AddWithValue("@actionBy", param.ActionBy);
-
-                            comm.ExecuteNonQuery();
-                        }
-
-                        AssignedTask(param.QuotationID, param.Step, param.ActionBy);
+                        Approve(param);
                     }
                     break;
                 case "Reject":
                     {
-                        using (var conn = new SqlConnection(conStr))
-                        using (var comm = conn.CreateCommand())
-                        {
-                            if (conn.State == ConnectionState.Closed) conn.Open();
-
-                            comm.CommandType = CommandType.StoredProcedure;
-                            comm.CommandText = "uspQuotationWorkFlowAction";
-
-                            comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
-                            comm.Parameters.AddWithValue("@ID", param.QuotationWorkFlowID);
-                            comm.Parameters.AddWithValue("@step", param.Step);
-                            comm.Parameters.AddWithValue("@action", param.Action);
-                            comm.Parameters.AddWithValue("@actionBy", param.ActionBy);
-
-                            comm.ExecuteNonQuery();
-                        }
-
-                        Reject(param.QuotationID, param.ActionBy);
+                        Reject(param);
                     }
                     break;
                 case "Recall":
                     {
-                        //1080 Draft
-                        //1088 Created
-                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1080, 1088);
-
-                        ClearQuotationWorkFlow(param.QuotationID);
+                        Recall(param);
                     }
                     break;
                 case "SubmitQuote":
                     {
-                        //1086 Completed
-                        //1088 Created
-                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1088);
+                        SubmitQuote(param);
                     }
                     break;
                 case "Pending":
                     {
-                        //1086 Completed
-                        //1093 Pending
-                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1093);
+                        Prnding(param);
                     }
                     break;
                 case "Win":
                     {
-                        //1086 Completed
-                        //1091 Win
-                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1091);
+                        Win(param);
                     }
                     break;
                 case "Loss":
                     {
-                        //1086 Completed
-                        //1092 Loss
-                        UpdateQuotationStatus(param.QuotationID, param.ActionBy, 1086, 1092);
+                        Loss(param);
                     }
                     break;
+            }
+        }
+
+        private void Loss(QuotationWorkFlowActionModels param)
+        {
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "Loss");
+
+            UpdateQuotationState_And_Status(param.QuotationID, param.ActionBy, StateEnum.LOSS, StatusEnum.APPROVE);
+        }
+
+        private void Win(QuotationWorkFlowActionModels param)
+        {
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "Win");
+            
+            UpdateQuotationState_And_Status(param.QuotationID, param.ActionBy, StateEnum.WIN, StatusEnum.APPROVE);
+
+            //----------------- ตัด สต๊อกสิ้นค้า ----------------------------------
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspAdjustInventory";
+
+                comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
+
+                comm.ExecuteNonQuery();
+            }
+        }
+
+        private void Prnding(QuotationWorkFlowActionModels param)
+        {
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "Pending");
+
+            UpdateQuotationState_And_Status(param.QuotationID, param.ActionBy, StateEnum.PENDING, StatusEnum.NOT_CHANGE);
+        }
+
+        private void SubmitQuote(QuotationWorkFlowActionModels param)
+        {
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "SubmitQuote");
+
+            UpdateQuotationState_And_Status(param.QuotationID, param.ActionBy, StateEnum.SUBMIT_QUOTE, StatusEnum.APPROVE);
+        }
+
+        private void Approve(QuotationWorkFlowActionModels param)
+        {
+            UpdateQuotationState_And_Status(param.QuotationID, param.ActionBy, StateEnum.IN_PROGRESS, StatusEnum.IN_PROGRESS);
+
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspQuotationWorkFlowAction";
+
+                comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
+                comm.Parameters.AddWithValue("@ID", param.QuotationWorkFlowID);
+                comm.Parameters.AddWithValue("@step", param.Step);
+                comm.Parameters.AddWithValue("@action", param.Action);
+                comm.Parameters.AddWithValue("@actionBy", param.ActionBy);
+
+                comm.ExecuteNonQuery();
+            }
+
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "Approve");
+
+            AssignedTask(param.QuotationID, param.Step, param.ActionBy);
+        }
+
+        private void Reject(QuotationWorkFlowActionModels param)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspQuotationWorkFlowAction";
+
+                comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
+                comm.Parameters.AddWithValue("@ID", param.QuotationWorkFlowID);
+                comm.Parameters.AddWithValue("@step", param.Step);
+                comm.Parameters.AddWithValue("@action", param.Action);
+                comm.Parameters.AddWithValue("@actionBy", param.ActionBy);
+
+                comm.ExecuteNonQuery();
+            }
+
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "Reject");
+
+            Reject(param.QuotationID, param.ActionBy);
+        }
+
+        private void Recall(QuotationWorkFlowActionModels param)
+        {
+            CommonProvider.Instance.CreateQuotationHistory(param.QuotationID, param.ActionBy, "Recall");
+
+            UpdateQuotationState_And_Status(param.QuotationID, param.ActionBy, StateEnum.IN_PROGRESS, StatusEnum.RECALL);
+
+
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspRecall";
+
+                comm.Parameters.AddWithValue("@quoteID", param.QuotationID);
+                comm.Parameters.AddWithValue("@step", param.Step);
+
+                comm.ExecuteNonQuery();
             }
         }
 
@@ -278,16 +347,12 @@ namespace KanitApi.DAL.Sell.Quotation
 
         public void CompleteWorkFlow(int quoteID, int editBy)
         {
-            //Completed 1087
-            //Approved 1089
-            UpdateQuotationStatus(quoteID, editBy, 1086, 1089);
+            UpdateQuotationState_And_Status(quoteID, editBy, StateEnum.IN_PROGRESS, StatusEnum.APPROVE);
         }
 
         public void Reject(int quoteID, int editBy)
         {
-            //Reject 1087
-            //Approved 1089
-            UpdateQuotationStatus(quoteID, editBy, 1087, 1089);
+            UpdateQuotationState_And_Status(quoteID, editBy, StateEnum.IN_PROGRESS, StatusEnum.REJECT);
         }
 
         public void SetAssignedDate(int quotationWorkFlowID)
@@ -306,7 +371,7 @@ namespace KanitApi.DAL.Sell.Quotation
             }
         }
 
-        public void UpdateQuotationStatus(int quoteID, int editBy, int state, int status)
+        public void UpdateQuotationState_And_Status(int quoteID, int editBy, StateEnum state, StatusEnum status)
         {
             using (var conn = new SqlConnection(conStr))
             using (var comm = conn.CreateCommand())
@@ -340,5 +405,7 @@ namespace KanitApi.DAL.Sell.Quotation
                 comm.ExecuteNonQuery();
             }
         }
+
+
     }
 }

@@ -114,7 +114,26 @@ $(document).ready(function () {
         });
     });
 
+    $('#dtQuotationDate').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+    $('#dtWarningDate').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
 });
+
+function bindQuotationHistory(data) {
+
+    for (var i = 0; i < data.length; i++) {
+        data[i].CreatedDate = new Date(data[i].CreatedDate);
+    }
+
+    var vmHistory = kendo.observable({
+        History: data
+    });
+
+    kendo.bind($("#divQuotationHistory"), vmHistory);
+}
 
 function bindProductDetail(quotation, items) {
     var isBindComplete = false;
@@ -762,6 +781,8 @@ function GetData(val) {
                 $("#txtDiscount").val(data.Table[0].Discount);
                 $("#cmbSeller").val(data.Table[0].Seller);
                 $("#cmbState").val(data.Table[0].State);
+                $("#lblState").text(data.Table[0].StateName);
+                $("#lblStatus").text(data.Table[0].StatusName);
                 $("#cmbCurrency").val(data.Table[0].Currency);
 
                 $("#costSheetURL").attr("href", data.Table[0].CostSheet);
@@ -784,6 +805,7 @@ function GetData(val) {
 
                 bindProductDetail(data.Table[0], data.Table1);
 
+                bindQuotationHistory(data.Table2);
 
 
                 //if (data.Table1.length > 0) {

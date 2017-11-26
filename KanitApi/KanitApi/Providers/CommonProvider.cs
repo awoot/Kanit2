@@ -195,8 +195,9 @@ namespace KanitApi.Providers
             client.Send(mm);
         }
 
-        public DataSet GetInfoDashboard()
+        public DataSet Dashboard(int userID)
         {
+            var ds = new DataSet();
             using (var conn = new SqlConnection(conStr))
             using (var comm = conn.CreateCommand())
             using (var adp = new SqlDataAdapter(comm))
@@ -204,14 +205,13 @@ namespace KanitApi.Providers
                 if (conn.State == ConnectionState.Closed) conn.Open();
 
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.CommandText = "uspGetInfoDashBoard";
-
-                var ds = new DataSet();
-
+                comm.CommandText = "uspGetDashBoard";
+                comm.Parameters.AddWithValue("@userID", userID);
+                
                 adp.Fill(ds);
-
-                return ds;
             }
+
+            return ds;
         }
 
         public int CurrentUserID
@@ -247,6 +247,46 @@ namespace KanitApi.Providers
 
                 comm.ExecuteNonQuery();
             }
+        }
+
+        public void CreateQuotationHistory(int quoteID, int createdByUserID, string detail)
+        {
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspCreateQuotationHistory";
+
+                comm.Parameters.AddWithValue("@quoteID", quoteID);
+                comm.Parameters.AddWithValue("@createdByUserID", createdByUserID);
+                comm.Parameters.AddWithValue("@detail", detail);
+
+                comm.ExecuteNonQuery();
+            }
+        }
+
+        public DataSet Monitoring(int userID, DateTime fromDate, DateTime toDate)
+        {
+            var ds = new DataSet();
+            using (var conn = new SqlConnection(conStr))
+            using (var comm = conn.CreateCommand())
+            using (var adp = new SqlDataAdapter(comm))
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.CommandText = "uspGetMonitoring";
+
+                comm.Parameters.AddWithValue("@userID", userID);
+                comm.Parameters.AddWithValue("@fromDate", fromDate);
+                comm.Parameters.AddWithValue("@toDate", toDate);
+
+                adp.Fill(ds);
+            }
+
+            return ds;
         }
     }
 }
